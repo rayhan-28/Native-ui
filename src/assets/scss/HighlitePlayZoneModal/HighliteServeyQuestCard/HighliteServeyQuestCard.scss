@@ -1,0 +1,107 @@
+.highlite-servey-quest-card {
+    background-color: #c7f3ea;
+    border-radius: 16px;
+    /* Rounded border */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0);
+    padding: 20px;
+    margin: auto;
+    // text-align: center;
+    font-family: 'Arial', sans-serif;
+    max-width: 520px;
+    /* Maximum width of the card */
+  
+    /* Make the card width responsive */
+    width: 100%;
+    /* Takes up 100% of the available space */
+    // box-sizing: border-box;
+  
+    @media (max-width: 768px) {
+      max-width: 90%;
+      padding: 15px;
+    }
+  
+    @media (max-width: 480px) {
+      max-width: 100%;
+      padding: 10px;
+    }
+   
+    .highlite-uppper{
+        display: flex;
+        gap: 10px;
+        align-items: baseline;
+      }
+      .servey-status{
+        padding: 2px 14px;
+        background-color: white;
+        border-radius: 20px;
+      }
+      .commission{
+        padding: 2px 20px;
+        background-color: #e1f3ef;
+        border-radius: 20px;
+      }
+       
+      .highlite-last{
+        display: flex;
+       }
+       .highlite-points{
+        display: flex;
+       }
+       .points-referrals{
+        color: #858383;
+        font-size: 0.9rem;
+        font-weight: bold;
+        position: relative;
+        bottom: -14px;
+        
+       }
+       
+       .task{
+        font-size: 1.3rem;
+        font-weight: bold;
+        color: #333;
+        margin-top: 0px;
+        margin-bottom: 0;
+    }
+
+
+          button{
+              background-color: black;
+              padding: 7px 40px;
+              border: none;
+              color: white;
+              border-radius: 20px;
+              cursor: pointer;
+              position: relative;
+              bottom: 5px;
+      
+          }
+        
+        .progress-bar {
+          background-color: #e9d6af;
+          position: relative;
+          // bottom: -10px;
+          border-radius: 10px;
+          height: 10px;
+          margin: 10px 0;
+          // position: relative;
+          width: 50%;
+          margin: 0 auto;
+    
+          .progress-indicator {
+            background-color: #000;
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.4s ease;
+          }
+        }
+
+
+     
+  
+  }
+  
+  
+ 
+    
+    

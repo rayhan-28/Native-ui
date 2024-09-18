@@ -1,0 +1,25 @@
+.top-card{
+  color: white;
+  
+  .top-part{
+    display: flex;
+  }
+
+  .point-part{
+    display: flex;
+    gap: 30px;
+    div{
+        p{
+            font-size: 25px;
+            margin:0;
+        }
+        span{
+            font-size: 0.8rem;
+            position: relative;
+            top: 8px;
+        }
+    }
+  }
+
+}
+

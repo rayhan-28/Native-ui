@@ -1,0 +1,122 @@
+.highlite-action-quest-card{
+    background-color: #f7f0e1;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0);
+    padding: 20px;
+    margin: auto;
+    font-family: 'Arial', sans-serif;
+    max-width: 550px;
+    width: 100%;
+  
+    @media (max-width: 768px) {
+      max-width: 90%;
+      padding: 15px;
+    }
+  
+    @media (max-width: 480px) {
+      max-width: 100%;
+      padding: 10px;
+    }
+
+    .profile-section{
+      display: flex;
+      flex-wrap: wrap;
+      
+      @media (max-width: 768px) {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+    
+   
+    
+      .action-streak-section {
+        display: flex;
+        justify-content: center;
+        align-items: baseline;
+        margin-top: 0px;
+        @media (max-width: 480px) {
+          flex-direction: column;
+          align-items: center;
+        }
+        .streak-background{
+          display: flex;
+          align-items: baseline;
+          margin-right: 20px;
+          font-family: Arial, sans-serif;
+          font-weight: 600;
+          color: #333;
+        }
+        .streak {
+          margin-left: 5px;
+          font-size: .95rem;
+          // margin-bottom: 8px;
+        }
+      }
+      .commission{
+        padding: 2px 20px;
+        background-color: #f0ece4;
+        border-radius: 20px;
+        margin-left: 10px;
+      }
+
+
+    .task{
+        font-size: 1.3rem;
+        font-weight: bold;
+        color: #333;
+        margin-top: 0px;
+        margin-bottom: 0;
+    }
+      
+
+    .highlite-last{
+      display: flex;
+     }
+     .highlite-points{
+      display: flex;
+     }
+     .points-referrals{
+      color: #858383;
+      font-size: 0.9rem;
+      font-weight: bold;
+      position: relative;
+      bottom: -14px;
+      
+     }
+        button{
+            background-color: black;
+            padding: 7px 40px;
+            border: none;
+            color: white;
+            border-radius: 20px;
+            cursor: pointer;
+            position: relative;
+            bottom: 5px;
+    
+        }
+      
+      .progress-bar {
+        background-color: #e9d6af;
+        position: relative;
+        // bottom: -10px;
+        border-radius: 10px;
+        height: 10px;
+        margin: 10px 0;
+        // position: relative;
+        width: 50%;
+        margin: 0 auto;
+  
+        .progress-indicator {
+          background-color: #000;
+          height: 100%;
+          border-radius: 10px;
+          transition: width 0.4s ease;
+        }
+      }
+
+  }
+  
+    
+    

@@ -1,0 +1,54 @@
+.highlite-leaderboard-card {
+    background-color: #f9f9f9;
+    border-radius: 16px;
+    /* Rounded border */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0);
+    padding: 20px;
+    margin: auto;
+    // text-align: center;
+    font-family: 'Arial', sans-serif;
+    max-width: 520px;
+    /* Maximum width of the card */
+  
+    /* Make the card width responsive */
+    width: 100%;
+    /* Takes up 100% of the available space */
+    // box-sizing: border-box;
+  
+    @media (max-width: 768px) {
+      max-width: 90%;
+      padding: 15px;
+    }
+  
+    @media (max-width: 480px) {
+      max-width: 100%;
+      padding: 10px;
+    }
+
+
+    
+
+  }
+  .highlite-header{
+         display:  flex;
+        justify-content: space-between;
+        h5{
+            font-weight: bold;
+        }
+        .header-text{
+            font-size: 1rem;
+            color: black;
+            font-weight: 400;
+            text-decoration: none;
+        }
+        span{
+            text-decoration: underline;
+            padding: 5px;
+            color: #888;
+           font-size: 0.8rem;
+        }
+    }
+    .ag-theme-quartz .ag-root-wrapper {
+      border: none !important;
+    }
+    

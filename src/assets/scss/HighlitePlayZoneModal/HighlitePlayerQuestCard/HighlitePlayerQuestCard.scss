@@ -1,0 +1,56 @@
+
+  
+
+  .highlite-streak-section {
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    margin-top: 10px;
+    @media (max-width: 480px) {
+      flex-direction: column;
+      align-items: center;
+    }
+   
+
+    .progress-bar {
+      background-color: #f0f0f0;
+      border-radius: 10px;
+      height: 10px;
+      margin: 10px 0;
+      // position: relative;
+      width: 100%;
+      margin: 0 auto;
+
+      .progress-indicator {
+        background-color: #000;
+        height: 100%;
+        border-radius: 10px;
+        transition: width 0.4s ease;
+      }
+    }
+    
+  }
+  .highlite-status-section{
+    display: flex;
+    justify-content: space-between;
+    div{
+        p{
+          font-size: 1.4rem;
+          margin-bottom: 0;
+    
+        }
+        span{
+          color: #888;
+          font-size: 0.8rem;
+          margin-top: 0;
+          position: relative;
+          top:-7px;
+          justify-content: center;
+          display: flex;
+        }
+      }
+  }
+
+
+  
+  
