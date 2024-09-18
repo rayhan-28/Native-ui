@@ -12,14 +12,109 @@
         p{
             font-size: 25px;
             margin:0;
+            color: #FFFFFF;
         }
         span{
             font-size: 0.8rem;
             position: relative;
-            top: 8px;
+            top: 5px;
         }
     }
   }
+ 
 
+  .slider-level-container {
+    .level-text {
+      font-size: 15px;
+      text-align: center;
+      transition: color 0.3s ease-in-out;  // Smooth transition when changing active slide
+  
+      &.active-level {
+        color: white;  // Bright gold for active level
+      }
+  
+      &.inactive-level {
+        color: rgba(255, 255, 255, 0.5);  // Faded white for inactive levels
+      }
+    }
+  }
+
+  .progressbar{
+  background-color: #FFFFFF;
+  width: 100vw;
+  height: 2px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow-x: visible;
+  
+  margin-left: -200px; /* Negative margin to overflow content from left */
+  }
+
+  .circle{
+    position: relative;
+    top: -5.5px;
+    left: 80px;
+
+    background-color: #FFFFFF;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+  .nextlevel{
+   font-size: 0.8rem;
+   position: relative;
+   right:  -70px;
+   margin: 0;
+  }
+
+
+.quest-name{
+  display: flex;
+  p{
+    font-size: 0.8rem;
+  }
+}
+
+
+  .rewards-boxes{
+    display: flex;
+    gap: 13px;
+  }
+  .reward-point{
+    height: 90px;
+    width: 70px;
+    border-radius: 10px;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.2);
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+
+  }
+  
+
+}
+
+.quest-name {
+  display: flex;
+  align-items: baseline;
+  gap: 20px;
+  // padding: 10px;
+
+  p {
+    cursor: pointer;
+    padding: 5px;
+    transition: all 0.5s ease;
+
+    &.active-earning {
+      background-color: rgba(255, 255, 255, 0.2);
+      color: #fff;
+      padding:5px 16px;
+      border-radius: 15px;
+    }
+  }
 }
 
