@@ -68,7 +68,7 @@ const Card = ({
       </>
     );
   }
-
+ 
   return (
     // <div className="user-card">
     //   {/* Profile section */}
