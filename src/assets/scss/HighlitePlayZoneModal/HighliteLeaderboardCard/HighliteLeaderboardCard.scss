@@ -1,20 +1,14 @@
 .highlite-leaderboard-card {
     background-color: #f9f9f9;
     border-radius: 16px;
-    /* Rounded border */
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0);
     padding: 20px;
     margin: auto;
-    // text-align: center;
     font-family: 'Arial', sans-serif;
     max-width: 520px;
-    /* Maximum width of the card */
-  
-    /* Make the card width responsive */
     width: 100%;
-    /* Takes up 100% of the available space */
-    // box-sizing: border-box;
-  
+    // overflow: hidden;
+    overflow-y: auto;
     @media (max-width: 768px) {
       max-width: 90%;
       padding: 15px;
@@ -51,4 +45,8 @@
     .ag-theme-quartz .ag-root-wrapper {
       border: none !important;
     }
-    
+   
+
+    .ag-theme-quartz .highlighted-row {
+      background-color: #e0f7fa /* Light blue for user's row */
+    }

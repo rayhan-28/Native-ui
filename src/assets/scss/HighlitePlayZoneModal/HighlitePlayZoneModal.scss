@@ -14,7 +14,7 @@
   }
  
   .highlite-modal {
-    width: 550px;
+   
     //  padding: 20px;
     
     background-color: #fff;
@@ -39,6 +39,17 @@
    gap:20px;
    display:flex;
    flex-direction:column
+  }
+
+  .quest-see{
+    display: flex;
+    justify-content: space-between;
+  }
+  .see{
+       color:rgba(6, 24, 44, 0.8);
+        font-size:0.8rem;
+        text-decoration:underline;
+        cursor:pointer
   }
   
   .highlite-close-btn{

@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
 import svgIcons from "../../../assets/image/SVG/svg";
+import axios from "axios";
+import { useAuth } from "../../../context/AuthContext";
 const Levels = [
   "Explorer",
   "Rookie",
@@ -17,21 +19,6 @@ const Levels = [
   "Native",
   "Super Native",
 ];
-
-const typeOfreward={
-
-   artefact:[
-
-   ],
-   reward:[
-
-   ],
-   badges:[
-
-   ]
-
-  
-}
 
 
   const rewardsIcon = [
@@ -68,20 +55,51 @@ const SliderLevel = () => {
 
   const [current, setCurrent] = useState(0);
 
-  const NeedPoints = 1200;
-
-  const currentLevel = Levels.indexOf("Rookie");
-
   const handleSelectEarning = (earningType) => {
     setSelectedEarning(earningType);
   };
 
+  
+  //api call
+  const { email, token } = useAuth();  // Get email and token from context
+
+  const [data, setData] = useState(null);
+  const [error, setError] = useState(null);
+    useEffect(() => {
+      // Make an API call with the stored email and token
+      const fetchData = async () => {
+          try {
+              const response = await axios.get('https://dev.api.pitch.space/api/player-level', {
+                params: {
+                  email: email,
+                  token: token
+              }
+              });
+              console.log(email)
+              if (response.status === 200) {
+                  console.log(response.data)
+                  setData(response.data);
+                  console.log("hlw")
+              }
+          } catch (err) {
+              setError('You are not valid');
+          }
+      };
+      if (email && token) {
+          fetchData();  // Only fetch if both email and token are set
+      }
+  }, [email, token]);
+ console.log(data)
   return (
     <>
       <div className="top-part">
-        <p style={{ fontSize: "25px" }}>
+        <img 
+        src={`https://res.cloudinary.com/pitchspace/image/upload/v1/player-icons/${data?.data?.playerAvatar}`}
+        style={{height:'60px',width:'60px',borderRadius:'50%'}}
+        />
+        <p style={{ fontSize: "20px" }}>
           Hello
-          <br /> <span style={{ fontSize: "45px" }}>Ollie</span>
+          <br /> <span style={{ fontSize: "35px" }}>{data?.data?.playerName}</span>
         </p>
         <div
           style={{ cursor: "pointer" }}
@@ -92,24 +110,24 @@ const SliderLevel = () => {
         <Swiper
           slidesPerView={4}
           spaceBetween={30}
-          centeredSlides
-          initialSlide={currentLevel}
+          centeredSlides={Levels[data?.data?.currentLevel]}
+          initialSlide={data?.data?.currentLevel}
         >
           {Levels.map((level, index) => (
             <SwiperSlide key={index}>
               <p
                 style={{ fontWeight: "bold" }}
                 className={`level-text ${
-                  currentLevel === index ? "active-level" : "inactive-level"
+                  data?.data?.currentLevel === index ? "active-level" : "inactive-level"
                 }`}
               >
                 {level}
               </p>
-              {index === currentLevel && <div className="progressbar" />}
-              {index === currentLevel && <div className="circle" />}
-              {index === currentLevel && (
+              {index === data?.data?.currentLevel && <div className="progressbar"/>}
+              {index === data?.data?.currentLevel && <div className="circle" />}
+              {index === data?.data?.currentLevel && (
                 <p style={{}} className="nextlevel">
-                  (1200 to level up)
+                  ({data?.data?.requiredPointToLevelUp} to level up)
                 </p>
               )}
             </SwiperSlide>
@@ -120,7 +138,7 @@ const SliderLevel = () => {
       <div className="point-part">
         <div>
           <span>Points</span>
-          <p>1950</p>
+          <p>{data?.data?.points}</p>
         </div>
         <div>
           <span>Streaks</span>
@@ -139,23 +157,25 @@ const SliderLevel = () => {
           className={selectedEarning === "artefact" ? "active-earning" : ""}
           onClick={() => handleSelectEarning("artefact")}
         >
-          Artefacts (28)
+          Artefacts ({data?.data?.artefacts})
         </p>
         <p
           className={selectedEarning === "reward" ? "active-earning" : ""}
           onClick={() => handleSelectEarning("reward")}
         >
-          Reward (1)
+          Reward (0)
         </p>
         <p
           className={selectedEarning === "badges" ? "active-earning" : ""}
           onClick={() => handleSelectEarning("badges")}
         >
-          Badges (5)
+          Badges (0)
         </p>
       </div>
 
-     
+      <div className="rewards-box-container">
+
+      
       <div className="rewards-boxes">
       {typeOfReward[selectedEarning].length > 0 ?(
         rewardsIcon.map((icon,index)=>(
@@ -169,8 +189,7 @@ const SliderLevel = () => {
        
         <p>No data available for {selectedEarning}.</p>
       )}
-
-
+        </div>
       </div>
     </>
   );

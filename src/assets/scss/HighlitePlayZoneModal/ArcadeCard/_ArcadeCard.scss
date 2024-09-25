@@ -3,11 +3,12 @@
   
   .top-part{
     display: flex;
+    gap: 15px;
   }
 
   .point-part{
     display: flex;
-    gap: 30px;
+    gap: 60px;
     div{
         p{
             font-size: 25px;
@@ -43,14 +44,18 @@
   background-color: #FFFFFF;
   width: 100vw;
   height: 2px;
-
   display: flex;
   align-items: center;
   justify-content: center;
 
   overflow-x: visible;
   
-  margin-left: -200px; /* Negative margin to overflow content from left */
+   margin-left: -400px; /* Negative margin to overflow content from left */
+
+   @media (max-width: 490px) {
+    margin-left: -100px; 
+  }
+
   }
 
   .circle{
@@ -77,11 +82,20 @@
     font-size: 0.8rem;
   }
 }
+.rewards-box-container {
+  overflow-x: auto; 
+}
 
 
   .rewards-boxes{
     display: flex;
     gap: 13px;
+    overflow-x: auto; // Allows horizontal scroll for the boxes
+    scroll-snap-type: x mandatory; 
+    
+    @media (max-width: 505px) {
+      gap: 20px; // Increase the gap on smaller screens if needed
+    }
   }
   .reward-point{
     height: 90px;
@@ -92,7 +106,10 @@
     display: flex;
     flex-direction: column;
     text-align: center;
-
+    @media (max-width: 505px) {
+      
+      flex: 0 0 calc((100% - 60px) / 4); // Adjust to fit 4 boxes within the container (with increased gap)
+    }
   }
   
 
@@ -102,7 +119,6 @@
   display: flex;
   align-items: baseline;
   gap: 20px;
-  // padding: 10px;
 
   p {
     cursor: pointer;

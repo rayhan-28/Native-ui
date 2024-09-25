@@ -1,4 +1,163 @@
-.user-card {
+// .user-card {
+  // background-color: #f9f9f9;
+  // border-radius: 16px;
+  // box-shadow: 0 4px 12px rgba(0, 0, 0, 0);
+  // padding: 20px;
+  // margin: auto;
+  // font-family: 'Arial', sans-serif;
+  // max-width: 520px;
+  // width: 100%;
+
+//   @media (max-width: 768px) {
+//     max-width: 90%;
+//     padding: 15px;
+//   }
+
+//   @media (max-width: 480px) {
+//     max-width: 100%;
+//     padding: 10px;
+//   }
+  
+  
+  
+
+// }
+// .profile-section{
+//   display: flex;
+//   flex-wrap: wrap;
+  
+//   @media (max-width: 768px) {
+//     flex-direction: column;
+//     align-items: center;
+//     justify-content: center;
+//     // display: flex;
+//   }
+// }
+
+
+// .first-level{
+//   margin-left: 20px;
+//   @media (max-width: 768px) {
+//     text-align: center;
+//     margin-left: 0;
+//   }
+// }
+
+// .status-section{
+//   display: flex;
+//   gap: 50px;
+//   flex-wrap: wrap;
+//   @media (max-width: 480px) {
+//     gap: 15px;
+//     flex-direction: column;
+//   }
+//   div{
+//     p{
+//       font-size: 2rem;
+//       margin-bottom: 0;
+
+//     }
+//     span{
+//       color: #888;
+//       font-size: 0.8rem;
+//       margin-top: 0;
+//       position: relative;
+//       top:-10px;
+//       justify-content: center;
+//       display: flex;
+//     }
+//   }
+
+//   }
+
+//   .streak-section {
+//     display: flex;
+//     justify-content: space-between;
+//     margin-top: 10px;
+//     @media (max-width: 480px) {
+//       flex-direction: column;
+//       align-items: center;
+//     }
+//     .icon-text{
+//       display: flex;
+//     }
+//     .voucher {
+//       padding: 2px 16px;
+//       background-color: #e7e7e7;
+//       border-radius: 15px;
+//       white-space: nowrap;   /* Prevents the text from wrapping */
+//       overflow: hidden;      /* Hides the overflow */
+//       max-width: 246px;      /* Set a max width as needed */
+//       cursor: pointer;  
+//       position: relative;     /* Needed for proper scrollbar styling */
+//     }
+    
+//     .voucher:hover {
+//       overflow-x: auto;      /* Enable horizontal scrolling on hover */
+//     }
+    
+//     /* Custom scrollbar styles for WebKit browsers */
+//     .voucher::-webkit-scrollbar {
+//       height: 6px;           /* Adjust the height of the scrollbar */
+//     }
+    
+//     .voucher::-webkit-scrollbar-thumb {
+//       background: #888;      /* Color of the scrollbar thumb */
+//       border-radius: 10px;   /* Rounded corners for the thumb */
+//     }
+    
+//     .voucher::-webkit-scrollbar-thumb:hover {
+//       background: #555;      /* Darker color on hover */
+//     }
+    
+    
+//   }
+
+//   .discount-section{
+//     display: flex;
+//     align-items: baseline;
+//     @media (max-width: 480px) {
+//       flex-direction: column;
+//       align-items: center;
+//     }
+
+//     // .circle-progress{
+//     //   width: 100px;
+//     //   height: 100px;
+//     //   position: relative;
+//     //   svg{
+//     //     display: block;
+//     //     margin: 0 auto;
+//     //   }
+//     //   text{
+//     //     font-family: Arial,sans-serif;
+//     //   }
+//     // }
+   
+//     justify-content: space-between;
+    
+//     .go-button{
+//       background-color:black;
+//       color: #fff;
+//       padding: 10px 50px;
+//       border: none;
+//       border-radius: 25px;
+//       cursor: pointer;
+//       transition: background-color 0.3s ease;
+
+//       &:hover {
+//         background-color: #333;
+//       }
+//     }
+//   }
+//   .isolation{
+//     display: flex;
+//     align-items: baseline;
+//     justify-content: center;
+//   }
+  
+  
+.player-card{
   background-color: #f9f9f9;
   border-radius: 16px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0);
@@ -7,129 +166,134 @@
   font-family: 'Arial', sans-serif;
   max-width: 520px;
   width: 100%;
-
-  @media (max-width: 768px) {
-    max-width: 90%;
-    padding: 15px;
-  }
-
-  @media (max-width: 480px) {
-    max-width: 100%;
-    padding: 10px;
-  }
-  
-  
-  
-
 }
-.profile-section{
+.player-card-top{
+  width: 100%;
   display: flex;
-  flex-wrap: wrap;
-  
-  @media (max-width: 768px) {
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    // display: flex;
-  }
+  align-items: center;
 }
-
-
-.first-level{
-  margin-left: 20px;
-  @media (max-width: 768px) {
-    text-align: center;
-    margin-left: 0;
-  }
+.player-card-img{
+  flex: 1;
+  // border: 1px solid black;
 }
-
-.status-section{
+.name-points{
+  width: 70%;
+  flex: 3.5;
+  // border: 1px solid red;
+}
+.name-title{
   display: flex;
-  gap: 50px;
-  flex-wrap: wrap;
-  @media (max-width: 480px) {
-    gap: 15px;
-    flex-direction: column;
+  flex-direction: column;
+}
+.name{
+  font-size: 25px;
+  font-weight: bold;
+}
+.title{
+  color: rgba(6, 24, 44, 0.5);
+  font-size: 14px;
+}
+.text{
+  color: rgba(6, 24, 44, 0.5);
+}
+.point-text{
+  display: flex;
+  justify-content: space-between;
+  // div{
+  //   display: flex;
+  //   flex-direction: column;
+  // }
+  .points-streak-rank{
+     display: flex;
+     flex-direction: column;
+     align-items: center;
   }
-  div{
-    p{
-      font-size: 2rem;
-      margin-bottom: 0;
-
-    }
-    span{
-      color: #888;
-      font-size: 0.8rem;
-      margin-top: 0;
-      position: relative;
-      top:-10px;
-      justify-content: center;
-      display: flex;
-    }
-  }
-
-  }
-
-  .streak-section {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 10px;
-    @media (max-width: 480px) {
-      flex-direction: column;
-      align-items: center;
-    }
-    .icon-text{
-      display: flex;
-    }
-    .voucher{
-      padding: 2px 16px;
-      background-color: #e7e7e7;
-      border-radius: 15px;
-    }
-   
+  .point{
+    font-size: 22px;
+    font-weight: bold;
   }
 
-  .discount-section{
-    display: flex;
-    align-items: baseline;
-    @media (max-width: 480px) {
-      flex-direction: column;
-      align-items: center;
-    }
+  
+}
 
-    // .circle-progress{
-    //   width: 100px;
-    //   height: 100px;
-    //   position: relative;
-    //   svg{
-    //     display: block;
-    //     margin: 0 auto;
-    //   }
-    //   text{
-    //     font-family: Arial,sans-serif;
-    //   }
-    // }
-   
-    justify-content: space-between;
+.voucher {
+  
+
+  padding: 2px 16px;
+  background-color: #e7e7e7;
+  background: linear-gradient(90deg, rgba(255, 152, 255, 0.5) 0%, rgba(255, 255, 255, 0) 100%);
+
+  font-size: 0.8rem;
+  border-radius: 15px;
+  overflow: hidden; // Hide overflow
+  white-space: nowrap; // Prevent line breaks
+  width: 100%; // Ensure it takes full width of the parent
+  max-width: 246px; // Set a max width as needed
+  cursor: pointer;
+  position: relative;
+
+  .scroll-text {
+    display: inline-block;
+    position: relative;
     
-    .go-button{
-      background-color:black;
-      color: #fff;
-      padding: 10px 50px;
-      border: none;
-      border-radius: 25px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
+    left: 0; // Start outside the right edge
+    animation: none; // No animation by default
+    transition: left 0.5s ease-in-out;
 
-      &:hover {
-        background-color: #333;
+    &:hover {
+      animation: scroll-text 5s linear infinite; // Start scrolling on hover
+      left: 0; // Reset to start position
+    }
+
+    @keyframes scroll-text {
+      0% {
+        left: 0%; // Start at the initial position
+      }
+
+      100% {
+        left: -100%; // Move left to hide
       }
     }
   }
-  .isolation{
-    display: flex;
-    align-items: baseline;
-    justify-content: center;
+}
+
+.player-card-middle{
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+.voucher-div{
+  
+  // border: 1px solid red;
+
+}
+.streak-icon{
+  
+  // border: 1px solid black;
+  display: flex;
+}
+.circle-progress {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.player-card-last{
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.go-button {
+  background-color: black;
+  color: #fff;
+  padding: 6px 25px;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #333;
   }
-  
-  
+}
