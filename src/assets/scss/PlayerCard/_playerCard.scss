@@ -158,14 +158,15 @@
   
   
 .player-card{
-  background-color: #f9f9f9;
+  background-color: #FFFFFF;
   border-radius: 16px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
   padding: 20px;
   margin: auto;
+  
   font-family: 'Arial', sans-serif;
-  max-width: 520px;
-  width: 100%;
+  // max-width: 520px;
+  // width: 100%;
 }
 .player-card-top{
   width: 100%;
@@ -173,12 +174,12 @@
   align-items: center;
 }
 .player-card-img{
-  flex: 1;
+  // flex: 1;
   // border: 1px solid black;
 }
 .name-points{
   width: 70%;
-  flex: 3.5;
+  // flex: 3.5;
   // border: 1px solid red;
 }
 .name-title{
@@ -217,12 +218,8 @@
 }
 
 .voucher {
-  
-
   padding: 2px 16px;
-  background-color: #e7e7e7;
-  background: linear-gradient(90deg, rgba(255, 152, 255, 0.5) 0%, rgba(255, 255, 255, 0) 100%);
-
+  background-color: #F9F9F9;
   font-size: 0.8rem;
   border-radius: 15px;
   overflow: hidden; // Hide overflow

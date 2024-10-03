@@ -1,20 +1,10 @@
 import React, { useEffect, useState } from "react";
 import svgIcons from "../../assets/image/SVG/svg";
-// import { useAuth } from "../../context/AuthContext";
+import { useAuth } from "../../context/AuthContext";
 import axios from "axios";
 
-const Card = ({
-  profileImg,
-  name = "Oliver",
-  points = 120,
-  moments = 3,
-  ranking = 2,
-  streak = 7,
-  discount = "20% discount on next month",
-  task = "Create 3 moments in 7 days",
-  onButtonClick,
-}) => {
-  // const { email, token } = useAuth();  // Get email and token from context
+const Card = ({ profileImg, width = "100%", maxWidth = "520px" }) => {
+  const { email, token } = useAuth(); // Get email and token from context
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
   const getOrdinalSuffix = (rank) => {
@@ -28,29 +18,32 @@ const Card = ({
       return "th";
     }
   };
-  //   useEffect(() => {
-  //     // Make an API call with the stored email and token
-  //     const fetchData = async () => {
-  //         try {
-  //             const response = await axios.get('https://dev.api.pitch.space/api/player-history', {
-  //               params: {
-  //                 email: email,
-  //                 token: token
-  //             }
-  //             });
-  //             console.log(email)
-  //             if (response.status === 200) {
-  //                 setData(response.data?.data[0]);
-  //                 console.log("hlw")
-  //             }
-  //         } catch (err) {
-  //             setError('You are not valid');
-  //         }
-  //     };
-  //     if (email && token) {
-  //         fetchData();  // Only fetch if both email and token are set
-  //     }
-  // }, [email, token]);
+  useEffect(() => {
+    // Make an API call with the stored email and token
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          "https://dev.api.pitch.space/api/player-history",
+          {
+            params: {
+              email: email,
+              token: token,
+            },
+          }
+        );
+        console.log(email);
+        if (response.status === 200) {
+          setData(response.data?.data[0]);
+          console.log("hlw");
+        }
+      } catch (err) {
+        setError("You are not valid");
+      }
+    };
+    if (email && token) {
+      fetchData(); // Only fetch if both email and token are set
+    }
+  }, [email, token]);
 
   const radius = 40;
   const circumference = 2 * Math.PI * radius;
@@ -68,7 +61,7 @@ const Card = ({
       </>
     );
   }
- 
+
   return (
     // <div className="user-card">
     //   {/* Profile section */}
@@ -144,10 +137,10 @@ const Card = ({
     //   <div className="streak-section">
     //     <p className="voucher">8 streaks: £20 Amazon voucher</p>
     //     <div className="icon-text">
-          // <div
-          //   dangerouslySetInnerHTML={{ __html: svgIcons.streak }}
-          //   style={{ marginRight: "5px" }}
-          // />
+    // <div
+    //   dangerouslySetInnerHTML={{ __html: svgIcons.streak }}
+    //   style={{ marginRight: "5px" }}
+    // />
     //       <p>2 Streaks</p>
     //     </div>
     //   </div>
@@ -311,13 +304,27 @@ const Card = ({
     //   </div>
     // </div>
 
-    <div className="player-card">
+    <div
+      className="player-card"
+      style={{
+        width,
+        maxWidth,
+      }}
+    >
       {/* top */}
       <div className="player-card-top">
         <div className="player-card-img">
           <img
-            src={`https://res.cloudinary.com/pitchspace/image/upload/v1/player-icons/playerCharacter,3`}
-            style={{ height: "90px", width: "90px", borderRadius: "50%" }}
+            src={
+              profileImg ||
+              `https://res.cloudinary.com/pitchspace/image/upload/v1/player-icons/playerCharacter,3`
+            }
+            style={{
+              height: "90px",
+              width: "90px",
+              borderRadius: "50%",
+              marginRight: "10px",
+            }}
           />
         </div>
         <div className="name-points">
@@ -349,14 +356,14 @@ const Card = ({
       </div>
       <div className="player-card-middle">
         <div className="voucher-div">
-        <p className="voucher">
-          <span className="scroll-text">
-            8 streaks for £20 Amazon voucher progress start
-          </span>
-        </p>
+          <p className="voucher">
+            <span className="scroll-text">
+              8 streaks for £20 Amazon voucher progress start
+            </span>
+          </p>
         </div>
         <div className="streak-icon">
-        <div
+          <div
             dangerouslySetInnerHTML={{ __html: svgIcons.streak }}
             style={{ marginRight: "5px" }}
           />
@@ -364,7 +371,7 @@ const Card = ({
         </div>
       </div>
       <div className="player-card-last">
-      <div className="circle-progress">
+        <div className="circle-progress">
           <svg width="80" height="80" viewBox="0 0 100 100">
             <circle
               cx="50"
@@ -389,13 +396,23 @@ const Card = ({
             />
             <text
               x="50%"
-              y="50%"
+              y="43%"
+              dominantBaseline="middle"
+              textAnchor="middle"
+              fontSize={22}
+              fill="#000"
+            >
+              ★
+            </text>
+            <text
+              x="50%"
+              y="60%"
               dominantBaseline="middle"
               textAnchor="middle"
               fontSize={fontSize}
               fill="#000"
             >
-              ★
+             
               {taskValue}
             </text>
           </svg>
@@ -410,7 +427,7 @@ const Card = ({
           </div>
         </div>
         <div>
-        <button className="go-button">Go</button>
+          <button className="go-button">Go</button>
         </div>
       </div>
     </div>

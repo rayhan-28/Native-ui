@@ -1,0 +1,608 @@
+.servey {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  //  align-items: center;
+  z-index: 200;
+  }
+  .servery-container{
+    background-color: #F9F9F9;
+    border-top-left-radius: 15px;  /* Rounded top-left corner */
+    border-top-right-radius: 15px;
+    height: 70vh;
+    max-height: 80vh;
+    position: relative;
+    box-shadow: #45454526;
+    overflow-y: auto; 
+    padding: 20px;
+  }
+  .first-part{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+  }
+  .icon-name{
+    display: flex;
+    align-items: center;
+  }
+  .text-one{
+    font-weight: 500;
+    font-size:  22px;
+    line-height: 25.48px;
+  }
+  .text-two{
+    color: #06182C80;
+    margin: 0;
+  }
+  .text-section{
+    display: flex;
+    flex-direction: column;
+    
+  }
+  .text-two {
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* Show 3 lines */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+  }
+  
+  .text-two.expanded {
+    -webkit-line-clamp: unset;
+    display: block; /* Expand to show full content */
+  }
+
+  .link-part{
+    display: flex;
+    gap: 5px;
+    p{
+      color: #06182CB2;
+      text-decoration: underline;
+    }
+  }
+
+  .custom-textarea {
+    width: 100%; /* Full width */
+    border: none; /* Disable the border */
+    outline: none; /* Remove the focus border */
+    resize: none; /* Disable resizing */
+    // padding: 10px; /* Add some padding for better spacing */
+    box-sizing: border-box; /* Ensure padding is included in the width */
+    font-size: 20px; /* Set a suitable font size */
+    background-color: #f9f9f9; /* Light background color for better contrast */
+  }
+  
+  .custom-textarea::placeholder {
+    color:#06182C33 /* Placeholder text color */
+  }
+  
+  .custom-textarea:focus {
+    outline: none; /* Ensure no outline on focus */
+  }
+  .last-part{
+    background-color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  .progress-bar {
+    background-color: #06182C08;
+    border-radius: 10px;
+    height: 10px;
+    width: 300px;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+
+    overflow: visible;
+    
+  }
+  .profile-img{
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    margin-right: 8px;
+  }
+  .left-progress{
+    border-radius: 5px 0px 0px 5px;
+  }
+  .left-arrow{
+     height: 40px;
+     width: 40px;
+     color: white;
+     background-color: white;
+     border: 0.1rem solid black;
+     border-radius: 50%;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     cursor: pointer;
+  }
+  .right-arrow{
+    height: 40px;
+     width: 40px;
+     color: white;
+     background-color: black;
+     border: 0.1rem solid black;
+     border-radius: 50%;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     cursor: pointer;
+  }
+  .arrow{
+    display: flex;
+    gap:8px
+  }
+  .finish {
+    background-color: black;
+    color: #fff;
+    padding: 4px 14px;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: #333;
+    }}
+
+
+    //give A rate
+    .rate-container {
+      display: flex;
+      flex-wrap: wrap;
+      row-gap: 10px;
+      column-gap: 12px;
+      // justify-content: center;
+    }
+    
+    .rate-button {
+      width: 60px;  /* Fixed width */
+      height: 60px; 
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 3px;
+      cursor: pointer;
+      background-color: #F9F9F9;
+      color: #06182C80;
+      border: 0.1rem solid #06182C33;
+      transition: background-color 0.3s ease, border 0.3s ease;
+    }
+
+    .rate-button.selected {
+      border:0.5px solid rgb(0, 191, 159);
+    }
+
+
+    //multiple image
+
+    .slider-container {
+      position: relative;
+      width: 100%; /* Set the width of the container */
+      margin: 0 auto; /* Center the container */
+      overflow-x: auto; /* Enable horizontal scrolling */
+      // white-space: nowrap; /* Prevent wrapping of children */
+      cursor: pointer;
+    }
+    
+    .slider {
+      display: flex; /* Use flexbox to display images in a row */
+    }
+    .image{
+      width: 300px;
+      height: 300px;
+      border-radius:12px
+    }
+    .image-item {
+      margin-left: 10px;
+      position: relative; /* For positioning the star icon inside the image */
+      cursor: pointer;
+    }
+
+    .image-item:hover .image {
+      opacity: 0.7; /* Slight opacity change on hover */
+    }
+    
+    .image-item:hover .star-icon {
+      display: block; /* Show the star icon on hover */
+    }
+    
+    .image-text {
+      display: flex;
+      flex-direction: column;
+      align-items: center; /* Center align items horizontally */
+    }
+    .text-handle{
+       max-width: 200px;
+       text-align: center;
+    }
+    .description {
+      word-wrap: break-word; /* Allow words to break and wrap onto the next line */
+      overflow-wrap: break-word; /* Helps in breaking long words */
+      color: #06182C80;
+    }
+    
+   //yes no
+   .yesNO{
+    width: 100%;
+    height: auto;
+    border-radius: 6px;
+    border: 0.1rem solid #06182C33;
+    color: #06182C80;
+    padding: 16px;
+    cursor: pointer;
+   }
+   .yesNO.selected {
+    border:0.5px solid rgb(0, 191, 159); /* Change border color when selected */
+  }
+
+
+   //uploade image
+   .uploade-image{
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+   }
+   .uploade-container{
+    width: 170px;
+    height: 160px;
+    background-color: #f2f2f3;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    border-radius: 8px;
+   }
+   .circle{
+     width: 40px;
+     height: 40px;
+     background-color: #FFFFFF;
+     border-radius: 50%;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+   }
+    
+//poll
+.poll-text{
+  width: 100%;
+  height: auto;
+  border-radius: 6px;
+  background-color: #f1f2f2;
+  border: 0.1rem solid #06182C33;
+  color: #06182C80;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  cursor: pointer;
+  margin-bottom: 16px;
+}
+.poll-text:hover{
+  background-color: #FFFFFF;
+}
+
+.poll-left {
+  flex: 0 1 80%;  /* 80% width for text */
+  text-align: left;
+  white-space: nowrap; /* Prevent text from wrapping */
+  overflow: hidden;    /* Hide overflowed content */
+  text-overflow: ellipsis;
+}
+
+.poll-right {
+  flex: 0 1 20%; /* 20% width for percentage */
+  text-align: right;
+  margin-left: 10px;
+  font-weight: bold;
+  
+}
+
+.selected-text{
+  font-weight: bold;
+}
+.selected-box{
+  border:0.5px solid rgb(0, 191, 159); /* Change border color when selected */
+}
+.selected-percentage {
+  color: #3eb9a3; /* Set selected percentage color */
+}
+
+/* Initially hide the percentage and color until selected */
+.poll-text.selected .poll-right {
+  display: block;
+}
+    
+//multiple image     
+.multiple-image-slider{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}   
+.multi-image{
+  width:180px;
+  height: 180px;
+  border-radius: 10px;
+}
+.multi-image-item {
+  position: relative; /* For positioning the star icon inside the image */
+  cursor: pointer;
+}
+.star-icon{
+  position: absolute;
+  top: 35%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  // font-size: 40px;
+  display: block; /* Initially hide the star icon */
+  pointer-events: none; /* Ensure the star icon doesn't interfere with hover */
+}
+.multi-text-handle{
+  max-width: 180px;
+}   
+.multi-image-item:hover .multi-image {
+  opacity: 0.7; /* Slight opacity change on hover */
+}
+
+.multi-image-item:hover .star-icon {
+  display: block; /* Show the star icon on hover */
+}
+
+.percentage-container {
+  width: 100%;
+  height: 24px; /* Adjust height for the progress box */
+  border-radius: 6px;
+  margin-top: 10px;
+  position: relative;
+}
+
+.percentage-box {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items:center;
+  color: #000; /* Text color */
+  font-weight: bold; /* Make percentage text bold */
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Ensure the modal is above other content */
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  width: 90%; /* Use percentage for responsiveness */
+  max-width: 320px; /* Maintain a max-width */
+  height: 180px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+  display: flex; /* Add flex for vertical alignment */
+  flex-direction: column; /* Stack children vertically */
+  // align-items: center; /* Center items horizontally */
+}
+
+
+.modal-button{
+  background-color: black;
+  color: #fff;
+  width: 100px;
+  padding: 6px 10px;
+  border: none;
+  margin-left: 80px;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #333;
+  }
+}
+
+
+
+//upload image other design
+
+.upload-image {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.upload-container {
+  position: relative;
+  width: 100px; // Adjust the width as needed
+  height: 100px; // Adjust the height as needed
+  margin: 10px;
+
+  .circle {
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px dashed #ccc;
+  }
+}
+
+
+
+
+.cropper-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.9); // Light white background for clarity
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  z-index: 1000; // Ensure it appears on top
+}
+
+.cropper-container {
+  position: relative;
+  width: 500px; // Set fixed width
+  height: 520px; // Set fixed height
+  background-color: white; // Background color for the cropper
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); // Slight shadow for depth
+  overflow: hidden; // Ensure no overflow outside the container
+  padding: 20px; // Padding around the cropper
+}
+
+.cropper-container button {
+  position: absolute;
+  bottom: 10px; // Position button at the bottom
+  left: 15%;
+  transform: translateX(-40%); // Center the button
+  
+  border: none;
+ 
+  cursor: pointer;
+  transition: background-color 0.3s; // Smooth transition for hover effect
+}
+
+// .cropper-container button:hover {
+//   background-color: #6a7480; // Darker button on hover
+// }
+
+
+.btn-container{
+  display: flex;
+  gap:40px
+}
+
+
+.controls {
+  // position: absolute;
+  // bottom: 65px;
+  //  left: 10%;
+  margin-top: 20px;
+  width: 20%;
+  transform: translateX(-10%);
+  height: 30px;
+  display: flex;
+  align-items: center;
+  
+
+  @media (max-width: 1450px) {
+    width: 25%;
+  }
+  @media (max-width: 1368px) {
+    width: 28%;
+  }
+  @media (max-width: 1228px) {
+    width: 30%;
+  }
+  @media (max-width: 1130px) {
+    width: 35%;
+  }
+  @media (max-width: 1000px) {
+    width: 40%;
+  }
+  @media (max-width: 848px) {
+    width: 46%;
+  }
+  @media (max-width: 754px) {
+    width:55%;
+  }
+  @media (max-width: 636px) {
+    width:65%;
+  }
+  @media (max-width: 522px) {
+    width:77%;
+  }
+  @media (max-width: 440px) {
+    width:80%;
+  }
+
+}
+
+
+.zoom-range {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  height: 1px;
+ 
+  background: black;
+  width: 100%;
+}
+
+.zoom-range::-moz-range-thumb {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  border: 1px solid  #333;
+  background:  #333;
+  border-radius: 50%;
+  width: 12px;
+  height: 12px;
+  transition: box-shadow 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+}
+
+.zoom-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  border: 1px solid  #333;
+  background:  #333;
+  border-radius: 50%;
+  width: 12px;
+  height: 12px;
+  transition: box-shadow 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+}
+
+.controls:hover input[type='range']::-webkit-slider-thumb {
+  box-shadow: 0px 0px 0px 8px rgba(63, 81, 181, 0.16);
+  border-radius: 50%;
+}
+
+.controls:hover input[type='range']::-moz-range-thumb {
+  box-shadow: 0px 0px 0px 8px rgba(63, 81, 181, 0.16);
+}
+
+.save-btn {
+  background-color: black;
+  color: #fff;
+  padding: 6px 30px;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #333;
+  }
+}
+.cancel-btn {
+  background-color: white;
+  color: black;
+  padding: 6px 30px;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  border: 1px solid black;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #333;
+  }
+}

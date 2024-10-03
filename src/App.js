@@ -37,6 +37,9 @@ import Card from "./components/PlayerCard/PlayerCard";
 import HighlitePlayZone from "./components/HighlitePlayZoneModal/HighlitePlayZoneModal";
 import HighlitePlayZoneModal from "./components/HighlitePlayZoneModal/HighlitePlayZoneModal";
 import { AuthProvider } from "./context/AuthContext";
+import Servey from "./components/Servey/Servey";
+import SuccessScreenWihoutReward from "./components/Servey/SuccessScreen/SuccessScreenWihoutReward";
+
 function App() {
   // const [showSuccess, setShowSuccess] = useState(false);
 
@@ -44,12 +47,15 @@ function App() {
   // const handleCloseSuccess = () => setShowSuccess(false);
 
 
-  const email = 'jahir.rayhan@gmail.com';
+  const email = 'jahir.rayhan@bedatasolutions.com';
   const token = '4733788f-783d-455f-a2b7-3b1815e53196';
   return (
     <AuthProvider email={email} token={token}>
      {/* <HighlitePlayZoneModal/> */}
-     <Card/>
+     <SuccessScreenWihoutReward/>
+     {/* <Card /> */}
+     {/* <Servey/> */}
+     {/* <MomentSuccess/> */}
     </AuthProvider>
   );
 }

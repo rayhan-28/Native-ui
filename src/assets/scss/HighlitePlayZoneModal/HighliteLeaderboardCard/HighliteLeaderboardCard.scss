@@ -1,52 +1,281 @@
 .highlite-leaderboard-card {
-    background-color: #f9f9f9;
-    border-radius: 16px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0);
-    padding: 20px;
-    margin: auto;
-    font-family: 'Arial', sans-serif;
-    max-width: 520px;
-    width: 100%;
-    // overflow: hidden;
-    overflow-y: auto;
-    @media (max-width: 768px) {
-      max-width: 90%;
-      padding: 15px;
-    }
+    // background-color: #f9f9f9;
+    // border-radius: 16px;
+    // box-shadow: 0 4px 12px rgba(0, 0, 0, 0);
+    // padding: 20px;
+    // margin: auto;
+    // font-family: 'Arial', sans-serif;
+    // max-width: 520px;
+    // width: 100%;
+    //  overflow: hidden;
+    // overflow-y: auto;
+    // @media (max-width: 768px) {
+    //   max-width: 90%;
+    //   padding: 15px;
+    // }
   
-    @media (max-width: 480px) {
-      max-width: 100%;
-      padding: 10px;
-    }
+    // @media (max-width: 480px) {
+    //   max-width: 100%;
+    //   padding: 10px;
+    // }
 
 
     
 
   }
-  .highlite-header{
-         display:  flex;
-        justify-content: space-between;
-        h5{
-            font-weight: bold;
-        }
-        .header-text{
-            font-size: 1rem;
-            color: black;
-            font-weight: 400;
-            text-decoration: none;
-        }
-        span{
-            text-decoration: underline;
-            padding: 5px;
-            color: #888;
-           font-size: 0.8rem;
-        }
-    }
-    .ag-theme-quartz .ag-root-wrapper {
-      border: none !important;
-    }
+//   .highlite-header{
+//          display:  flex;
+//         justify-content: space-between;
+//         h5{
+//             font-weight: bold;
+//         }
+//         .header-text{
+//             font-size: 1rem;
+//             color: black;
+//             font-weight: 400;
+//             text-decoration: none;
+//         }
+//         span{
+//             text-decoration: underline;
+//             padding: 5px;
+//             color: #888;
+//            font-size: 0.8rem;
+//         }
+//     }
+//     .ag-theme-quartz .ag-root-wrapper {
+//       border: none !important;
+//       overflow-x: hidden; // Prevent horizontal scroll bar from showing
+//     }
+    
+//     .ag-theme-quartz .highlighted-row {
+//       background-color: #e0f7fa;
+//     }
+    
+//     .ag-theme-quartz .ag-cell {
+//       white-space: nowrap;
+//       overflow: hidden;
+//       text-overflow: ellipsis;
+//     }
+//     .player-cell, .points-cell, .rank-cell {
+//       display: flex;
+//       align-items: center;
+//       white-space: nowrap;
+//       overflow: hidden;
+//       text-overflow: ellipsis;
+//       max-width: 100px; /* Set max width for cells */
+//     }
+//     .player-cell, .points-cell, .rank-cell {
+//       display: flex;
+//       align-items: center;
+//       white-space: nowrap;
+//       overflow: hidden;
+//       text-overflow: ellipsis;
+//       max-width: 100px; /* Set max width for cells */
+//     }
+//     .player-cell, .points-cell, .rank-cell {
+//       display: flex;
+//       align-items: center;
+//       white-space: nowrap;
+//       overflow: hidden;
+//       text-overflow: ellipsis;
+//       max-width: 100px; /* Set max width for cells */
+//     }
+//     .player-cell, .points-cell, .rank-cell {
+//       display: flex;
+//       align-items: center;
+//       white-space: nowrap;
+//       overflow: hidden;
+//       text-overflow: ellipsis;
+//       max-width: 100px; /* Set max width for cells */
+//     }
+//     .player-cell, .points-cell, .rank-cell {
+//       display: flex;
+//       align-items: center;
+//       white-space: nowrap;
+//       overflow: hidden;
+//       text-overflow: ellipsis;
+//       max-width: 100px; /* Set max width for cells */
+//     }
+//     .player-cell, .points-cell, .rank-cell {
+//       display: flex;
+//       align-items: center;
+//       white-space: nowrap;
+//       overflow: hidden;
+//       text-overflow: ellipsis;
+//       max-width: 100px; /* Set max width for cells */
+//     }
+//     .player-cell, .points-cell, .rank-cell {
+//       display: flex;
+//       align-items: center;
+//       white-space: nowrap;
+//       overflow: hidden;
+//       text-overflow: ellipsis;
+//       max-width: 100px; /* Set max width for cells */
+//     }
+//     .player-cell, .points-cell, .rank-cell {
+//       display: flex;
+//       align-items: center;
+//       white-space: nowrap;
+//       overflow: hidden;
+//       text-overflow: ellipsis;
+//       max-width: 100px; /* Set max width for cells */
+//     }
+//     .player-cell, .points-cell, .rank-cell {
+//       display: flex;
+//       align-items: center;
+//       white-space: nowrap;
+//       overflow: hidden;
+//       text-overflow: ellipsis;
+//       max-width: 100px; /* Set max width for cells */
+//     }
+//     .player-cell, .points-cell, .rank-cell {
+//       display: flex;
+//       align-items: center;
+//       white-space: nowrap;
+//       overflow: hidden;
+//       text-overflow: ellipsis;
+//       max-width: 100px; /* Set max width for cells */
+//     }
+//     .player-cell, .points-cell, .rank-cell {
+//       display: flex;
+//       align-items: center;
+//       white-space: nowrap;
+//       overflow: hidden;
+//       text-overflow: ellipsis;
+//       max-width: 100px; /* Set max width for cells */
+//     }
+//     .player-cell, .points-cell, .rank-cell {
+//       display: flex;
+//       align-items: center;
+//       white-space: nowrap;
+//       overflow: hidden;
+//       text-overflow: ellipsis;
+//       max-width: 100px; /* Set max width for cells */
+//     }
+//     .player-cell, .points-cell, .rank-cell {
+//       display: flex;
+//       align-items: center;
+//       white-space: nowrap;
+//       overflow: hidden;
+//       text-overflow: ellipsis;
+//       max-width: 100px; /* Set max width for cells */
+//     }
+//     .ag-cell-hover .tooltip {
+//       visibility: visible;
+//       white-space: normal; /* Allow line breaks */
+//       max-width: 150px; /* Set max width to prevent very long tooltips */
+//       word-wrap: break-word; /* Break long words */
+//       background: #f1f1f1;
+//       padding: 5px;
+//       border-radius: 5px;
+//       position: absolute;
+//       z-index: 100;
+//     }
+    
    
+    
+//     .tooltip:hover {
+//       visibility: visible;
+//       display: block;
+//       width: auto;
+//       max-width: 150px; // Adjust for multi-line text with breaks
+//     }
+    
+.leaderboard-table-container {
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin: auto;
+  font-family: 'Arial', sans-serif;
+  max-width: 520px;
+  width: 100%;
+  overflow: hidden;
 
-    .ag-theme-quartz .highlighted-row {
-      background-color: #e0f7fa /* Light blue for user's row */
-    }
+  
+}
+
+.leaderboard-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed; /* Ensures columns have fixed width */
+  text-align: left;
+}
+
+thead {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+tbody {
+  display: block;
+  max-height: 230px; /* Customize to show only a certain number of rows */
+  overflow-y: auto;
+  width: 100%;
+  table-layout: fixed;
+}
+
+thead th, tbody td {
+  padding: 10px;
+  text-align: left;
+}
+
+thead th:nth-child(1),
+tbody td:nth-child(1) {
+  width: 20%; /* Rank */
+}
+
+thead th:nth-child(2),
+tbody td:nth-child(2) {
+  width: 55%; /* Player */
+}
+
+thead th:nth-child(3),
+tbody td:nth-child(3) {
+  width: 25%; /* Points */
+}
+
+tbody td {
+  padding: 12px;
+  border-bottom: 1px solid #ddd;
+  position: relative;
+}
+
+tbody tr {
+  display: table;
+  table-layout: fixed;
+  width: 100%;
+}
+
+.player-info {
+  display: flex;
+  align-items: center;
+
+  .player-avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+}
+
+tbody td span {
+  display: inline-block;
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+tbody td span[title] {
+  cursor: pointer;
+  position: relative;
+}
+
+
+
+
+
+
+
+    

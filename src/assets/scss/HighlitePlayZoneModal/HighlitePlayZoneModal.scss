@@ -10,7 +10,7 @@
     align-items: center;
     
     
-    z-index: 9999;
+    z-index: 100;
   }
  
   .highlite-modal {
@@ -24,9 +24,15 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     overflow-y: auto; 
   }
+ 
   .highlite-modal > :not(.top-card) {
-    padding: 20px; /* Apply padding to all children except .top-card */
+    padding: 20px; /* Default padding */
   }
+  
+  .highlite-modal.no-padding > :not(.top-card) {
+    padding: 0px; /* Remove padding when the .no-padding class is applied */
+  }
+  
   .highlie-modal-title{
     display: flex;
     justify-content: space-between;
