@@ -5,9 +5,10 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0);
   padding: 20px;
   margin: auto;
+  gap: 15px;
+  flex-direction: column;
   font-family: 'Arial', sans-serif;
   max-width: 550px;
-  
   justify-content: space-between;
 
   // @media (max-width: 768px) {
@@ -103,6 +104,43 @@
     &:hover {
       background-color: #333;
     }
+  }
+  .last-part-quest{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 15px;
+    background-color:rgba(255, 255, 255, 0.3) ;
+    border-radius: 40px ;
+  }
+  .icon-text-quest{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+   
+  }
+  .text-ellipsis {
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    
+    @media (max-width: 452px) {
+      
+      max-width: 150px; // Adjust based on how much space you want to allow
+    }
+  }
+
+  .arrow-box{
+    width: 30px;
+    cursor: pointer;
+    height: 30px;
+    border-radius: 50%;
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
 

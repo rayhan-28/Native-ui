@@ -6,58 +6,56 @@
 // import axios from "axios";
 
 // const HighliteLeaderboardCard = () => {
-  // const [leaderboardData, setLeaderBoardData] = useState([]);
-  // const [myRankIndex, setMyRankIndex] = useState(null);
-  // const { email, token } = useAuth(); 
-  // const [error, setError] = useState(null);
-  // const [showExtraUserRow, setShowExtraUserRow] = useState(false);
+// const [leaderboardData, setLeaderBoardData] = useState([]);
+// const [myRankIndex, setMyRankIndex] = useState(null);
+// const { email, token } = useAuth();
+// const [error, setError] = useState(null);
+// const [showExtraUserRow, setShowExtraUserRow] = useState(false);
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await axios.get('https://dev.api.pitch.space/api/leader-board', {
-  //         params: {
-  //           email: email,
-  //           token: token
-  //         }
-  //       });
-        
-  //       if (response.status === 200) {
-  //         let leaderboard = response.data.data;
+// useEffect(() => {
+//   const fetchData = async () => {
+//     try {
+//       const response = await axios.get('https://dev.api.pitch.space/api/leader-board', {
+//         params: {
+//           email: email,
+//           token: token
+//         }
+//       });
 
-  //         // Sort by points in descending order
-  //         leaderboard.sort((a, b) => b.points - a.points);
+//       if (response.status === 200) {
+//         let leaderboard = response.data.data;
 
-  //         // Add rank and find my rank based on email
-  //         leaderboard = leaderboard.map((player, index) => ({
-  //           ...player,
-  //           rank: index + 1,
-  //         }));
+//         // Sort by points in descending order
+//         leaderboard.sort((a, b) => b.points - a.points);
 
-  //         // Find the user's rank based on the email
-  //         const myRank = leaderboard.findIndex(player => player.email === email);
-  //         setMyRankIndex(myRank);
+//         // Add rank and find my rank based on email
+//         leaderboard = leaderboard.map((player, index) => ({
+//           ...player,
+//           rank: index + 1,
+//         }));
 
-  //         // Determine if we need to show the user's row separately
-  //         setShowExtraUserRow(myRank > 4);
+//         // Find the user's rank based on the email
+//         const myRank = leaderboard.findIndex(player => player.email === email);
+//         setMyRankIndex(myRank);
 
-  //         setLeaderBoardData(leaderboard);
-  //       }
-  //     } catch (err) {
-  //       setError('You are not valid');
-  //     }
-  //   };
+//         // Determine if we need to show the user's row separately
+//         setShowExtraUserRow(myRank > 4);
 
-  //   if (email && token) {
-  //     fetchData();  // Only fetch if both email and token are set
-  //   }
-  // }, [email, token]);
+//         setLeaderBoardData(leaderboard);
+//       }
+//     } catch (err) {
+//       setError('You are not valid');
+//     }
+//   };
+
+//   if (email && token) {
+//     fetchData();  // Only fetch if both email and token are set
+//   }
+// }, [email, token]);
 
 //   // Adjust row data to show only 4 rows when rank > 4
 //   const getAdjustedRowData = () => {
 //     if (myRankIndex === null || myRankIndex < 0) return leaderboardData;
-
-   
 
 //     // Return the entire leaderboard data if rank <= 4
 //     return leaderboardData;
@@ -69,7 +67,7 @@
 //   };
 
 //   const [colDefs, setColDefs] = useState([
-//     { 
+//     {
 //       headerName: "Rank",
 //       field: "rank",
 //       minWidth: 60,
@@ -88,12 +86,12 @@
 //       cellRenderer: (params) => {
 //         const { playerAvatar, playerName } = params.data;
 //         const isCurrentUser = params.data.email === email; // Check if this is the current user's row
-      
+
 //         return (
 //           <div className="player-cell" title={playerName}>
-//             <img 
-//               src={`https://res.cloudinary.com/pitchspace/image/upload/v1/player-icons/${playerAvatar}`} 
-//               style={{ width: '30px', height: '30px', marginRight: '10px', borderRadius: '50%' }} 
+//             <img
+//               src={`https://res.cloudinary.com/pitchspace/image/upload/v1/player-icons/${playerAvatar}`}
+//               style={{ width: '30px', height: '30px', marginRight: '10px', borderRadius: '50%' }}
 //             />
 //             <span>{isCurrentUser ? `You (${playerName})` : playerName}</span>
 //           </div>
@@ -102,7 +100,7 @@
 //       minWidth: 100,
 //     },
 //     {
-//       headerName: 'Points', 
+//       headerName: 'Points',
 //       field: "points",
 //       cellRenderer: (params) => {
 //         return (
@@ -113,7 +111,6 @@
 //       }
 //     },
 //   ]);
-  
 
 //   return (
 //     <div className="highlite-leaderboard-card">
@@ -140,25 +137,24 @@
 //         />
 //       </div>
 
-      // {showExtraUserRow && (
-      //   <div className="user-row" style={{ marginTop: "10px" }}>
-      //     <div style={{ display: "flex", alignItems: "center", padding: "10px", background: "#f1f1f1" }}>
-      //       <span style={{ width: "60px", textAlign: "center" }}>{leaderboardData[myRankIndex].rank}.</span>
-      //       <img 
-      //         src={`https://res.cloudinary.com/pitchspace/image/upload/v1/player-icons/${leaderboardData[myRankIndex].playerAvatar}`} 
-      //         style={{ width: '30px', height: '30px', marginRight: '10px', borderRadius: '50%' }} 
-      //       />
-      //       <span>{`You (${leaderboardData[myRankIndex].playerName})`}</span>
-      //       <span style={{ marginLeft: "auto" }}>{leaderboardData[myRankIndex].points}</span>
-      //     </div>
-      //   </div>
-      // )}
+// {showExtraUserRow && (
+//   <div className="user-row" style={{ marginTop: "10px" }}>
+//     <div style={{ display: "flex", alignItems: "center", padding: "10px", background: "#f1f1f1" }}>
+//       <span style={{ width: "60px", textAlign: "center" }}>{leaderboardData[myRankIndex].rank}.</span>
+//       <img
+//         src={`https://res.cloudinary.com/pitchspace/image/upload/v1/player-icons/${leaderboardData[myRankIndex].playerAvatar}`}
+//         style={{ width: '30px', height: '30px', marginRight: '10px', borderRadius: '50%' }}
+//       />
+//       <span>{`You (${leaderboardData[myRankIndex].playerName})`}</span>
+//       <span style={{ marginLeft: "auto" }}>{leaderboardData[myRankIndex].points}</span>
+//     </div>
+//   </div>
+// )}
 //     </div>
 //   );
 // };
 
 // export default HighliteLeaderboardCard;
-
 
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../../../context/AuthContext";
@@ -167,20 +163,23 @@ import axios from "axios";
 const HighliteLeaderboardCard = () => {
   const [leaderboardData, setLeaderBoardData] = useState([]);
   const [myRowData, setMyRowData] = useState(null); // Store the row that contains the email field
-  const { email, token } = useAuth(); 
+  const { email, token } = useAuth();
   const [error, setError] = useState(null);
   const [showExtraUserRow, setShowExtraUserRow] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('https://dev.api.pitch.space/api/leader-board', {
-          params: {
-            email: email,
-            token: token
+        const response = await axios.get(
+          "https://dev.api.pitch.space/api/leader-board",
+          {
+            params: {
+              email: email,
+              token: token,
+            },
           }
-        });
-        
+        );
+
         if (response.status === 200) {
           let leaderboard = response.data.data;
 
@@ -194,7 +193,7 @@ const HighliteLeaderboardCard = () => {
           }));
 
           // Find the row that has the `email` field and store that row
-          const myRow = leaderboard.find(player => player.email);
+          const myRow = leaderboard.find((player) => player.email);
 
           // If such a row is found, store it in `myRowData`
           if (myRow) {
@@ -207,74 +206,97 @@ const HighliteLeaderboardCard = () => {
           setLeaderBoardData(leaderboard);
         }
       } catch (err) {
-        setError('You are not valid');
+        setError("You are not valid");
         console.error("Error fetching leaderboard:", err);
       }
     };
 
     if (email && token) {
-      fetchData();  // Only fetch if both email and token are set
+      fetchData(); // Only fetch if both email and token are set
     }
   }, [email, token]);
-
+  console.log(myRowData)
   const maxHeight = myRowData && myRowData.rank > 4 ? "230px" : "300px";
 
   return (
     <div className="leaderboard-table-container">
-      {error && <div className="error">{error}</div>} {/* Display any error message */}
-      
+      {error && <div className="error">{error}</div>}{" "}
+      {/* Display any error message */}
       {/* Main leaderboard table */}
-      <table className="leaderboard-table">
-        <thead>
-          <tr>
-            <th>Rank</th>
-            <th>Player</th>
-            <th>Points</th>
-          </tr>
-        </thead>
-        <tbody style={{ maxHeight: maxHeight, overflowY: "auto", display: "block" }}>
-          {leaderboardData.map((player, index) => (
-            <tr key={index} style={{ display: "table", width: "100%", tableLayout: "fixed" }}>
-              <td>{player.rank}</td>
-              <td>
-                <div className="player-info">
-                  <img
-                    src={`https://res.cloudinary.com/pitchspace/image/upload/v1/player-icons/${player?.playerAvatar}`}
-                    className="player-avatar"
-                  />
-                  <span title={player.playerName}>
-                    {player.playerName}
-                  </span>
-                </div>
-              </td>
-              <td>
-                <span title={player.points}>
-                  {player.points}
-                </span>
-              </td>
+      <div
+        style={{ maxHeight: maxHeight, overflowY: "auto", display: "block" }}
+      >
+        <table className="leaderboard-table">
+          <thead>
+            <tr>
+              <th>Rank</th>
+              <th>Player</th>
+              <th>Points</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-
+          </thead>
+          <tbody>
+            {leaderboardData.map((player, index) => (
+              <tr
+                key={index}
+                style={{
+                  display: "table",
+                  width: "100%",
+                  tableLayout: "fixed",
+                  backgroundColor:player.rank===myRowData.rank?'#FFFFFF':'#f9f9f9'
+                }}
+              >
+                <td>{player.rank}</td>
+                <td>
+                  <div className="player-info">
+                    <img
+                      src={`https://res.cloudinary.com/pitchspace/image/upload/v1/player-icons/${player?.playerAvatar}`}
+                      className="player-avatar"
+                    />
+                    {player.rank===myRowData.rank?<span title={player.playerName}>You ({player.playerName})</span>:
+                      <span title={player.playerName}>{player.playerName}</span>
+                    }
+                  </div>
+                </td>
+                <td>
+                  <span title={player.points}>{player.points}</span>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
       {/* Second table to show only the row with the email field */}
       {myRowData && (
-        <table className="leaderboard-table" >
-          <tbody>
-            <tr style={{ display: "table", width: "100%", tableLayout: "fixed" }}>
+        <table className="leaderboard-table">
+          <tbody
+            style={{
+              height:'54px',
+              maxHeight: maxHeight,
+              overflowY: "auto",
+              display: "block",
+              backgroundColor:'#FFFFFF'
+            }}
+          >
+          <tr
+              style={{ display: "table", width: "100%", tableLayout: "fixed" }}
+          >
               <td>{myRowData.rank}</td>
-              <td>
+              <td >
                 <div className="player-info">
                   <img
                     src={`https://res.cloudinary.com/pitchspace/image/upload/v1/player-icons/${myRowData?.playerAvatar}`}
-                    alt="Avatar"
                     className="player-avatar"
                   />
-                  <span title={myRowData.playerName}>{`You (${myRowData.playerName})`}</span>
+                  <span
+                    
+                    title={myRowData.playerName}
+                  >{`You (${myRowData.playerName})`}</span>
                 </div>
               </td>
               <td>
-                <span title={myRowData.points}>{myRowData.points}</span>
+               
+                  <span title={myRowData.points}>{myRowData.points}</span>
+               
               </td>
             </tr>
           </tbody>
@@ -282,7 +304,6 @@ const HighliteLeaderboardCard = () => {
       )}
     </div>
   );
-}
+};
 
 export default HighliteLeaderboardCard;
-

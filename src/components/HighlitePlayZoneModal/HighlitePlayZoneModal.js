@@ -9,18 +9,23 @@ import CommonCardOne from './CommonCardOne/CommonCardOne';
 import axios from 'axios';
 import { useAuth } from '../../context/AuthContext';
 import Servey from '../Servey/Servey';
+import SuccessScreenWihoutReward from '../Servey/SuccessScreen/SuccessScreenWihoutReward';
 
 const HighlitePlayZoneModal = ({ width = '550px' }) => {
   const [isOpen, setIsOpen] = useState(true);
   const [userHabitQuest, setUserHabitQuest] = useState([]);
   const [serveyQuest, setServeyQuest] = useState([]);
   const [referralQuest, setReferralQuest] = useState([]);
+  const [nodgesType,setNodgesType]=useState(null)
   const [showAll, setShowAll] = useState(false); // State to track whether to show all quests
   const { email, token } = useAuth(); // Get email and token from context
   const [error, setError] = useState(null);
-  const [isGoClicked, setIsGoClicked] = useState(false);
+  const [isServeyClicked, setIsServeyGoClicked] = useState(false);
+  const [nudgesClicked,setNudgesClicked]=useState(false)
   const [questId, setQuestId] = useState(null);
   const [reward,setReward]=useState(null);
+  const [typeOfQuest,setTypeOfQuest]=useState(null)
+  const [completeSurveyQuestion,setCompleteSurveyQuestion]=useState(false)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -67,11 +72,12 @@ const HighlitePlayZoneModal = ({ width = '550px' }) => {
 
   return (
     <div className='highlite-modal-overlay'>
-      <div className={`highlite-modal ${isGoClicked ? 'no-padding' : ''}`}
+      <div className={`highlite-modal ${isServeyClicked ? 'no-padding' : ''}`}
         style={{ width: width}}
       >
-        {isGoClicked && <Servey  onClose={() => setIsGoClicked(false)} questId={questId}/>}
-         {!isGoClicked && <>
+        {isServeyClicked && <Servey setCompleteSurveyQuestion={setCompleteSurveyQuestion} onClose={() => setIsServeyGoClicked(false)} questId={questId}/>}
+        {nudgesClicked && <SuccessScreenWihoutReward onClose={()=>setNudgesClicked(false)} nodgesType={nodgesType} />}
+         {!isServeyClicked && !nudgesClicked && <>
         <div className="top-card"
           style={{
             backgroundColor:'#9a7eff',
@@ -106,26 +112,39 @@ const HighlitePlayZoneModal = ({ width = '550px' }) => {
 
           {/* Render User Habit Quest cards */}
           {displayedQuests.filter(quest => quest.questCategory === 'User Habit Quest').length > 0 && 
-            <CommonCardOne userHabitQuest={displayedQuests.filter(quest => quest.questCategory === 'User Habit Quest')} />
+            <CommonCardOne 
+            userHabitQuest={displayedQuests.filter(quest => quest.questCategory === 'User Habit Quest')} 
+            setNudgesClicked={setNudgesClicked}
+            setNodgesType={setNodgesType}
+            setTypeOfQuest={setTypeOfQuest}
+            />
           }
 
           {/* Render Survey Quest cards */}
           {displayedQuests.filter(quest => quest.questCategory === 'Survey Quest').length > 0 && 
             <HighliteServeyQuestCard 
               serveyQuest={displayedQuests.filter(quest => quest.questCategory === 'Survey Quest')} 
-              setIsGoClicked={setIsGoClicked}
+              setIsServeyGoClicked={setIsServeyGoClicked}
               setQuestId={setQuestId}
               setReward={setReward}
+              setTypeOfQuest={setTypeOfQuest}
+              
             />
           }
 
           {/* Render Referral Quest cards */}
           {displayedQuests.filter(quest => quest.questCategory === 'Referral Quest').length > 0 && 
-            <HighliteReferralsQuestCard referralQuest={displayedQuests.filter(quest => quest.questCategory === 'Referral Quest')} />
+            <HighliteReferralsQuestCard
+             referralQuest={displayedQuests.filter(quest => quest.questCategory === 'Referral Quest')}
+             setNudgesClicked={setNudgesClicked}
+             setNodgesType={setNodgesType}
+             setTypeOfQuest={setTypeOfQuest}
+             
+             />
           }
 
           {/* Render Action Quest and Leaderboard components */}
-          <HighliteActionQuestCard />
+          {/* <HighliteActionQuestCard /> */}
           <HighliteLeaderboardCard />
         </div>
         </>}

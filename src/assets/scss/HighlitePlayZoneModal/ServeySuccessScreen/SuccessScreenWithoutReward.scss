@@ -17,13 +17,22 @@
     max-height: 90vh;
     display: flex;
     flex-direction: column;
-    // justify-content: center;
+    justify-content: center;
     align-items: center;
+    position: relative;
     position: relative;
     box-shadow: #45454526;
     overflow-y: auto; 
     padding: 20px;
     }
+    .close-icon {
+      position: absolute;
+      top: 15px; /* Adjust the distance from the top */
+      right: 20px; /* Adjust the distance from the right */
+      cursor: pointer;
+      width: 20px;
+      height: 20px;
+  }
     .reward-container{
         width: 70px;
         height: 80px;

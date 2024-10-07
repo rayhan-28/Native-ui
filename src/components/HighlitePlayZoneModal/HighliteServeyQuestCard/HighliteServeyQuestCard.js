@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import svgIcons from '../../../assets/image/SVG/svg'
+import Nudges from '../../Common/Nudges';
 
 
 const hexToRgba = (hex, opacity) => {
@@ -15,7 +16,15 @@ const hexToRgba = (hex, opacity) => {
   }
   return `rgba(${r}, ${g}, ${b}, ${opacity})`;
 };
-const HighliteServeyQuestCard = ({width="100%",maxWidth="520px",serveyQuest, setIsGoClicked, setQuestId,setReward}) => {
+const HighliteServeyQuestCard = ({
+  width="100%",
+  maxWidth="520px",
+  serveyQuest,
+  setIsServeyGoClicked,
+  setQuestId,
+  setTypeOfQuest,
+  setReward,
+  }) => {
   
   const [showSuccess, setShowSuccess] = useState(false);
   
@@ -23,7 +32,7 @@ const HighliteServeyQuestCard = ({width="100%",maxWidth="520px",serveyQuest, set
   const handleCloseSuccess = () => setShowSuccess(false);
 
   const onGoClicked = (questId) => {
-    setIsGoClicked(true);
+    setIsServeyGoClicked(true);
     setQuestId(questId);
   }
   console.log(serveyQuest)
@@ -69,6 +78,15 @@ const HighliteServeyQuestCard = ({width="100%",maxWidth="520px",serveyQuest, set
         </div>
         <button onClick={() => onGoClicked(habit?.questId)} className='servey-button'>Go</button>
       </div>
+     
+        <Nudges
+         questType="Survey Quest"
+         setIsServeyGoClicked={setIsServeyGoClicked}
+         setTypeOfQuest={setTypeOfQuest}
+         questId={habit?.questId}
+         setQuestId={setQuestId}
+        />
+      
     </div>
     )
     })

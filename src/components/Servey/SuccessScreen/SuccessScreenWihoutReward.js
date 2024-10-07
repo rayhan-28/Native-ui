@@ -1,8 +1,13 @@
 import React from 'react'
 import svgIcons from '../../../assets/image/SVG/svg'
 
-const SuccessScreenWihoutReward = ({isOpen,onClose,width='100%',maxWidth='520px'}) => {
-    const reward=true;
+const SuccessScreenWihoutReward = ({nodgesType,onClose,width='100%',maxWidth='520px'}) => {
+    const reward=false;
+    const handleClicked =()=>{
+      console.log("clicked")
+
+    }
+    console.log("nodegesTyoe ",nodgesType)
   return (
     <div className='success-without-reward-overlay'>
         <div
@@ -13,14 +18,17 @@ const SuccessScreenWihoutReward = ({isOpen,onClose,width='100%',maxWidth='520px'
         className='success-without-container'
         >    
             
-             <div
+          <div
+             className='close-icon'
               onClick={onClose}
               dangerouslySetInnerHTML={{ __html: svgIcons.cross }}
-              style={{position:'relative', left:'45%',cursor:'pointer' }}
-            />
+              
+          />
         
         {/* <div  dangerouslySetInnerHTML={{ __html: svgIcons.nice }} /> */}
-         {reward && <div  dangerouslySetInnerHTML={{ __html: svgIcons.wow }} />} 
+         {nodgesType==='wow_small'? <div  dangerouslySetInnerHTML={{ __html: svgIcons.wow }}/>
+         : 
+         <div  dangerouslySetInnerHTML={{ __html: svgIcons.letsGo_big }}/>} 
          {reward &&
           <>
            <p style={{fontSize:'1.1rem',marginBottom:'0'}}>Reward unlocked</p> 
@@ -58,7 +66,7 @@ const SuccessScreenWihoutReward = ({isOpen,onClose,width='100%',maxWidth='520px'
             <p style={{fontSize:'0.8rem'}}>Artefact</p>
             </div>
         </div>
-        <button style={{marginTop:'15px'}} className='success-without-btn'>Collect more points</button>
+        <button onClick={onClose} style={{marginTop:'15px'}} className='success-without-btn'>Collect more points</button>
         <p style={{marginTop:'15px',color:'rgba(6, 24, 44, 0.7)'}}>Collect more points to unlock amazing rewards!</p>
         </div>
     </div>

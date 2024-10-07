@@ -14,7 +14,7 @@ import axios from "axios";
 import QuestionModal from "./QuestionModal";
 import LinkModal from "./LinkModal";
 
-const Servey = ({ width = "100%", maxWidth = "100%", onClose, questId }) => {
+const Servey = ({ width = "100%", maxWidth = "100%", onClose, questId,setCompleteSurveyQuestion }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [linkError,setLinkError]=useState(false)
   const [isExpanded, setIsExpanded] = useState(false);
@@ -39,7 +39,7 @@ const Servey = ({ width = "100%", maxWidth = "100%", onClose, questId }) => {
     setIsExpanded(!isExpanded);
   };
   
-  console.log(questAnswer)
+  console.log("questId ",questId)
 
   const { email, token } = useAuth(); // Get email and token from context
   const [error, setError] = useState(null);
@@ -69,6 +69,40 @@ const Servey = ({ width = "100%", maxWidth = "100%", onClose, questId }) => {
       fetchData(); // Only fetch if both email and token are set
     }
   }, [email, token]);
+
+  const sendSurveyAnswers = async () => {
+  
+    setCompleteSurveyQuestion(true)
+    try {
+      const response = await axios.post(
+        `https://dev.api.pitch.space/api/survey-quest-answers?email=${email}&token=${token}&questId=${questId}`,
+        {
+            questId: questId,
+            playerId: '', 
+            ActionId: '', 
+            QuestAnswer: [{
+              TextAnswer: questAnswer.TextAnswer,
+              ImageMultiChoice: questAnswer.ImageMultiChoice,
+              TextMultiChoice: questAnswer.TextMultiChoice,
+              YesNo: questAnswer.YesNo,
+              Rate: questAnswer.Rate,
+              UploadedImage: questAnswer.UploadedImage,
+              ReplyWithLink: questAnswer.ReplyWithLink,
+              TextChoicePoll: questAnswer.TextChoicePoll,
+              ImageChoicePoll: questAnswer.ImageChoicePoll
+            }]
+        
+
+        }
+        
+      );
+
+      console.log('Response:', response.data);
+    } catch (error) {
+      console.error('Error posting survey answers:', error);
+    }
+  };
+
 
   const validateCurrentQuestion = (currentAction) => {
     const { ResponseType } = currentAction;
@@ -301,7 +335,7 @@ const Servey = ({ width = "100%", maxWidth = "100%", onClose, questId }) => {
               />
             </div>}
             {tempQuestion===questionNo-1 && <div className="finish">
-               <button className="finish">Finish</button>
+               <button onClick={sendSurveyAnswers} className="finish">Finish</button>
             </div>}
 
             {tempQuestion < questionNo && tempQuestion !== questionNo - 1 && (

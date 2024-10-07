@@ -34,13 +34,23 @@ const ProgressBarSvg = ({progress,progressColor}) => {
             />
             <text
               x="50%"
-              y="50%"
+              y="43%"
               dominantBaseline="middle"
               textAnchor="middle"
               fontSize={fontSize}
               fill="#000"
             >
-              ★ {taskValue}
+              ★ 
+            </text>
+            <text
+              x="50%"
+              y="60%"
+              dominantBaseline="middle"
+              textAnchor="middle"
+              fontSize={fontSize}
+              fill="#000"
+            >
+              {taskValue}
             </text>
           </svg>
      

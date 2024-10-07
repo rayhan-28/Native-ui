@@ -1,63 +1,31 @@
 import { useCallback, useState } from "react";
-import { useLazyQuery } from "@apollo/client";
-import { GET_MY_ASSETS } from "@graphql/index";
 
-// Function to upload an image to Cloudinary
-export const uploadToCloudinary = async (config, file, onCompleted) => {
-  const formData = new FormData();
-  formData.append("api_key", config.apiKey);
-  formData.append("timestamp", config.timestamp.toString());
-  formData.append("signature", config.signature);
-  formData.append("public_id", config.publicId);
-  formData.append("file", file);
-
-  const uploadUrl = `https://api.cloudinary.com/v1_1/${config?.cloudName}/image/upload`;
-
-  const response = await fetch(uploadUrl, {
-    method: "POST",
-    body: formData,
-  });
-
-  console.log("This is the largeImageUpload response", response);
-  const isSuccess = response.status >= 200 && response.status <= 299;
-  const result = isSuccess
-    ? { wasSuccessful: true }
-    : {
-        wasSuccessful: false,
-        errorMessage:
-          response.status === 400
-            ? "That image was too large after transformation, please try a smaller image."
-            : "Something went wrong, please try again.",
-      };
-
-  onCompleted(result);
-};
-
-/** Returns a function that uploads the image provided to Cloudinary, then calls the completion function provided. */
-export const useUploadImage = (image, onCompleted) => {
+export const useUploadImage = (image, newAssetToUpload, uploadConfig, onCompleted) => {
+  console.log("image1 = " ,image);
   const [isUploading, setIsUploading] = useState(false);
 
-  const onGetAssetCompleted = useCallback(
-    async (assetData) => {
-      console.log("This is imageUrl", image?.url);
+
+  const onGetAssetCompleted = useCallback(async () => {
       if (image) {
+        console.log("Image checking by misbah 1 = ", image)
         // Get the image file
         const imageResponse = await fetch(image.url);
         const imageData = await imageResponse.blob();
         const metadata = { type: image.fileType };
-        const fileTypeSplit = image.fileType
-          ? image.fileType.split("/")
-          : ["", "png"];
+        const fileTypeSplit = image.fileType ? image.fileType.split("/") : ["", "png"];
         const fileName = `upload.${fileTypeSplit[fileTypeSplit.length - 1]}`;
         const file = new File([imageData], fileName, metadata);
 
-        // Create the cloudinary config
+        console.log("newAssetToUpload = ", newAssetToUpload);
+        console.log("uploadConfig = ", uploadConfig);
+
+        // Create the Cloudinary config
         const config = {
-          publicId: assetData.getNewAssetToUpload?.publicId,
-          cloudName: assetData.getNewAssetToUpload?.cloudName,
-          apiKey: assetData.getNewAssetToUpload?.uploadConfig?.apiKey,
-          signature: assetData.getNewAssetToUpload?.uploadConfig?.signature,
-          timestamp: assetData.getNewAssetToUpload?.uploadConfig?.timestamp,
+          publicId: newAssetToUpload.publicId,
+          cloudName: newAssetToUpload.cloudName,
+          apiKey: uploadConfig.apiKey,
+          signature: uploadConfig.signature,
+          timestamp: uploadConfig.timestamp,
         };
 
         // Create the form data
@@ -68,6 +36,8 @@ export const useUploadImage = (image, onCompleted) => {
         formData.append("public_id", config.publicId);
         formData.append("file", file);
 
+        console.log("Image checking by misbah 2 = ", image)
+
         // Upload to Cloudinary
         const uploadUrl = `https://api.cloudinary.com/v1_1/${config?.cloudName}/image/upload`;
 
@@ -76,41 +46,37 @@ export const useUploadImage = (image, onCompleted) => {
           body: formData,
         });
 
+        console.log("Image checking by misbah 3 = ", image)
+
         // Deal with the response
         const isSuccess = response.status >= 200 && response.status <= 299;
 
         const result = isSuccess
-          ? {
+          ? ({
               wasSuccessful: true,
               publicId: config.publicId,
-            }
-          : {
+            })
+          : ({
               wasSuccessful: false,
               errorMessage:
                 response.status === 400
                   ? "That image was too large after transformation, please try a smaller image."
                   : "Something went wrong, please try again.",
-            };
+            });
 
         onCompleted(result);
+        console.log("Image checking by misbah 4 = ", image)
         setIsUploading(false);
       }
-    },
-    [image, onCompleted]
-  );
+    },[image, onCompleted]);
 
-  const [getAssetData] = useLazyQuery(GET_MY_ASSETS, {
-    fetchPolicy: "network-only",
-    nextFetchPolicy: "cache-first",
-    onCompleted: onGetAssetCompleted,
-  });
-
-  const uploadImage = useCallback(() => {
+  const uploadImage = useCallback(async () => {
     if (image) {
+      console.log("image checking ",image)
       setIsUploading(true);
-      getAssetData();
+      await onGetAssetCompleted();
     }
-  }, [image, getAssetData]);
+  }, [image]);
 
   return {
     uploadImage,

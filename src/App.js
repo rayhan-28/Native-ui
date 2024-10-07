@@ -51,8 +51,8 @@ function App() {
   const token = '4733788f-783d-455f-a2b7-3b1815e53196';
   return (
     <AuthProvider email={email} token={token}>
-     {/* <HighlitePlayZoneModal/> */}
-     <SuccessScreenWihoutReward/>
+     <HighlitePlayZoneModal/>
+     {/* <SuccessScreenWihoutReward/> */}
      {/* <Card /> */}
      {/* <Servey/> */}
      {/* <MomentSuccess/> */}

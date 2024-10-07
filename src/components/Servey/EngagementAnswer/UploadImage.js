@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Cropper from 'react-easy-crop';
 import svgIcons from '../../../assets/image/SVG/svg';
 import getCroppedImg from '../../../utils'; // Import your utility function
+import {useUploadImage} from '../../../hooks/useCloudinaryUpload'
+import axios from 'axios';
 
 const UploadImage = ({ uploadedImg, questAnswer, setQuestAnswer, IsMultiSelection, MaxSelectionOrUpload }) => {
   console.log(IsMultiSelection)
@@ -10,9 +12,84 @@ const UploadImage = ({ uploadedImg, questAnswer, setQuestAnswer, IsMultiSelectio
   const [zoom, setZoom] = useState(1);
   const [countImg, setCountImg] = useState(0);
   const [cropperOpen, setCropperOpen] = useState(false);
+  const [isSavedClicked, setSavedClicked] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(null);
-  const [file, setFile] = useState(null);
+  const [imageToUpload, setImageToUpload] = useState(undefined);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
+  const [newAssetToUpload, setNewAssetToUpload] = useState(null);
+  const [uploadConfig, setUploadConfig] = useState(null);
+  const email = "jahir.rayhan@bedatasolutions.com";
+  const token = "4733788f-783d-455f-a2b7-3b1815e53196";
+
+  const getNewAssetToUpload = async () => {
+    try {
+      const response = await axios.get('https://dev.api.pitch.space/api/assets/new', {
+        params: {
+          email: email,
+          token: token
+        }
+      });
+      if (response.status === 200) {
+        setNewAssetToUpload(response.data);
+        const publicId = response.data.publicId;
+        await getUploadConfig(publicId)
+      }
+    } catch (err) {
+      console.log('You are not valid');
+    }
+  };
+
+  const getUploadConfig = async (publicId) => {
+    try {
+      publicId = encodeURIComponent(publicId);
+      const response = await axios.get(`https://dev.api.pitch.space/api/assets/${publicId}/upload-config`, {
+        params: {
+          email: email,
+          token: token
+        }
+      });
+      if (response.status === 200) {
+        console.log("Checking by misbah", response.data);
+        setUploadConfig(response.data);
+      }
+    } catch (err) {
+      console.log('You are not valid');
+    }
+  };
+
+  useEffect(() => {
+    if(imageToUpload) {
+      getNewAssetToUpload();
+    }
+  }, [imageToUpload])
+
+  const { uploadImage, isUploadingImage } = useUploadImage(
+    imageToUpload,
+    newAssetToUpload,
+    uploadConfig,
+    (r) => {
+        if (r.wasSuccessful && imageToUpload) {
+          //setImages([r?.url])
+          setSavedClicked(false);
+          setCropperOpen(false);
+        } else if (!r.wasSuccessful) {
+          console.log("error misbah = ",r.errorMessage);
+          setSavedClicked(false);
+          setCropperOpen(false);
+        } else {
+           console.log("Something went wrong, please try again later");
+           setSavedClicked(false);
+           setCropperOpen(false);
+        }
+    }
+  );
+
+   // Start uploading an image if necessary
+   useEffect(() => {
+        if (isSavedClicked && newAssetToUpload && uploadConfig && images) {
+            uploadImage();
+        }
+    }, [images, isSavedClicked, uploadImage]);
 
   const handleImageUpload = (index) => {
     if (!IsMultiSelection && countImg === 1) {
@@ -32,7 +109,11 @@ const UploadImage = ({ uploadedImg, questAnswer, setQuestAnswer, IsMultiSelectio
     input.onchange = (e) => {
       const file = e.target.files[0];
       if (file) {
-        setFile(URL.createObjectURL(file));
+        const fileType = file && file.type;
+        setImageToUpload({
+          url: URL.createObjectURL(file),
+          fileType: fileType
+        })
         setCropperOpen(true);
       }
     };
@@ -44,13 +125,13 @@ const UploadImage = ({ uploadedImg, questAnswer, setQuestAnswer, IsMultiSelectio
   };
 
   const saveCroppedImage = async () => {
-    if (file && croppedAreaPixels) {
-      const croppedImage = await getCroppedImg(file, croppedAreaPixels);
+    setSavedClicked(true);
+    if (imageToUpload && croppedAreaPixels) {
+      const croppedImage = await getCroppedImg(imageToUpload?.url, croppedAreaPixels);
       const newImages = [...images];
       newImages[currentIndex] = croppedImage;
       setImages(newImages);
-      setCropperOpen(false);
-      setFile(null);
+      setImageToUpload(null);
       setCroppedAreaPixels(null);
       setCountImg(prevCount => prevCount + 1); // Increment the count of uploaded images
     }
@@ -58,7 +139,7 @@ const UploadImage = ({ uploadedImg, questAnswer, setQuestAnswer, IsMultiSelectio
 
   const cancelCrop = () => {
     setCropperOpen(false);
-    setFile(null);
+    setImageToUpload(null);
     setCroppedAreaPixels(null);
   };
 
@@ -97,7 +178,7 @@ const UploadImage = ({ uploadedImg, questAnswer, setQuestAnswer, IsMultiSelectio
         <div className='cropper-modal'>
           <div className='cropper-container'>
             <Cropper
-              image={file}
+              image={imageToUpload?.url}
               crop={crop}
               zoom={zoom}
               aspect={3 / 3}
@@ -122,7 +203,7 @@ const UploadImage = ({ uploadedImg, questAnswer, setQuestAnswer, IsMultiSelectio
             />
           </div>
           <div className='btn-container'>
-            <button className='save-btn' onClick={saveCroppedImage}>Save</button>
+            <button className='save-btn' onClick={saveCroppedImage}>{isUploadingImage ? "Loading..." : "Save"}</button>
             <button className='cancel-btn' onClick={cancelCrop}>Cancel</button>
           </div>
         </div>
