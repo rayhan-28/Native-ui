@@ -1,28 +1,45 @@
 import React, { useState, useEffect } from "react";
 import svgIcons from "../../../assets/image/SVG/svg";
 
-const ImageChoicePoll = ({ Options, questAnswer, setQuestAnswer }) => {
+const ImageChoicePoll = ({ Options, questAnswer,idx, setQuestAnswer }) => {
   const [selectedImageIndex, setSelectedImageIndex] = useState(null); // State to track selected image index
   const [hoveredIndex, setHoveredIndex] = useState(null); // State to track hovered image index
-
+  const [singleQAnswer, setSingleAnswer] = useState({
+    TextAnswer: "",
+    ImageMultiChoice: "",
+    TextMultiChoice: "",
+    YesNo: "",
+    Rate: "",
+    UploadedImage: "",
+    ReplyWithLink: "",
+    TextChoicePoll: "",
+    ImageChoicePoll: "",
+  });
   // Check if ImageChoicePoll already has a selected image when the component mounts
   useEffect(() => {
-    if (questAnswer.ImageChoicePoll) {
+    const updatedAnswers = [...questAnswer];
+    if (!updatedAnswers[idx]) {
+      updatedAnswers[idx] = { ...singleQAnswer };
+      setQuestAnswer(updatedAnswers);
+    }
+    if (questAnswer[idx]?.ImageChoicePoll) {
       const preSelectedIndex = Options.findIndex(
-        (option) => option.OptionsImageUrl === questAnswer.ImageChoicePoll
+        (option) => option.OptionsImageUrl === questAnswer[idx]?.ImageChoicePoll
       );
       setSelectedImageIndex(preSelectedIndex); // Set the pre-selected image index
     }
-  }, [Options, questAnswer.ImageChoicePoll]);
+  }, [Options, questAnswer[idx]?.ImageChoicePoll,idx,questAnswer,setQuestAnswer]);
 
   const handleImageClick = (index) => {
     // Allow selection only if no image has been selected
     if (selectedImageIndex === null) {
-      setSelectedImageIndex(index); // Set the selected image index when clicked
-      setQuestAnswer((prev) => ({
-        ...prev,
-        ImageChoicePoll: Options[index].OptionsImageUrl, // Save the selected image URL in ImageChoicePoll
-      }));
+    setSelectedImageIndex(index); // Set the selected image index when clicked
+    const updatedSingleQAnswer={...singleQAnswer,ImageChoicePoll:Options[index].OptionsImageUrl}
+    setSingleAnswer(updatedSingleQAnswer)
+    const updatedAnswers = [...questAnswer];
+    updatedAnswers[idx]=updatedSingleQAnswer;
+    // Set the updated answers back to state
+    setQuestAnswer(updatedAnswers);
     }
   };
 

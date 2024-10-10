@@ -2,11 +2,13 @@ import React, { useEffect, useState } from "react";
 import svgIcons from "../../assets/image/SVG/svg";
 import { useAuth } from "../../context/AuthContext";
 import axios from "axios";
+import PlayerCharacterOverlay from "./PlayerCharacterOverlay";
 
 const Card = ({ profileImg, width = "100%", maxWidth = "520px" }) => {
   const { email, token } = useAuth(); // Get email and token from context
-  const [data, setData] = useState(null);
+  const [playerData, setPlayerData] = useState(null);
   const [error, setError] = useState(null);
+  const [isClicked,setIsClicked]=useState(false)
   const getOrdinalSuffix = (rank) => {
     if (rank % 10 === 1 && rank % 100 !== 11) {
       return "st";
@@ -23,7 +25,7 @@ const Card = ({ profileImg, width = "100%", maxWidth = "520px" }) => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "https://dev.api.pitch.space/api/player-history",
+          "https://dev.api.pitch.space/api/player-info",
           {
             params: {
               email: email,
@@ -33,7 +35,7 @@ const Card = ({ profileImg, width = "100%", maxWidth = "520px" }) => {
         );
         console.log(email);
         if (response.status === 200) {
-          setData(response.data?.data[0]);
+          setPlayerData(response.data?.data);
           console.log("hlw");
         }
       } catch (err) {
@@ -43,7 +45,7 @@ const Card = ({ profileImg, width = "100%", maxWidth = "520px" }) => {
     if (email && token) {
       fetchData(); // Only fetch if both email and token are set
     }
-  }, [email, token]);
+  }, [email, token, isClicked]);
 
   const radius = 40;
   const circumference = 2 * Math.PI * radius;
@@ -52,15 +54,22 @@ const Card = ({ profileImg, width = "100%", maxWidth = "520px" }) => {
   const textLength = taskValue.toString().length;
   const fontSize = textLength > 5 ? 16 - (textLength - 5) * 2 : 16;
 
-  if (error) {
-    return (
-      <>
-        <div className="user-card">
-          <h4>Please give your credentials</h4>
-        </div>
-      </>
-    );
-  }
+  // if (error) {
+  //   return (
+  //     <>
+  //       <div className="user-card">
+  //         <h4>Please give your credentials</h4>
+  //       </div>
+  //     </>
+  //   );
+  // }
+
+   const handleClick=()=>{
+    setIsClicked(true)
+    console.log("clicked")
+    
+   }
+   console.log(playerData)
 
   return (
     // <div className="user-card">
@@ -312,18 +321,22 @@ const Card = ({ profileImg, width = "100%", maxWidth = "520px" }) => {
       }}
     >
       {/* top */}
-      <div className="player-card-top">
+      {isClicked && <PlayerCharacterOverlay Player={playerData} onClose={()=>setIsClicked(false)}/>}
+    {error? <h1>Please give correct credentials</h1>:<>  <div className="player-card-top">
         <div className="player-card-img">
           <img
+            onClick={handleClick}
             src={
               profileImg ||
-              `https://res.cloudinary.com/pitchspace/image/upload/v1/player-icons/playerCharacter,3`
+              `https://res.cloudinary.com/pitchspace/image/upload/v1/player-icons/${playerData?.playerAvatar
+              }`
             }
             style={{
               height: "90px",
               width: "90px",
               borderRadius: "50%",
               marginRight: "10px",
+              cursor:'pointer'
             }}
           />
         </div>
@@ -336,7 +349,7 @@ const Card = ({ profileImg, width = "100%", maxWidth = "520px" }) => {
             <div className="point-text">
               <div className="points-streak-rank">
                 <span className="text">Points</span>
-                <span className="point">1990</span>
+                <span className="point">{playerData?.points}</span>
               </div>
 
               <div className="points-streak-rank">
@@ -430,6 +443,7 @@ const Card = ({ profileImg, width = "100%", maxWidth = "520px" }) => {
           <button className="go-button">Go</button>
         </div>
       </div>
+      </>}
     </div>
   );
 };

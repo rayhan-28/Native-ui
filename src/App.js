@@ -39,6 +39,8 @@ import HighlitePlayZoneModal from "./components/HighlitePlayZoneModal/HighlitePl
 import { AuthProvider } from "./context/AuthContext";
 import Servey from "./components/Servey/Servey";
 import SuccessScreenWihoutReward from "./components/Servey/SuccessScreen/SuccessScreenWihoutReward";
+import PlayerCharacterOverlay from "./components/PlayerCard/PlayerCharacterOverlay";
+import AlertOverly from "./components/PlayerCard/AlertOverly";
 
 function App() {
   // const [showSuccess, setShowSuccess] = useState(false);
@@ -54,8 +56,10 @@ function App() {
      <HighlitePlayZoneModal/>
      {/* <SuccessScreenWihoutReward/> */}
      {/* <Card /> */}
+     {/* <AlertOverly/> */}
      {/* <Servey/> */}
      {/* <MomentSuccess/> */}
+     {/* <PlayerCharacterOverlay/> */}
     </AuthProvider>
   );
 }

@@ -10,7 +10,7 @@ const QuestionModal = ({ onClose ,text}) => {
               onClick={onClose}
               dangerouslySetInnerHTML={{ __html: svgIcons.cross }}
               style={{ marginRight: "10px", cursor:'pointer',display:'flex',justifyContent:'flex-end' }}
-            />
+        />
         <p style={{fontSize:'25px',fontWeight:'bold'}}>Hello</p>
         <p>{text}</p>
         <button className='modal-button' onClick={onClose}>Ok</button>

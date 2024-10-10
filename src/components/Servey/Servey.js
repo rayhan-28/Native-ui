@@ -23,17 +23,10 @@ const Servey = ({ width = "100%", maxWidth = "100%", onClose, questId,setComplet
   const [pointCal,setPointCal]=useState(20)
   const [questAction, setQuestAction] = useState(null);
   const [data,setData]=useState(null)
-  const [questAnswer,setQuestAnswer]=useState({
-    TextAnswer: "",
-    ImageMultiChoice: "",
-    TextMultiChoice: "",
-    YesNo: "",
-    Rate: "",
-    UploadedImage: "",
-    ReplyWithLink: "",
-    TextChoicePoll: "",
-    ImageChoicePoll: ""
-  })
+  // const [idx,setIdx]=useState(0)
+  // const [questAnswer,setQuestAnswer]=useState([])
+  
+  const [questAnswer, setQuestAnswer] = useState([]);
 
   const toggleText = () => {
     setIsExpanded(!isExpanded);
@@ -56,9 +49,6 @@ const Servey = ({ width = "100%", maxWidth = "100%", onClose, questId,setComplet
           setQuestAction(quest.action);
           setData(quest)
           setQuestionNo(quest?.action?.ActionDetails?.length)
-          // setTempQuestion(quest.action.ActionDetails.length)
-          // Filter quests based on questCategory
-         
         }
       } catch (err) {
         setError('You are not valid');
@@ -81,15 +71,7 @@ const Servey = ({ width = "100%", maxWidth = "100%", onClose, questId,setComplet
             playerId: '', 
             ActionId: '', 
             QuestAnswer: [{
-              TextAnswer: questAnswer.TextAnswer,
-              ImageMultiChoice: questAnswer.ImageMultiChoice,
-              TextMultiChoice: questAnswer.TextMultiChoice,
-              YesNo: questAnswer.YesNo,
-              Rate: questAnswer.Rate,
-              UploadedImage: questAnswer.UploadedImage,
-              ReplyWithLink: questAnswer.ReplyWithLink,
-              TextChoicePoll: questAnswer.TextChoicePoll,
-              ImageChoicePoll: questAnswer.ImageChoicePoll
+             
             }]
         
 
@@ -102,7 +84,8 @@ const Servey = ({ width = "100%", maxWidth = "100%", onClose, questId,setComplet
       console.error('Error posting survey answers:', error);
     }
   };
-
+ 
+ 
 
   const validateCurrentQuestion = (currentAction) => {
     const { ResponseType } = currentAction;
@@ -119,23 +102,23 @@ const Servey = ({ width = "100%", maxWidth = "100%", onClose, questId,setComplet
 
     switch (ResponseType.OptionsType) {
       case "Reply with text":
-        return questAnswer.TextAnswer !== "";
+        return questAnswer[tempQuestion]?.TextAnswer !== "";
       case "Give a rate":
-        return questAnswer.Rate !== "";
+        return questAnswer[tempQuestion]?.Rate !== "";
       case "Image multi-choice":
-        return questAnswer.ImageMultiChoice !== "";
+        return questAnswer[tempQuestion]?.ImageMultiChoice !== "";
       case "Yes / No":
-        return questAnswer.YesNo !== "";
+        return questAnswer[tempQuestion]?.YesNo !== "";
       case "Text multi-choice":
-        return questAnswer.TextMultiChoice !== "";
+        return questAnswer[tempQuestion]?.TextMultiChoice !== "";
       case "Upload image":
-        return questAnswer.UploadedImage !== "";
+        return questAnswer[tempQuestion]?.UploadedImage !== "";
       case "Reply with link":
-        return questAnswer.ReplyWithLink !== "" && isValidUrl(questAnswer.ReplyWithLink);
+        return questAnswer[tempQuestion]?.ReplyWithLink !== "" && isValidUrl(questAnswer[tempQuestion]?.ReplyWithLink);
       case "Text Choice Poll":
-        return questAnswer.TextChoicePoll !== "";
+        return questAnswer[tempQuestion]?.TextChoicePoll !== "";
       case "Image Choice Poll":
-        return questAnswer.ImageChoicePoll !== "";
+        return questAnswer[tempQuestion]?.ImageChoicePoll !== "";
       default:
         return true;
     }
@@ -144,11 +127,12 @@ const Servey = ({ width = "100%", maxWidth = "100%", onClose, questId,setComplet
     setModalVisible(false);
     setLinkError(false)
   }
-  console.log(pointCal)
-  console.log("questAction = ",questionNo);
-  console.log("tempQuestion = ",tempQuestion);
-  console.log("check link",linkError)
+  // console.log(pointCal)
+  // console.log("questAction = ",questionNo);
+  // console.log("tempQuestion = ",tempQuestion);
+  // console.log("check link",linkError)
   // console.log(data.profileImage)
+  console.log("questAnswer ",questAnswer);
   return (
     <div className="servey">
      
@@ -244,30 +228,38 @@ const Servey = ({ width = "100%", maxWidth = "100%", onClose, questId,setComplet
          
          {questAction?.ActionDetails?.length>tempQuestion 
          && questAction?.ActionDetails[tempQuestion]?.ResponseType.OptionsType === "Reply with text" 
-         && <ReplyWithTextAnswer questAnswer={questAnswer} setQuestAnswer={setQuestAnswer}/>}
+         && <ReplyWithTextAnswer questAnswer={questAnswer} idx={tempQuestion} setQuestAnswer={setQuestAnswer}/>}
 
          {questAction?.ActionDetails?.length>tempQuestion 
          && questAction?.ActionDetails[tempQuestion]?.ResponseType.OptionsType === "Give a rate"
-         &&<GiveARate questAnswer={questAnswer} setQuestAnswer={setQuestAnswer}/>}
+         &&<GiveARate questAnswer={questAnswer} idx={tempQuestion}  setQuestAnswer={setQuestAnswer}/>}
+
+
          {questAction?.ActionDetails?.length>tempQuestion 
          && questAction?.ActionDetails[tempQuestion]?.ResponseType.OptionsType === "Image multi-choice" 
          && <ImageMultiChoice 
          Options={questAction?.ActionDetails[tempQuestion]?.ResponseType.Options}
          questAnswer={questAnswer}
          setQuestAnswer={setQuestAnswer}
+         
+         idx={tempQuestion}
          IsRequired={questAction?.ActionDetails[tempQuestion]?.IsRequired}
          IsMultiSelection={questAction?.ActionDetails[tempQuestion]?.IsMultiSelection}
          MaxSelectionOrUpload={questAction?.ActionDetails[tempQuestion]?.MaxSelectionOrUpload}
          />}
+
          {questAction?.ActionDetails?.length>tempQuestion 
          && questAction?.ActionDetails[tempQuestion]?.ResponseType.OptionsType === "Yes / No" 
-         && <YesNoChoice questAnswer={questAnswer} setQuestAnswer={setQuestAnswer}/>}
+         && <YesNoChoice questAnswer={questAnswer} idx={tempQuestion}  setQuestAnswer={setQuestAnswer}/>}
+
          {questAction?.ActionDetails?.length>tempQuestion 
          && questAction?.ActionDetails[tempQuestion]?.ResponseType.OptionsType === "Text multi-choice" 
          && <TextMultiChoice
           Options={questAction?.ActionDetails[tempQuestion]?.ResponseType.Options}
           questAnswer={questAnswer}
           setQuestAnswer={setQuestAnswer}
+         
+          idx={tempQuestion}
           IsMultiSelection={questAction?.ActionDetails[tempQuestion]?.IsMultiSelection}
           MaxSelectionOrUpload={questAction?.ActionDetails[tempQuestion]?.MaxSelectionOrUpload}
          />}
@@ -277,17 +269,21 @@ const Servey = ({ width = "100%", maxWidth = "100%", onClose, questId,setComplet
          uploadedImg={questAction?.ActionDetails[tempQuestion]?.MaxSelectionOrUpload}
          questAnswer={questAnswer}
          setQuestAnswer={setQuestAnswer}
+         
+         idx={tempQuestion}
          IsMultiSelection={questAction?.ActionDetails[tempQuestion]?.IsMultiSelection}
         MaxSelectionOrUpload={questAction?.ActionDetails[tempQuestion]?.MaxSelectionOrUpload}
          />}
          {questAction?.ActionDetails?.length>tempQuestion
           && questAction?.ActionDetails[tempQuestion]?.ResponseType.OptionsType === "Reply with link" 
-          && <ReplyWithLink questAnswer={questAnswer} setQuestAnswer={setQuestAnswer}/>}
+          && <ReplyWithLink questAnswer={questAnswer} idx={tempQuestion} setQuestAnswer={setQuestAnswer}/>}
+
          {questAction?.ActionDetails?.length>tempQuestion 
          && questAction?.ActionDetails[tempQuestion]?.ResponseType.OptionsType === "Text Choice Poll" 
          && <Poll
          Options={questAction?.ActionDetails[tempQuestion]?.ResponseType.Options}
          questAnswer={questAnswer}
+         idx={tempQuestion}
          setQuestAnswer={setQuestAnswer}
          />}
         {questAction?.ActionDetails?.length>tempQuestion 
@@ -295,6 +291,7 @@ const Servey = ({ width = "100%", maxWidth = "100%", onClose, questId,setComplet
         && <ImageChoicePoll questAnswer={questAnswer}
         Options={questAction?.ActionDetails[tempQuestion]?.ResponseType.Options}
         setQuestAnswer={setQuestAnswer}
+        idx={tempQuestion}
         />}
 
         </div>
@@ -342,6 +339,7 @@ const Servey = ({ width = "100%", maxWidth = "100%", onClose, questId,setComplet
               <div
                 onClick={() => {
                   const currentAction = questAction?.ActionDetails[tempQuestion];
+                  console.log("labib clicked")
                   console.log(currentAction)
                   if ((currentAction?.IsRequired || questAction?.ActionDetails[tempQuestion]?.ResponseType.OptionsType === "Reply with link" ) && !validateCurrentQuestion(currentAction)) {
                     // Handle validation failure
@@ -357,7 +355,7 @@ const Servey = ({ width = "100%", maxWidth = "100%", onClose, questId,setComplet
                       return !!urlPattern.test(url);
                     };
                     console.log(questAnswer.ReplyWithLink)
-                    if(questAnswer.ReplyWithLink.length>0 && !isValidUrl(questAnswer.ReplyWithLink)){
+                    if(questAnswer[tempQuestion].ReplyWithLink.length>0 && !isValidUrl(questAnswer[tempQuestion].ReplyWithLink)){
                       console.log("lsdjfsdjfljsdljfljsdlfjlsdkjf")
                      setLinkError(true);
                     }
@@ -366,7 +364,7 @@ const Servey = ({ width = "100%", maxWidth = "100%", onClose, questId,setComplet
                   }
                   else{
                     setTempQuestion(tempQuestion + 1);
-                  setPointCal(prev => prev + 20);
+                    setPointCal(prev => prev + 20);
                   }
                   
                 }}
