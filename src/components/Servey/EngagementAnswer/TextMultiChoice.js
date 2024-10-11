@@ -63,31 +63,7 @@ const TextMultiChoice = ({ Options, questAnswer, setQuestAnswer, idx,IsMultiSele
         return  updatedSelection;
     });
   };
-
-  // const handleTextClick = (text) => {
-  //   setSelectedTexts((prevSelected) => {
-  //     if (prevSelected.includes(text)) {
-  //       // If the text is already selected, remove it
-  //       const updatedSelection = prevSelected.filter((selectedText) => selectedText !== text);
-  //       setQuestAnswer({ ...questAnswer, TextMultiChoice: updatedSelection.join(',') });
-  //       return updatedSelection;
-  //     } else {
-  //       // If it's not selected, add it (if under max selection limit)
-  //       if (IsMultiSelection && prevSelected.length < MaxSelectionOrUpload) {
-  //         const updatedSelection = [...prevSelected, text];
-  //         setQuestAnswer({ ...questAnswer, TextMultiChoice: updatedSelection.join(',') });
-  //         return updatedSelection;
-  //       } else if (!IsMultiSelection) {
-  //         // If not multi-selection, replace the selection
-  //         setQuestAnswer({ ...questAnswer, TextMultiChoice: text });
-  //         return [text];
-  //       }
-  //     }
-  //     return prevSelected;
-  //   });
-  // };
-  
-
+ 
   return (
     <div>
       {Options.map((option, index) => {

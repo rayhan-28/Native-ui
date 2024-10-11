@@ -57,7 +57,16 @@ const Nudges = ({
       <p className="text-ellipsis">You're {remaining} streaks away from a reward</p>
       </>
     ))}
-    
+
+    {questType==='Referral Quest' &&
+     <>
+     <div
+     dangerouslySetInnerHTML={{ __html: svgIcons.letsGo }}
+     />
+     <p className="text-ellipsis">You're 8 answers away from a reward</p>
+     </>
+     
+     } 
       
     </div>
     <div onClick={()=>handleClicked(questType)} className="arrow-box">

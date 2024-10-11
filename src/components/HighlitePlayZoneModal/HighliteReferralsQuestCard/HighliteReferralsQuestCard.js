@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import backgroundImageUrl from "../../../assets/image/img/avtar.jpg";
 import svgIcons from "../../../assets/image/SVG/svg";
 import Nudges from "../../Common/Nudges";
 import ProgressBarSvg from "../CommonCardOne/ProgressBarSvg";
+import axios from "axios";
+import { useAuth } from "../../../context/AuthContext";
 
 const hexToRgba = (hex, opacity) => {
   let r = 0,
@@ -19,8 +21,57 @@ const hexToRgba = (hex, opacity) => {
   }
   return `rgba(${r}, ${g}, ${b}, ${opacity})`;
 };
-const HighliteReferralsQuestCard = ({ referralQuest,setNudgesClicked,setNodgesType,width='100%',maxWidth='520px', }) => {
-  console.log("refarralQuest ",referralQuest);
+const HighliteReferralsQuestCard = ({
+  referralQuest,
+  setNudgesClicked,
+  setNodgesType,
+  width = "100%",
+  maxWidth = "520px",
+}) => {
+  console.log("refarralQuest ", referralQuest);
+  const [isLinkClicked, setIsLinkClicked] = useState(false);
+  const [clickedIndex, setClickedIndex] = useState(null);
+  const { email, token } = useAuth();  // Get email and token from context
+  const [error, setError] = useState(null);
+  const handleClicked = (index, questId) => {
+      
+      const getGeneratedLink= async()=>{
+        try {
+          const response = await axios.get('https://dev.api.pitch.space/api/generated-url',{
+            params:{
+              email:email,
+              token:token,
+              questId:questId
+            }
+          });
+          if(response.status===200){
+           console.log("Labib wuwe ",questId)
+        navigator.clipboard.writeText(response.data)
+        .then(() => {
+          setClickedIndex(index);
+          setIsLinkClicked(true);
+          
+          setTimeout(() => {
+            setIsLinkClicked(false);
+          }, 2000);  // Reset after 2 seconds
+        })
+        .catch((err) => {
+          console.error("Failed to copy link: ", err);
+        });
+          }
+        } catch (error) {
+          setError('You are not valid');
+        }
+      }
+      if(email && token){
+         getGeneratedLink()
+      }
+     
+      
+     
+  };
+  
+
   return (
     <div style={{ width }} className="common-card-container">
       {referralQuest.length > 0
@@ -32,7 +83,7 @@ const HighliteReferralsQuestCard = ({ referralQuest,setNudgesClicked,setNodgesTy
 
             return (
               <div
-                className="common-card-one"
+                className="referrals-card-wrapper"
                 key={habit.questId || index}
                 style={{
                   backgroundColor, // Use the dynamic color with opacity
@@ -44,7 +95,7 @@ const HighliteReferralsQuestCard = ({ referralQuest,setNudgesClicked,setNodgesTy
                   style={{
                     display: "flex",
                     justifyContent: "space-between",
-                    alignItems: "center",
+                    alignItems: "flex-end",
                   }}
                 >
                   <div>
@@ -56,66 +107,53 @@ const HighliteReferralsQuestCard = ({ referralQuest,setNudgesClicked,setNodgesTy
                         </span>
                       </p>
                     )}
-                    <div className="circle-progress">
+
+                    <div className="circle-progress-text">
                       <ProgressBarSvg
                         progress={habit.progress || "50"}
                         progressColor={habit.gradientColor}
                       />
                       <div className="details">
-                        <span className="details-text">Community updates</span>
-                        <br />
-                        <span>
-                          {habit?.completedReferrals} out of{" "}
-                          {habit?.sentReferrals}
+                        <span className="referrals-details-text">
+                          Referrals
                         </span>
                         <br />
-                        {/* <span
-                          style={{
-                            color: "rgba(6, 24, 44, 0.8)",
-                            fontSize: "0.7rem",
-                          }}
-                        >
-                          in {habit.targetDay} ({habit.dayLeft} days left)
-                        </span> */}
+                        <span style={{ fontSize: "30px", fontWeight: "400" }}>
+                          1
+                        </span>
+                        <span style={{ color: "#06182CCC", fontSize: "15px" }}>
+                          {" "}
+                          confrimed
+                        </span>
+                        <br />
+                        <span className="text-ellipsis-referrals">
+                          out of 4 sent so far
+                        </span>
                       </div>
                     </div>
                   </div>
                   <div className="button-streaks">
-                    <div className="icon-text">
-                      {habit.completedStreak > 0 ? (
-                        <div
-                          dangerouslySetInnerHTML={{ __html: svgIcons.streak }}
-                          style={{ marginRight: "5px" }}
-                        />
-                      ) : (
-                        <div
-                          dangerouslySetInnerHTML={{
-                            __html: svgIcons.empty_streak,
-                          }}
-                          style={{ marginRight: "5px" }}
-                        />
-                      )}
-                      <p style={{ whiteSpace: "nowrap" }}>
-                        {habit.completedStreak} Streaks
-                      </p>
-                    </div>
-                    <button className="go-button">Go</button>
+                    <button onClick={()=>handleClicked(index,habit.questId)} className="referrals-go-button">
+                      {(isLinkClicked && clickedIndex===index)? "Copied" : "Invite"}
+                    </button>
                   </div>
                 </div>
-                {/* <Nudges
-                  Icon={
-                    parseInt(habit.completedStreak) ===
-                    parseInt(habit.completionTarget[0])
-                      ? "wow_small"
-                      : "letsGo"
-                  }
-                  remaining={
-                    parseInt(habit.completionTarget[0]) -
-                    parseInt(habit.completedStreak)
-                  }
+                <Nudges
+                  // Icon={
+                  //   parseInt(habit.completedStreak) ===
+                  //   parseInt(habit.completionTarget[0])
+                  //     ? "wow_small"
+                  //     : "letsGo"
+                  // }
+                  // remaining={
+                  //   parseInt(habit.completionTarget[0]) -
+                  //   parseInt(habit.completedStreak)
+                  // }
+                  questType="Referral Quest"
+                  Icon="wow_small"
                   setNudgesClicked={setNudgesClicked} // Pass setNudgesClicked as a prop
                   setNodgesType={setNodgesType}
-                /> */}
+                />
               </div>
             );
           })

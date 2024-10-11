@@ -13,6 +13,7 @@ import { useAuth } from "../../context/AuthContext";
 import axios from "axios";
 import QuestionModal from "./QuestionModal";
 import LinkModal from "./LinkModal";
+import Nudges from "../Common/Nudges";
 
 const Servey = ({ width = "100%", maxWidth = "100%", onClose, questId,setCompleteSurveyQuestion }) => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -23,6 +24,7 @@ const Servey = ({ width = "100%", maxWidth = "100%", onClose, questId,setComplet
   const [pointCal,setPointCal]=useState(20)
   const [questAction, setQuestAction] = useState(null);
   const [data,setData]=useState(null)
+  const [isFinisedClicked,setIsFinisedClicked]=useState(null)
   // const [idx,setIdx]=useState(0)
   // const [questAnswer,setQuestAnswer]=useState([])
   
@@ -60,29 +62,25 @@ const Servey = ({ width = "100%", maxWidth = "100%", onClose, questId,setComplet
     }
   }, [email, token]);
 
-  const sendSurveyAnswers = async () => {
-  
-    setCompleteSurveyQuestion(true)
+  const addPoints=async(data)=>{
     try {
-      const response = await axios.post(
-        `https://dev.api.pitch.space/api/survey-quest-answers?email=${email}&token=${token}&questId=${questId}`,
+      const response = await axios.post(`https://dev.api.pitch.space/api/player-info-for-quest?email=${email}&token=${token}&questId=${questId}`,
         {
-            questId: questId,
-            playerId: '', 
-            ActionId: '', 
-            QuestAnswer: [{
-             
-            }]
-        
-
+          points:data
         }
-        
-      );
-
-      console.log('Response:', response.data);
+    )
     } catch (error) {
-      console.error('Error posting survey answers:', error);
+      throw error;
     }
+  }
+
+  const sendSurveyAnswers = async () => {
+    setIsFinisedClicked(true)
+    try {
+       await addPoints((questAnswer.length*20));
+    } catch (error) {
+      
+    }   
   };
  
  
@@ -135,7 +133,7 @@ const Servey = ({ width = "100%", maxWidth = "100%", onClose, questId,setComplet
   console.log("questAnswer ",questAnswer);
   return (
     <div className="servey">
-     
+      {isFinisedClicked && <Nudges/>}
       <div style={{ backgroundColor: "#FFFFFF", width, maxWidth }}>
         <div className="servery-container">
           <div className="first-part">
@@ -332,7 +330,7 @@ const Servey = ({ width = "100%", maxWidth = "100%", onClose, questId,setComplet
               />
             </div>}
             {tempQuestion===questionNo-1 && <div className="finish">
-               <button onClick={sendSurveyAnswers} className="finish">Finish</button>
+               <button onClick={()=>sendSurveyAnswers()} className="finish">Finish</button>
             </div>}
 
             {tempQuestion < questionNo && tempQuestion !== questionNo - 1 && (

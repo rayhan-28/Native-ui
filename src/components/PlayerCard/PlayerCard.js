@@ -9,6 +9,8 @@ const Card = ({ profileImg, width = "100%", maxWidth = "520px" }) => {
   const [playerData, setPlayerData] = useState(null);
   const [error, setError] = useState(null);
   const [isClicked,setIsClicked]=useState(false)
+  const [shouldRefetch, setShouldRefetch] = useState(false); 
+
   const getOrdinalSuffix = (rank) => {
     if (rank % 10 === 1 && rank % 100 !== 11) {
       return "st";
@@ -20,32 +22,36 @@ const Card = ({ profileImg, width = "100%", maxWidth = "520px" }) => {
       return "th";
     }
   };
-  useEffect(() => {
-    // Make an API call with the stored email and token
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          "https://dev.api.pitch.space/api/player-info",
-          {
-            params: {
-              email: email,
-              token: token,
-            },
-          }
-        );
-        console.log(email);
-        if (response.status === 200) {
-          setPlayerData(response.data?.data);
-          console.log("hlw");
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(
+        "https://dev.api.pitch.space/api/player-info",
+        {
+          params: { email, token },
         }
-      } catch (err) {
-        setError("You are not valid");
+      );
+      if (response.status === 200) {
+        setPlayerData(response.data?.data);
       }
-    };
-    if (email && token) {
-      fetchData(); // Only fetch if both email and token are set
+    } catch (err) {
+      setError("You are not valid");
     }
-  }, [email, token, isClicked]);
+  };
+
+
+  useEffect(() => {
+    if (email && token) {
+      fetchData(); // Fetch player data initially
+    }
+  }, [email, token]);
+
+  // Refetch player data when shouldRefetch changes to true
+  useEffect(() => {
+    if (shouldRefetch) {
+      fetchData();
+      setShouldRefetch(false); // Reset after refetch
+    }
+  }, [shouldRefetch]);
 
   const radius = 40;
   const circumference = 2 * Math.PI * radius;
@@ -321,7 +327,7 @@ const Card = ({ profileImg, width = "100%", maxWidth = "520px" }) => {
       }}
     >
       {/* top */}
-      {isClicked && <PlayerCharacterOverlay Player={playerData} onClose={()=>setIsClicked(false)}/>}
+      {isClicked && <PlayerCharacterOverlay Player={playerData} onClose={()=>setIsClicked(false)} setShouldRefetch={setShouldRefetch}/>}
     {error? <h1>Please give correct credentials</h1>:<>  <div className="player-card-top">
         <div className="player-card-img">
           <img

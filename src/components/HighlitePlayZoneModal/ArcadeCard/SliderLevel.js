@@ -77,7 +77,6 @@ const SliderLevel = () => {
               });
               console.log(email)
               if (response.status === 200) {
-                  console.log(response.data)
                   setData(response.data);
                   console.log("hlw")
               }
@@ -88,8 +87,16 @@ const SliderLevel = () => {
       if (email && token) {
           fetchData();  // Only fetch if both email and token are set
       }
-  }, [email, token]);
+  }, [email,token,data?.data?.currentLevel]);
+  // SwiperCore.use([]);
  console.log(data)
+ console.log("labib cureen check ",data?.data?.currentLevel)
+ const [currentIndex, setCurrentIndex] = useState(data?.data?.currentLevel);
+ const calculateProgress = (currentIndex) => {
+  const totalLevels = Levels.length;
+  const progressPercentage = (currentIndex / (totalLevels - 1)) * 100;
+  return progressPercentage;
+};
   return (
     <>
       <div className="top-part">
@@ -106,34 +113,41 @@ const SliderLevel = () => {
           dangerouslySetInnerHTML={{ __html: svgIcons.edit }}
         />
       </div>
+      <div style={{height:'15px'}}/>
       <div className="slider-level-container">
-        <Swiper
-          slidesPerView={4}
-          spaceBetween={30}
-          centeredSlides={Levels[data?.data?.currentLevel]}
-          initialSlide={data?.data?.currentLevel}
-        >
-          {Levels.map((level, index) => (
-            <SwiperSlide key={index}>
-              <p
-                style={{ fontWeight: "bold" }}
-                className={`level-text ${
-                  data?.data?.currentLevel === index ? "active-level" : "inactive-level"
-                }`}
-              >
-                {level}
-              </p>
-              {index === data?.data?.currentLevel && <div className="progressbar"/>}
-              {index === data?.data?.currentLevel && <div className="circle" />}
-              {index === data?.data?.currentLevel && (
-                <p style={{}} className="nextlevel">
-                  ({data?.data?.requiredPointToLevelUp} to level up)
-                </p>
-              )}
-            </SwiperSlide>
-          ))}
-        </Swiper>
+      <div className="progressbar-wrapper">
+        <div
+          className="progressbar"
+          style={{ width:'100%' }}
+        />
       </div>
+      {data?.data?.currentLevel !== undefined && (
+          <Swiper
+            key={data?.data?.currentLevel} // Reinitialize Swiper when currentLevel changes
+            slidesPerView={4}
+            spaceBetween={30}
+            centeredSlides
+            initialSlide={data?.data?.currentLevel}
+            onSlideChange={(swiper) => setCurrentIndex(swiper.activeIndex)}
+          >
+            {Levels.map((level, index) => (
+              <SwiperSlide key={index}>
+                <p
+                  style={{ fontWeight: "bold" }}
+                  className={`level-text ${data?.data?.currentLevel === index ? "active-level" : "inactive-level"}`}
+                >
+                  {level}
+                </p>
+                {index === data?.data?.currentLevel && <div className="circle" />}
+                {index === data?.data?.currentLevel && (
+                  <p className="nextlevel">({data?.data?.requiredPointToLevelUp} to level up)</p>
+                )}
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        )}
+      </div>
+      <div style={{height:'10px'}}/>
 
       <div className="point-part">
         <div>
@@ -151,6 +165,8 @@ const SliderLevel = () => {
           </p>
         </div>
       </div>
+
+      <div style={{height:'15px'}}/>
       
       <div className="quest-name">
         <p

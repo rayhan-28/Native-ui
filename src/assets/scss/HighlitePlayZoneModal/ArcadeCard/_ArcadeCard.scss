@@ -25,9 +25,11 @@
  
 
   .slider-level-container {
+    position: relative;
+    width: 100%;
     .level-text {
       font-size: 15px;
-      text-align: center;
+      text-align: start;
       transition: color 0.3s ease-in-out;  // Smooth transition when changing active slide
   
       &.active-level {
@@ -40,28 +42,28 @@
     }
   }
 
-  .progressbar{
-  background-color: #FFFFFF;
-  width: 100vw;
-  height: 2px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  overflow-x: visible;
-  
-   margin-left: -400px; /* Negative margin to overflow content from left */
-
-   @media (max-width: 490px) {
-    margin-left: -100px; 
-  }
-
+  .progressbar-wrapper {
+    position: absolute;
+    top: 37px; /* Adjust based on design */
+    left: 0;
+    width: 100%;
+    overflow-x: visible;
+    height: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    .progressbar {
+      background-color: #FFFFFF;
+      height: 2px;
+      transition: width 0.3s ease;
+    }
   }
 
   .circle{
     position: relative;
     top: -5.5px;
-    left: 80px;
+    left: 60px;
 
     background-color: #FFFFFF;
     width: 10px;

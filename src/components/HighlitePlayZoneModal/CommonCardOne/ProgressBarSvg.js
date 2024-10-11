@@ -16,7 +16,7 @@ const ProgressBarSvg = ({progress,progressColor}) => {
               cy="50"
               r={radius}
               fill="none"
-              stroke="#f0e6f3"
+              stroke="#FFFFFF80"
               strokeWidth="12"
             />
 

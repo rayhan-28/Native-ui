@@ -54,6 +54,7 @@ const PlayerCharacterOverlay = ({
   Player,
   onClose,
   menuButtonIsVisible,
+  setShouldRefetch,
 }) => {
   const [currentIndex, setCurrentIndex] = useState(
     Player?.playerAvatar ? Number(Player.playerAvatar.split(",")[1]) : 2
@@ -81,7 +82,9 @@ const PlayerCharacterOverlay = ({
       const response = await axios.post(`https://dev.api.pitch.space/api/player-info?email=${email}&token=${token}`, {
         playerAvatar: backupPlayer.playerAvatar
       });
-
+      if (response.status === 200) {
+        setShouldRefetch(true)
+      }
    
     } catch (err) {
       setError('You are not valid');
@@ -191,7 +194,7 @@ const PlayerCharacterOverlay = ({
           isEnabled={true}
           onClick={() => {
             onPlayerAvaterSaved();
-            onClose()
+            onClose();
           }}
         >
           Save

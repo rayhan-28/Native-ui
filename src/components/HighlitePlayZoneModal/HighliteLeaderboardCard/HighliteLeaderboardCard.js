@@ -266,7 +266,7 @@ const HighliteLeaderboardCard = () => {
         </table>
       </div>
       {/* Second table to show only the row with the email field */}
-      {myRowData && (
+      {myRowData?.rank>5 && (
         <table className="leaderboard-table">
           <tbody
             style={{
