@@ -15,7 +15,13 @@ import QuestionModal from "./QuestionModal";
 import LinkModal from "./LinkModal";
 import Nudges from "../Common/Nudges";
 
-const Servey = ({ width = "100%", maxWidth = "100%", onClose, questId,setCompleteSurveyQuestion }) => {
+const Servey = ({ width = "100%", 
+   maxWidth = "100%",
+   onClose, 
+   questId,
+   isFinisedClickedServey,
+   setIsFinisedClickedServey,
+  }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [linkError,setLinkError]=useState(false)
   const [isExpanded, setIsExpanded] = useState(false);
@@ -24,10 +30,6 @@ const Servey = ({ width = "100%", maxWidth = "100%", onClose, questId,setComplet
   const [pointCal,setPointCal]=useState(20)
   const [questAction, setQuestAction] = useState(null);
   const [data,setData]=useState(null)
-  const [isFinisedClicked,setIsFinisedClicked]=useState(null)
-  // const [idx,setIdx]=useState(0)
-  // const [questAnswer,setQuestAnswer]=useState([])
-  
   const [questAnswer, setQuestAnswer] = useState([]);
 
   const toggleText = () => {
@@ -75,9 +77,10 @@ const Servey = ({ width = "100%", maxWidth = "100%", onClose, questId,setComplet
   }
 
   const sendSurveyAnswers = async () => {
-    setIsFinisedClicked(true)
     try {
        await addPoints((questAnswer.length*20));
+       onClose();
+       setIsFinisedClickedServey(true);
     } catch (error) {
       
     }   
@@ -125,16 +128,13 @@ const Servey = ({ width = "100%", maxWidth = "100%", onClose, questId,setComplet
     setModalVisible(false);
     setLinkError(false)
   }
-  // console.log(pointCal)
-  // console.log("questAction = ",questionNo);
-  // console.log("tempQuestion = ",tempQuestion);
-  // console.log("check link",linkError)
-  // console.log(data.profileImage)
+
   console.log("questAnswer ",questAnswer);
-  return (
-    <div className="servey">
-      {isFinisedClicked && <Nudges/>}
-      <div style={{ backgroundColor: "#FFFFFF", width, maxWidth }}>
+  return ( 
+   <>
+  
+   <div className="servey">
+       <div style={{ backgroundColor: "#FFFFFF", width, maxWidth }}>
         <div className="servery-container">
           <div className="first-part">
             <div className="icon-name">
@@ -384,6 +384,8 @@ const Servey = ({ width = "100%", maxWidth = "100%", onClose, questId,setComplet
       )}
       
     </div>
+    
+    </>
   );
 };
 

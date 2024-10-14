@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import svgIcons from '../../../assets/image/SVG/svg'
 import Nudges from '../../Common/Nudges';
+import NudgesServey from '../../Common/NudgesServey';
 
 
 const hexToRgba = (hex, opacity) => {
@@ -22,8 +23,11 @@ const HighliteServeyQuestCard = ({
   serveyQuest,
   setIsServeyGoClicked,
   setQuestId,
-  setTypeOfQuest,
   setReward,
+  setIsFinisedClickedServey,
+  isFinisedClickedServey,
+  isAnswerIsCompleted,
+   setIsAnswerIsCompleted
   }) => {
   
   const [showSuccess, setShowSuccess] = useState(false);
@@ -78,14 +82,19 @@ const HighliteServeyQuestCard = ({
         </div>
         <button onClick={() => onGoClicked(habit?.questId)} className='servey-button'>Go</button>
       </div>
-     
-        <Nudges
+      <div style={{height:'10px'}}/>
+        <NudgesServey 
          questType="Survey Quest"
          setIsServeyGoClicked={setIsServeyGoClicked}
-         setTypeOfQuest={setTypeOfQuest}
+         isFinisedClickedServey={isFinisedClickedServey}
+         setIsFinisedClickedServey={setIsFinisedClickedServey}
          questId={habit?.questId}
          setQuestId={setQuestId}
+         isAnswerIsCompleted={isAnswerIsCompleted} 
+         setIsAnswerIsCompleted={setIsAnswerIsCompleted} 
+         isCompleted=""
         />
+        
       
     </div>
     )

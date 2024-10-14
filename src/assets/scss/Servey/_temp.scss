@@ -1,0 +1,47 @@
+.temp-top {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+  
+  .temp-container {
+    position: relative;
+    width: 700px;
+    height: 700px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .image-container {
+    width: 500px; /* Small image container */
+    height: 500px;
+    background: #f9f9f9;
+    display: flex;
+    flex-direction: column;
+    position: relative; /* Position relative to control the Cropper's absolute position */
+    cursor: pointer;
+  }
+  
+  .placeholder-image {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .controls {
+    margin-top: 20px;
+  }
+  
+  .cropper-container {
+    width: 500px; /* Larger Cropper */
+    height: 500px;
+    position: absolute;
+    margin-bottom: 100px;
+  }
+  

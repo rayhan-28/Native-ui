@@ -4,10 +4,13 @@ import svgIcons from '../../../assets/image/SVG/svg';
 import getCroppedImg from '../../../utils'; // Import your utility function
 import {useUploadImage} from '../../../hooks/useCloudinaryUpload'
 import axios from 'axios';
+import { AdvancedImage } from '@cloudinary/react';
+import { Cloudinary } from '@cloudinary/url-gen/index';
 
 const UploadImage = ({ uploadedImg, questAnswer, setQuestAnswer, IsMultiSelection, MaxSelectionOrUpload }) => {
   console.log(IsMultiSelection)
   const [images, setImages] = useState(Array(uploadedImg).fill(null));
+  const [imagePublicId,setImagePublicId]=useState([])
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
   const [countImg, setCountImg] = useState(0);
@@ -72,6 +75,7 @@ const UploadImage = ({ uploadedImg, questAnswer, setQuestAnswer, IsMultiSelectio
           //setImages([r?.url])
           setSavedClicked(false);
           setCropperOpen(false);
+          setImagePublicId((prevPublicIds) => [...prevPublicIds, r.publicId]);
         } else if (!r.wasSuccessful) {
           console.log("error misbah = ",r.errorMessage);
           setSavedClicked(false);
@@ -82,14 +86,18 @@ const UploadImage = ({ uploadedImg, questAnswer, setQuestAnswer, IsMultiSelectio
            setCropperOpen(false);
         }
     }
-  );
-
+  ); 
+  console.log("imagePublicId ",imagePublicId);
    // Start uploading an image if necessary
    useEffect(() => {
-        if (isSavedClicked && newAssetToUpload && uploadConfig && images) {
-            uploadImage();
-        }
-    }, [images, isSavedClicked, uploadImage]);
+    if (isSavedClicked && images[currentIndex]) {
+      if (!isUploadingImage) {
+        uploadImage();
+      }
+    }
+  }, [isSavedClicked, uploadImage, currentIndex, isUploadingImage]);
+  
+  
 
   const handleImageUpload = (index) => {
     if (!IsMultiSelection && countImg === 1) {
@@ -107,13 +115,14 @@ const UploadImage = ({ uploadedImg, questAnswer, setQuestAnswer, IsMultiSelectio
     input.type = 'file';
     input.accept = 'image/*';
     input.onchange = (e) => {
-      const file = e.target.files[0];
+      const file = e.target.files[0]; 
       if (file) {
         const fileType = file && file.type;
         setImageToUpload({
           url: URL.createObjectURL(file),
           fileType: fileType
         })
+        console.log("hlw cropped");
         setCropperOpen(true);
       }
     };
@@ -126,22 +135,52 @@ const UploadImage = ({ uploadedImg, questAnswer, setQuestAnswer, IsMultiSelectio
 
   const saveCroppedImage = async () => {
     setSavedClicked(true);
+    console.log("-----labib---",imageToUpload);
+    console.log("----jahir---",croppedAreaPixels);
     if (imageToUpload && croppedAreaPixels) {
+
       const croppedImage = await getCroppedImg(imageToUpload?.url, croppedAreaPixels);
+
+      // Create a file-like object from the cropped image
+    const imageResponse = await fetch(croppedImage);
+    const imageData = await imageResponse.blob();
+    const croppedFile = new File([imageData], 'croppedImage.png', { type: 'image/png' });
+
+    // Store the cropped image in the upload state
+    setImageToUpload({
+      url: URL.createObjectURL(croppedFile),
+      fileType: 'image/png'
+    });
+
+
       const newImages = [...images];
       newImages[currentIndex] = croppedImage;
+      console.log("hllw labib")
       setImages(newImages);
-      setImageToUpload(null);
+      // setImageToUpload(null);
       setCroppedAreaPixels(null);
       setCountImg(prevCount => prevCount + 1); // Increment the count of uploaded images
-    }
+    } 
   };
 
   const cancelCrop = () => {
     setCropperOpen(false);
-    setImageToUpload(null);
-    setCroppedAreaPixels(null);
+    setImageToUpload(null); 
+    setCroppedAreaPixels(null); 
   };
+
+  const cld = new Cloudinary({
+    cloud:{
+      cloudName:'pitchspace'
+    },
+    url:{
+      secure:true   
+    }
+  })
+  console.log("get image url : ",cld.image(newAssetToUpload?.publicId));
+
+  console.log("-----> ",newAssetToUpload);  
+  console.log("rayhan ---->",images);
 
   return (
     <>
@@ -156,15 +195,29 @@ const UploadImage = ({ uploadedImg, questAnswer, setQuestAnswer, IsMultiSelectio
             onClick={() => handleImageUpload(index)}
           >
             {image ? (
-              <img
-                src={image}
-                alt={`Uploaded ${index}`}
-                style={{
-                  width: '100%', // Ensure the image takes full width of the container
-                  height: '100%', // Ensure the image takes full height of the container
-                  objectFit: 'cover', // Crop the image to fit the container
-                }}
-              />
+              <>
+               <div style={{ height: '100%', width: '100%', position: 'relative' }}>
+      <AdvancedImage 
+        cldImg={cld.image(imagePublicId[index])}
+        style={{
+          width: '100%',    // Full width of the container
+          height: '100%',   // Full height of the container
+          objectFit: 'cover', // Ensure the image covers the container
+          borderRadius:'8px'
+          
+        }} 
+      />
+    </div>
+              </>
+              // <img
+              //   src={image}
+              //   alt={`Uploaded ${index}`}
+              //   style={{
+              //     width: '100%', // Ensure the image takes full width of the container
+              //     height: '100%', // Ensure the image takes full height of the container
+              //     objectFit: 'cover', // Crop the image to fit the container
+              //   }}
+              // /> 
             ) : (
               <div className='circle'>
                 <div dangerouslySetInnerHTML={{ __html: svgIcons.blankImage }} />

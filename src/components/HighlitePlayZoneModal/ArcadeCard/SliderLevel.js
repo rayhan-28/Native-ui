@@ -126,7 +126,7 @@ const SliderLevel = () => {
             key={data?.data?.currentLevel} // Reinitialize Swiper when currentLevel changes
             slidesPerView={4}
             spaceBetween={30}
-            centeredSlides
+            centeredSlides={data?.data?.currentLevel}
             initialSlide={data?.data?.currentLevel}
             onSlideChange={(swiper) => setCurrentIndex(swiper.activeIndex)}
           >

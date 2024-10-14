@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@cloudinary/react": "^1.13.0",
+    "@cloudinary/url-gen": "^1.21.0",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -10,6 +12,7 @@
     "axios": "^1.7.7",
     "bedata-countries": "^1.0.0",
     "bootstrap": "^5.3.3",
+    "cloudinary-react": "^1.8.1",
     "native_react_sdk": "file:native_react_sdk-1.0.0.tgz",
     "react": "^18.3.1",
     "react-bootstrap": "^2.10.4",

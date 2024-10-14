@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import backgroundImageUrl from "../../../assets/image/img/avtar.jpg";
 import svgIcons from "../../../assets/image/SVG/svg";
 import Nudges from "../../Common/Nudges";
 import ProgressBarSvg from "../CommonCardOne/ProgressBarSvg";

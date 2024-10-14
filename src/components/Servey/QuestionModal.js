@@ -2,7 +2,7 @@ import React from 'react';
 import svgIcons from '../../assets/image/SVG/svg';
 // import './QuestionModal.css'; // Assuming you will create some CSS for styling
 
-const QuestionModal = ({ onClose ,text}) => {
+const QuestionModal = ({ onClose ,text,OnCloseCompleteOverlay,}) => {
   return (
     <div className="modal-overlay">
       <div className="modal-content">

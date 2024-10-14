@@ -8,6 +8,8 @@ export default async function getCroppedImg(imageSrc, pixelCrop) {
   
     canvas.width = pixelCrop.width;
     canvas.height = pixelCrop.height;
+    console.log("x " ,pixelCrop.x);
+    console.log("y " ,pixelCrop.y);
   
     ctx.drawImage(
       image,
@@ -20,7 +22,7 @@ export default async function getCroppedImg(imageSrc, pixelCrop) {
       pixelCrop.width,
       pixelCrop.height
     );
-  
+     
     return new Promise((resolve) => {
       canvas.toBlob((blob) => {
         const file = new File([blob], 'croppedImage.png', { type: 'image/png' });
@@ -29,4 +31,6 @@ export default async function getCroppedImg(imageSrc, pixelCrop) {
       }, 'image/png');
     });
   }
+
+  
   

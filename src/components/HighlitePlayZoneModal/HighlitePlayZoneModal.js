@@ -10,6 +10,8 @@ import axios from 'axios';
 import { useAuth } from '../../context/AuthContext';
 import Servey from '../Servey/Servey';
 import SuccessScreenWihoutReward from '../Servey/SuccessScreen/SuccessScreenWihoutReward';
+import NdugesServeyQuestOverlay from '../Common/NdugesServeyQuestOverlay';
+import QuestionModal from '../Servey/QuestionModal';
 
 const HighlitePlayZoneModal = ({ width = '550px' }) => {
   const [isOpen, setIsOpen] = useState(true);
@@ -26,7 +28,9 @@ const HighlitePlayZoneModal = ({ width = '550px' }) => {
   const [reward,setReward]=useState(null);
   const [typeOfQuest,setTypeOfQuest]=useState(null)
   const [completeSurveyQuestion,setCompleteSurveyQuestion]=useState(false)
-
+  const [isFinisedClickedServey,setIsFinisedClickedServey]=useState(null)
+  const [isAnswerIsCompleted,setIsAnswerIsCompleted]=useState(false)
+  
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -70,14 +74,27 @@ const HighlitePlayZoneModal = ({ width = '550px' }) => {
 
   if (!isOpen) return null;
 
+  const OnCloseServeyOverlay = () => {
+    setIsFinisedClickedServey(false)
+    console.log("jahir click");
+  }
+
   return (
     <div className='highlite-modal-overlay'>
       <div className={`highlite-modal ${isServeyClicked ? 'no-padding' : ''}`}
         style={{ width: width}}
-      >
-        {isServeyClicked && <Servey setCompleteSurveyQuestion={setCompleteSurveyQuestion} onClose={() => setIsServeyGoClicked(false)} questId={questId}/>}
+      > 
+      {isAnswerIsCompleted && <QuestionModal text="You already play the quest" onClose={()=>setIsAnswerIsCompleted(false)}/>}
+      {isFinisedClickedServey &&  <NdugesServeyQuestOverlay   OnCloseServeyOverlay={OnCloseServeyOverlay} />}
+      {isServeyClicked && <Servey 
+        setCompleteSurveyQuestion={setCompleteSurveyQuestion} 
+        onClose={() => setIsServeyGoClicked(false)} 
+        setIsFinisedClickedServey={setIsFinisedClickedServey}
+        isFinisedClickedServey={isFinisedClickedServey}
+        questId={questId}
+      />}
         {nudgesClicked && <SuccessScreenWihoutReward onClose={()=>setNudgesClicked(false)} nodgesType={nodgesType} />}
-         {!isServeyClicked && !nudgesClicked && <>
+         {!isServeyClicked && !nudgesClicked && !isFinisedClickedServey && <>
         <div className="top-card"
           style={{
             backgroundColor:'#9a7eff',
@@ -127,8 +144,8 @@ const HighlitePlayZoneModal = ({ width = '550px' }) => {
               setIsServeyGoClicked={setIsServeyGoClicked}
               setQuestId={setQuestId}
               setReward={setReward}
-              setTypeOfQuest={setTypeOfQuest}
-              
+              isAnswerIsCompleted={isAnswerIsCompleted} 
+              setIsAnswerIsCompleted={setIsAnswerIsCompleted} 
             />
           }
 

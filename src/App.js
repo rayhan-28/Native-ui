@@ -41,6 +41,9 @@ import Servey from "./components/Servey/Servey";
 import SuccessScreenWihoutReward from "./components/Servey/SuccessScreen/SuccessScreenWihoutReward";
 import PlayerCharacterOverlay from "./components/PlayerCard/PlayerCharacterOverlay";
 import AlertOverly from "./components/PlayerCard/AlertOverly";
+import NdugesServeyQuestOverlay from "./components/Common/NdugesServeyQuestOverlay";
+import NudgesServey from "./components/Common/NudgesServey";
+import Temp from "./components/Servey/EngagementAnswer/Temp";
 
 function App() {
   // const [showSuccess, setShowSuccess] = useState(false);
@@ -53,13 +56,16 @@ function App() {
   const token = '4733788f-783d-455f-a2b7-3b1815e53196';
   return (
     <AuthProvider email={email} token={token}>
-     {/* <HighlitePlayZoneModal/> */}
+     <HighlitePlayZoneModal/>
      {/* <SuccessScreenWihoutReward/> */}
-     <Card />
+     {/* <Card /> */}
      {/* <AlertOverly/> */}
      {/* <Servey/> */}
      {/* <MomentSuccess/> */}
      {/* <PlayerCharacterOverlay/> */}
+     {/* <NdugesServeyQuestOverlay/> */}
+     {/* <NudgesServey/> */}
+    {/* <Temp/> */}
     </AuthProvider>
   );
 }
