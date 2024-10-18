@@ -1,4 +1,5 @@
 import React from 'react'
+import svgIcons from '../../assets/image/SVG/svg'
 
 const NugesReferrals = ({
     questType='Referral Quest'
@@ -8,11 +9,9 @@ const NugesReferrals = ({
 
     }
   return (
-    <div className="last-part-quest" >
-    <div className="icon-text-quest">
+    <div className="Nudges-quest" >
+      <div className="icon-text-quest">
      
-     
-
     {questType==='Referral Quest' &&
      <>
      <div

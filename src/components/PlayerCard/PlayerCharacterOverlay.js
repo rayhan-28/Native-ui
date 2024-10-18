@@ -14,8 +14,7 @@ import SwiperCore from 'swiper';
 // import "swiper/swiper.min.css";
 import 'swiper/swiper-bundle.css'
 import 'swiper/css'
-import 'swiper/scss'
-import svgIcons from "../../assets/image/SVG/svg";
+// import 'swiper/scss'
 import AlertOverly from "./AlertOverly";
 import { useAuth } from "../../context/AuthContext";
 import axios from "axios";
@@ -115,7 +114,7 @@ const PlayerCharacterOverlay = ({
 
   return (
     <div
-      className="overlay"
+      className="player-character-overlay"
       onClick={() => setIsOverlayClicked(true)}
     >
       {isOverlayClicked && 
@@ -129,20 +128,20 @@ const PlayerCharacterOverlay = ({
       }
       
       <div
-        className={`wrapper ${!menuButtonIsVisible ? 'centered' : ''}`}
+        className={`player-character-wrapper ${!menuButtonIsVisible ? 'centered' : ''}`}
         onClick={(e) => e.stopPropagation()}
       >
         
         <div style={{ width: '0', height: '5px', flexShrink: 0, flexGrow: 0 }}></div>
 
-        <div className="text-container">
-            <p className="text-cheked">
+        <div className="player-character-text-container">
+            <p className="player-character-text-cheked">
               Select your character
             </p>
         </div>
         <div style={{ width: '0', height: '25px', flexShrink: 0, flexGrow: 0 }}></div>
 
-        <div className="row">
+        <div className="player-character-row">
           <Swiper
             onSwiper={setSwiperInstance} // Get swiper instance
             grabCursor={true}
@@ -190,7 +189,7 @@ const PlayerCharacterOverlay = ({
         </div>
         <div style={{ width: '0', height: '25px', flexShrink: 0, flexGrow: 0 }}></div>
         <button
-         className="btn-player-card"
+         className="player-character-btn"
           isEnabled={true}
           onClick={() => {
             onPlayerAvaterSaved();

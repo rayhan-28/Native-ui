@@ -1,0 +1,39 @@
+@font-face {
+    font-family: 'Soehne';
+    src: url('../public/fonts/soehne-web-leicht.woff2') format('woff2'),
+        url('../public/fonts/soehne-web-leicht.woff') format('woff'),
+        url('../public/fonts/soehne-web-leicht.eot') format('eot');
+    font-weight: 200;
+    font-style: normal;
+    font-display: swap;
+  }
+  
+  @font-face {
+    font-family: 'Soehne';
+    src: url('../public/fonts/soehne-web-buch.woff2') format('woff2'),
+        url('../public/fonts/soehne-web-buch.woff') format('woff'),
+        url('../public/fonts/soehne-web-buch.eot') format('eot');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+  
+  @font-face {
+    font-family: 'Soehne';
+    src: url('../public/fonts/soehne-web-kraftig.woff2') format('woff2'),
+        url('../public/fonts/soehne-web-kraftig.woff') format('woff'),
+        url('../public/fonts/soehne-web-kraftig.eot') format('eot');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+  }
+  
+  @font-face {
+    font-family: 'Soehne';
+    src: url('../public/fonts/soehne-web-dreiviertelfett.woff2') format('woff2'),
+        url('../public/fonts/soehne-web-dreiviertelfett.woff') format('woff'),
+        url('../public/fonts/soehne-web-dreiviertelfett.eot') format('eot');
+    font-weight: 800;
+    font-style: normal;
+    font-display: swap;
+  }

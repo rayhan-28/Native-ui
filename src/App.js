@@ -1,31 +1,4 @@
-// import { useState } from "react";
 
-// import Point from "./components/Point/Point";
-// import MomentSuccess from "./components/MomentSuccess/MomentSuccess";
-// import Card from "./components/PlayerCard/PlayerCard";
-// import HighlitePlayZone from "./components/HighlitePlayZoneModal/HighlitePlayZoneModal";
-// import HighlitePlayZoneModal from "./components/HighlitePlayZoneModal/HighlitePlayZoneModal";
-// function App() {
-//   // const [showSuccess, setShowSuccess] = useState(false);
-
-//   // const handleShowSuccess = () => setShowSuccess(true);
-//   // const handleCloseSuccess = () => setShowSuccess(false);
-//   return (
-//     <>
-//     {/* <div style={{alignItems:'center',justifyContent:'center',display:'flex',marginTop:'150px',flexDirection:'column',gap:'30px'}}>
-//       <button onClick={handleShowSuccess}>Show Success</button>
-//       {showSuccess && (
-//        <MomentSuccess points={150} onclose={handleCloseSuccess}/>
-//       )}
-//       <Point/>
-//     </div> */}
-//     {/* <Card/> */}
-//     <HighlitePlayZoneModal/>
-//     </>
-//   );
-// }
-
-// export default App;
 
 
 
@@ -33,17 +6,18 @@ import { useState } from "react";
 
 import Point from "./components/Point/Point";
 import MomentSuccess from "./components/MomentSuccess/MomentSuccess";
-import Card from "./components/PlayerCard/PlayerCard";
-import HighlitePlayZone from "./components/HighlitePlayZoneModal/HighlitePlayZoneModal";
-import HighlitePlayZoneModal from "./components/HighlitePlayZoneModal/HighlitePlayZoneModal";
+import PlayerCard from "./components/PlayerCard/PlayerCard";
+
+import HighlitePlayZone from "./components/PlayZone/PlayZone";
+import HighlitePlayZoneModal from "./components/PlayZone/PlayZone";
 import { AuthProvider } from "./context/AuthContext";
-import Servey from "./components/Servey/Servey";
-import SuccessScreenWihoutReward from "./components/Servey/SuccessScreen/SuccessScreenWihoutReward";
 import PlayerCharacterOverlay from "./components/PlayerCard/PlayerCharacterOverlay";
 import AlertOverly from "./components/PlayerCard/AlertOverly";
 import NdugesServeyQuestOverlay from "./components/Common/NdugesServeyQuestOverlay";
 import NudgesServey from "./components/Common/NudgesServey";
-import Temp from "./components/Servey/EngagementAnswer/Temp";
+import SurveyQuestion from "./components/PlayZone/SurveyQuest/SurveyQuestion/SurveyQuestion";
+import PlayZone from "./components/PlayZone/PlayZone";
+import './App.css';
 
 function App() {
   // const [showSuccess, setShowSuccess] = useState(false);
@@ -56,16 +30,17 @@ function App() {
   const token = '4733788f-783d-455f-a2b7-3b1815e53196';
   return (
     <AuthProvider email={email} token={token}>
-     <HighlitePlayZoneModal/>
-     {/* <SuccessScreenWihoutReward/> */}
-     {/* <Card /> */}
+     {/* <HighlitePlayZoneModal/> */}
+     <PlayerCard/>
+     {/* <PlayZone/> */}
+     
      {/* <AlertOverly/> */}
      {/* <Servey/> */}
+     {/* <SurveyQuestion/> */}
      {/* <MomentSuccess/> */}
      {/* <PlayerCharacterOverlay/> */}
      {/* <NdugesServeyQuestOverlay/> */}
      {/* <NudgesServey/> */}
-    {/* <Temp/> */}
     </AuthProvider>
   );
 }

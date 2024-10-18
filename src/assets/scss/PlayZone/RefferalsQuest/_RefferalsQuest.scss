@@ -1,0 +1,111 @@
+.referrals-card-wrapper {
+  display: flex;
+  background-color: #d4a6ab;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0);
+  padding: 15px 12px;
+  margin: auto;
+  gap: 15px;
+  flex-direction: column;
+ 
+  max-width: 550px;
+  justify-content: space-between;
+   
+  
+  .referrals-voucher {
+    padding: 2px 16px;
+    background-color: #e7e7e7;
+    background: linear-gradient(90deg, rgba(255, 152, 255, 0.5) 0%, rgba(255, 255, 255, 0) 100%);
+
+    font-size: 0.8rem;
+    border-radius: 15px;
+    overflow: hidden; // Hide overflow
+    white-space: nowrap; // Prevent line breaks
+    width: 100%; // Ensure it takes full width of the parent
+    max-width: 246px; // Set a max width as needed
+    cursor: pointer;
+    position: relative;
+
+    .scroll-text {
+      display: inline-block;
+      position: relative;
+      
+      left: 0; // Start outside the right edge
+      animation: none; // No animation by default
+      transition: left 0.5s ease-in-out;
+
+      &:hover {
+        animation: scroll-text 5s linear infinite; // Start scrolling on hover
+        left: 0; // Reset to start position
+      }
+
+      @keyframes scroll-text {
+        0% {
+          left: 0%; // Start at the initial position
+        }
+
+        100% {
+          left: -100%; // Move left to hide
+        }
+      }
+    }
+  }
+  
+
+  .circle-progress-text {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  .referral-details{
+    display: flex;
+    flex-direction: column;
+  }
+  .referrals-details-text{
+    font-size: 14px;
+    margin: 0;
+    font-weight: 500;
+  }
+
+  .text-ellipsis-referrals {
+    margin: 0;
+    color: #06182CCC;
+    font-size: 12px;
+    font-weight: 400;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .referrals-go-button {
+    background-color: black;
+    color: #fff;
+    width: 61px;
+    height: 26px;
+    padding: 2.5px 8px;
+    border: none;
+    border-radius: 25px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: #333;
+    }
+  }
+  .button-streaks {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+ 
+
+
+  
+  }
+  
+ 
+    
+    

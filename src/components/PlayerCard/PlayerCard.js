@@ -3,8 +3,12 @@ import svgIcons from "../../assets/image/SVG/svg";
 import { useAuth } from "../../context/AuthContext";
 import axios from "axios";
 import PlayerCharacterOverlay from "./PlayerCharacterOverlay";
+import PlayrCardSvgIcons from "../../assets/image/SVG/PlayerCard/PlayerCardSvg";
+import { color } from "@cloudinary/url-gen/qualifiers/background";
+import { background } from "@cloudinary/url-gen/qualifiers/focusOn";
+import { BackgroundColor } from "@cloudinary/url-gen/actions/background/actions/BackgroundColor";
 
-const Card = ({ profileImg, width = "100%", maxWidth = "520px" }) => {
+const PayerCard = ({ profileImg, width = "100%", maxWidth = "335px" }) => {
   const { email, token } = useAuth(); // Get email and token from context
   const [playerData, setPlayerData] = useState(null);
   const [error, setError] = useState(null);
@@ -78,258 +82,21 @@ const Card = ({ profileImg, width = "100%", maxWidth = "520px" }) => {
    console.log(playerData)
 
   return (
-    // <div className="user-card">
-    //   {/* Profile section */}
-    //   <div className="profile-section">
-    //     <img
-    //       src={`https://res.cloudinary.com/pitchspace/image/upload/v1/player-icons/PlayerCharacter,3`}
-    //       style={{ height: "120px", width: "121px", borderRadius: "15px" }}
-    //     />
-    //     <div className="first-level">
-    //       <div className="name-title">
-    //         <h2 style={{ margin: "0" }}>Hi {name}</h2>
-    //         <p
-    //           style={{ marginBottom: "0", color: "#888" }}
-    //           className="subtitle"
-    //         >
-    //           YOU'RE A STAR 🎉
-    //         </p>
-    //       </div>
-
-    //       {/* Points and Ranking */}
-
-    //       <div className="status-section">
-    //         <div className="points">
-    //           <p>{points}</p>
-    //           <span>Points</span>
-    //         </div>
-    //         <div className="moments">
-    //           <p>{moments}</p>
-    //           <span>Moments</span>
-    //         </div>
-    //         <div className="ranking">
-    //           <p>
-    //             {ranking}
-    //             <sup>th</sup>
-    //           </p>
-    //           <span>Rank</span>
-    //         </div>
-    //       </div>
-    //     </div>
-    //   </div>
-
-    //   {/* Streak, rewards, and progress */}
-    //   {/* <div className="streak-section">
-    //     <div className="streak-background">
-
-    //         <p className="streak">⚡ {streak}-Week Streak</p>
-    //     </div>
-    //     <div className="isolation">
-    //     <div
-    //       dangerouslySetInnerHTML={{ __html: svgIcons.isolation }}
-    //       style={{marginRight:'3px',marginLeft:'10px'}}
-    //     />
-    //     <p style={{marginRight:'10px'}}>X1</p>
-    //     </div>
-
-    //     <div className="isolation">
-    //     <div
-    //       dangerouslySetInnerHTML={{ __html: svgIcons.stardust }}
-    //       style={{marginRight:'3px',marginLeft:'10px'}}
-    //     />
-    //     <p >150</p>
-    //     </div>
-
-    //     <div className="progress-bar">
-    //       <span
-    //         className="progress-indicator"
-    //         style={{ width: `${(2 / moments) * 100}%` }}
-    //       ></span>
-    //     </div>
-
-    //   </div> */}
-
-    //   <div className="streak-section">
-    //     <p className="voucher">8 streaks: £20 Amazon voucher</p>
-    //     <div className="icon-text">
-    // <div
-    //   dangerouslySetInnerHTML={{ __html: svgIcons.streak }}
-    //   style={{ marginRight: "5px" }}
-    // />
-    //       <p>2 Streaks</p>
-    //     </div>
-    //   </div>
-
-    //   {/* Discount and Button */}
-    //   <div className="discount-section">
-    //     <div className="circle-progress">
-    //       <svg width="100" height="100" viewBox="0 0 100 100">
-    //         {/* Background circle */}
-    //         <circle
-    //           cx="50"
-    //           cy="50"
-    //           r={radius}
-    //           fill="none"
-    //           stroke="#f5d8dc"
-    //           strokeWidth="12"
-    //         />
-    //         {/* Progress circle */}
-    //         <circle
-    //           cx="50"
-    //           cy="50"
-    //           r={radius}
-    //           fill="none"
-    //           stroke="#e4a1a9"
-    //           strokeWidth="12"
-    //           strokeDasharray={circumference}
-    //           strokeDashoffset={circumference - progress}
-    //           strokeLinecap="round"
-    //           transform="rotate(-90 50 50)" // rotate to make progress start from the top
-    //         />
-    //         <text
-    //           x="50%"
-    //           y="50%"
-    //           dominantBaseline="middle"
-    //           textAnchor="middle"
-    //           fontSize={fontSize}
-    //           fill="#000"
-
-    //         >
-    //           ★ {taskValue}
-    //         </text>
-    //       </svg>
-    //     </div>
-
-    //     <div>
-    //       <span style={{fontSize:'40px'}}>
-    //         1 out of 4
-    //       </span>
-    //       <br/>
-    //       <span>
-    //         Community updates in 7 days
-    //       </span>
-    //     </div>
-
-    //     <button className="go-button" onClick={onButtonClick}>
-    //       Go
-    //     </button>
-    //   </div>
-    // </div>
-
-    // <div className="user-card">
-    //   {/* Profile section */}
-    //   <div className="profile-section">
-    //     <h2 style={{ margin: "0" }}>Hi {name}</h2>
-    //     <div className="first-level">
-    //       <div className="name-title">
-    //         <p
-    //           style={{ marginBottom: "0", color: "#888" }}
-    //           className="subtitle"
-    //         >
-    //           <span style={{ color: "black" }}>Explorer</span>(1200 to Rookie
-    //           level)
-    //         </p>
-    //       </div>
-
-    //       {/* Points and Ranking */}
-
-    //       <div className="status-section">
-    //         <div className="points">
-    //           <p>{points}</p>
-    //           <span>Points</span>
-    //         </div>
-    //         <div className="moments">
-    //           <p>{moments}</p>
-    //           <span>Moments</span>
-    //         </div>
-    //         <div className="ranking">
-    //           <p>
-    //             {ranking}
-    //             <sup>th</sup>
-    //           </p>
-    //           <span>Rank</span>
-    //         </div>
-    //       </div>
-    //     </div>
-    //   </div>
-
-    //   <div className="streak-section">
-    //     <p class="voucher">
-    //         8 streaks: £20 Amazon voucher that is too long to fit in a single
-    //         line
-    //     </p>
-
-    //     <div className="icon-text">
-    //       <div
-    //         dangerouslySetInnerHTML={{ __html: svgIcons.streak }}
-    //         style={{ marginRight: "5px" }}
-    //       />
-    //       <p>2 Streaks</p>
-    //     </div>
-    //   </div>
-
-    //   {/* Discount and Button */}
-    //   <div className="discount-section">
-    //     <div className="circle-progress">
-    //       <svg width="100" height="100" viewBox="0 0 100 100">
-    //         {/* Background circle */}
-    //         <circle
-    //           cx="50"
-    //           cy="50"
-    //           r={radius}
-    //           fill="none"
-    //           stroke="#f5d8dc"
-    //           strokeWidth="12"
-    //         />
-    //         {/* Progress circle */}
-    //         <circle
-    //           cx="50"
-    //           cy="50"
-    //           r={radius}
-    //           fill="none"
-    //           stroke="#e4a1a9"
-    //           strokeWidth="12"
-    //           strokeDasharray={circumference}
-    //           strokeDashoffset={circumference - progress}
-    //           strokeLinecap="round"
-    //           transform="rotate(-90 50 50)" // rotate to make progress start from the top
-    //         />
-    //         <text
-    //           x="50%"
-    //           y="50%"
-    //           dominantBaseline="middle"
-    //           textAnchor="middle"
-    //           fontSize={fontSize}
-    //           fill="#000"
-    //         >
-    //           ★ {taskValue}
-    //         </text>
-    //       </svg>
-    //     </div>
-
-    //     <div>
-    //       <span style={{ fontSize: "40px" }}>1 out of 4</span>
-    //       <br />
-    //       <span>Community updates in 7 days</span>
-    //     </div>
-
-    //     <button className="go-button" onClick={onButtonClick}>
-    //       Go
-    //     </button>
-    //   </div>
-    // </div>
+ 
 
     <div
       className="player-card"
       style={{
         width,
-        maxWidth,
+        maxWidth:playerData?.featureUsingDetails?.cardWidth,
+        fontFamily:playerData?.featureUsingDetails?.fontFamily,
+        BackgroundColor:playerData?.featureUsingDetails?.primaryColor
       }}
     >
       {/* top */}
       {isClicked && <PlayerCharacterOverlay Player={playerData} onClose={()=>setIsClicked(false)} setShouldRefetch={setShouldRefetch}/>}
     {error? <h1>Please give correct credentials</h1>:<>  <div className="player-card-top">
-        <div className="player-card-img">
+       {playerData?.featureUsingDetails?.characterType===1 &&<> <div className="player-card-img">
           <img
             onClick={handleClick}
             src={
@@ -338,60 +105,67 @@ const Card = ({ profileImg, width = "100%", maxWidth = "520px" }) => {
               }`
             }
             style={{
-              height: "90px",
-              width: "90px",
+              height: "80px",
+              width: "80px",
               borderRadius: "50%",
               marginRight: "10px",
               cursor:'pointer'
             }}
           />
-        </div>
-        <div className="name-points">
-          <div className="name-title">
-            <span className="name">Ollie</span>
-            <span className="title">YOUR PROGRESS</span>
+          </div> </>
+        }
+        <div className="player-name-points">
+          <div className="player-name-title">
+            <span className="palyer-name">Ollie</span>
+            <span className="palyer-title">YOUR PROGRESS</span>
           </div>
           <div>
-            <div className="point-text">
-              <div className="points-streak-rank">
-                <span className="text">Points</span>
-                <span className="point">{playerData?.points}</span>
+            <div className="player-point-text">
+              <div className="player-points-streak-rank">
+                <div className="player-point-gap-increase" >
+                <span className="player-text">Points</span>
+                <span style={{marginTop:'6.2px'}} className="player-point">{playerData?.points}</span>
+                </div>
               </div>
 
-              <div className="points-streak-rank">
-                <span className="text">Streaks</span>
-                <span className="point">2</span>
+              <div className="player-points-streak-rank">
+              <div className="player-point-gap-increase">
+                <span className="player-text">Streaks</span>
+                <span style={{marginTop:'6.2px'}} className="player-point">2</span>
+              </div>
               </div>
 
-              <div className="points-streak-rank">
-                <span className="text">Rank</span>
-                <span className="point">
-                  4<sup>{getOrdinalSuffix(4)}</sup>
+              <div className="player-points-streak-rank">
+              <div className="player-point-gap">
+                <span className="player-text">Rank</span>
+                <span className="player-point">
+                  2<sup style={{marginTop:'3px'}}>{getOrdinalSuffix(2)}</sup>
                 </span>
+                </div>
               </div>
+
             </div>
           </div>
         </div>
       </div>
       <div className="player-card-middle">
-        <div className="voucher-div">
-          <p className="voucher">
+          <p className="player-voucher">
             <span className="scroll-text">
               8 streaks for £20 Amazon voucher progress start
             </span>
           </p>
-        </div>
+        
         <div className="streak-icon">
           <div
-            dangerouslySetInnerHTML={{ __html: svgIcons.streak }}
-            style={{ marginRight: "5px" }}
+            dangerouslySetInnerHTML={{ __html: PlayrCardSvgIcons.streak }}
+            style={{ marginRight: "5px"}}
           />
-          <p>2 Streak</p>
+          <div style={{fontSize:'12px',fontWeight:'500'}}>2 Streak</div>
         </div>
       </div>
       <div className="player-card-last">
         <div className="circle-progress">
-          <svg width="80" height="80" viewBox="0 0 100 100">
+          <svg width="60" height="60" viewBox="0 0 100 100">
             <circle
               cx="50"
               cy="50"
@@ -436,17 +210,17 @@ const Card = ({ profileImg, width = "100%", maxWidth = "520px" }) => {
             </text>
           </svg>
           <div className="details">
-            <span className="details-text">Community updates</span>
-            <br />
-            <span>1 out of 4</span>
-            <br />
-            <span style={{ color: "rgba(6, 24, 44, 0.8)", fontSize: "0.7rem" }}>
-              in 7 days(6 day left)
-            </span>
+            <p className="details-text">Events joined</p>
+           
+            <p className="out-of-point">2 out of 4</p>
+           
+            <p className="time-duration">
+              in 7 days(6 days left)
+            </p>
           </div>
         </div>
-        <div>
-          <button className="go-button">Go</button>
+        <div className="player-btn">
+          <button className="player-go-button">Go</button>
         </div>
       </div>
       </>}
@@ -454,4 +228,4 @@ const Card = ({ profileImg, width = "100%", maxWidth = "520px" }) => {
   );
 };
 
-export default Card;
+export default PayerCard;

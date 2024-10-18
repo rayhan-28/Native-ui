@@ -454,36 +454,40 @@
   bottom: 0;
   width: 100vw;
   height: 100vh;
-  background-color: rgba(255, 255, 255, 0.9); // Light white background for clarity
+  background-color: rgba(6, 24, 44, 0.753); // Light white background for clarity
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   z-index: 1000; // Ensure it appears on top
 }
+.reactEasyCrop_CropArea-reactEasyCrop_CropAreaGrid {
+  border: 3px dashed rgb(255, 255, 255);
+}
+
 
 .cropper-container {
-  position: relative;
-  width: 500px; // Set fixed width
-  height: 520px; // Set fixed height
-  background-color: white; // Background color for the cropper
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); // Slight shadow for depth
-  overflow: hidden; // Ensure no overflow outside the container
-  padding: 20px; // Padding around the cropper
+  // position: relative;
+  // width: 500px; // Set fixed width
+  // height: 520px; // Set fixed height
+  // background-color: white; // Background color for the cropper
+  // border-radius: 8px;
+  // box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); // Slight shadow for depth
+  // overflow: hidden; // Ensure no overflow outside the container
+  // padding: 20px; // Padding around the cropper
 }
 
-.cropper-container button {
-  position: absolute;
-  bottom: 10px; // Position button at the bottom
-  left: 15%;
-  transform: translateX(-40%); // Center the button
+// .cropper-container button {
+//   position: absolute;
+//   bottom: 10px; // Position button at the bottom
+//   left: 15%;
+//   transform: translateX(-40%); // Center the button
   
-  border: none;
+//   border: none;
  
-  cursor: pointer;
-  transition: background-color 0.3s; // Smooth transition for hover effect
-}
+//   cursor: pointer;
+//   transition: background-color 0.3s; // Smooth transition for hover effect
+// }
 
 // .cropper-container button:hover {
 //   background-color: #6a7480; // Darker button on hover
@@ -491,53 +495,21 @@
 
 
 .btn-container-cropper{
+  justify-content: center;
   display: flex;
-  gap:40px
+  gap: 40px;
+  margin-top: 25px;
+  margin-bottom: 20px;
 }
 
 
 .controls {
-  // position: absolute;
-  // bottom: 65px;
-  //  left: 10%;
-  margin-top: 20px;
-  width: 20%;
-  transform: translateX(-10%);
-  height: 30px;
-  display: flex;
-  align-items: center;
   
 
-  @media (max-width: 1450px) {
-    width: 25%;
-  }
-  @media (max-width: 1368px) {
-    width: 28%;
-  }
-  @media (max-width: 1228px) {
-    width: 30%;
-  }
-  @media (max-width: 1130px) {
-    width: 35%;
-  }
-  @media (max-width: 1000px) {
-    width: 40%;
-  }
-  @media (max-width: 848px) {
-    width: 46%;
-  }
-  @media (max-width: 754px) {
-    width:55%;
-  }
-  @media (max-width: 636px) {
-    width:65%;
-  }
-  @media (max-width: 522px) {
-    width:77%;
-  }
-  @media (max-width: 440px) {
-    width:80%;
-  }
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
 }
 

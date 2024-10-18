@@ -1,0 +1,198 @@
+.top-card {
+  color: white;
+  width: 375px;
+
+  .PlayZoneHeader-top-part {
+    display: flex;
+    text-align: left;
+    gap: 15px;
+  }
+
+  .point-part {
+    display: flex;
+    gap: 60px;
+
+    div {
+      p {
+        font-size: 24px;
+        font-weight: 500;
+        margin: 0;
+        color: #FFFFFF;
+      }
+
+      span {
+        font-weight: 400;
+        font-size: 12px;
+        position: relative;
+        top: 5px;
+      }
+    }
+  }
+
+
+  .PlayZoneHeader-slider-level-container {
+    position: relative;
+    cursor: pointer;
+    width: 100%;
+
+    .PlayZoneHeader-level-text {
+      font-size: 14px;
+      font-weight: 700;
+      text-align: start;
+      transition: color 0.3s ease-in-out; // Smooth transition when changing active slide
+
+      &.active-level {
+        
+        color: white; // Bright gold for active level
+      }
+
+      &.inactive-level {
+        color: #FFFFFF4D // Faded white for inactive levels
+      }
+    }
+  }
+
+  .PlayZoneHeader-progressbar-wrapper {
+    position: absolute;
+    top: 37px;
+    /* Adjust based on design */
+    left: 0;
+    width: 100%;
+    cursor: pointer;
+    overflow-x: visible;
+    height: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .PlayZoneHeader-progressbar {
+      cursor: pointer;
+      background-color: #FFFFFF;
+      height: 2px;
+      transition: width 0.3s ease;
+    }
+  }
+
+  .PlayZoneHeader-circle {
+    position: relative;
+    top: -4px;
+    left: 60px;
+
+    background-color: #FFFFFF;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+  }
+
+  .nextlevel {
+    font-size: 12px;
+    font-weight: 500;
+    position: relative;
+    right: -70px;
+    white-space: nowrap;
+    color: #FFFFFF;;
+    margin: 0;
+  }
+  
+
+  .player-point-text{
+    display: flex;
+    gap: 30px;  
+    .player-points-streak-rank{
+       display: flex;
+       flex-direction: column;
+    }
+    .player-point{
+      font-size: 20px;
+      font-weight: 400;
+      line-height: 17px;
+      
+    }
+  }
+
+  .player-point-gap{
+    display: flex;
+    flex-direction: column;
+  }
+  .player-point-gap-increase{
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .player-text{
+    color: #FFFFFF;
+    font-size: 12px;
+    font-weight: 400;
+    // line-height: 10px;
+  }
+
+
+
+
+  .quest-name {
+    display: flex;
+
+    p {
+      font-size: 12px;
+      font-weight: 400;
+    }
+  }
+
+
+
+
+}
+
+
+.rewards-boxes {
+  cursor: pointer;
+  display: flex;
+  gap: 5px;
+  max-width: 335px;
+  /* Only enough width for 4 boxes */
+  overflow-x: auto;
+  /* Allows horizontal scrolling */
+  scroll-behavior: smooth;
+  /* Adds smooth scrolling when triggered */
+  /* Prevents wrapping of boxes to a new row */
+}
+
+.reward-point {
+  height: 90px;
+  width: 70px;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.2);
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  flex-shrink: 0;
+  /* Prevents shrinking */
+}
+
+/* Optional: Hide scrollbar for cleaner UI */
+.rewards-boxes::-webkit-scrollbar {
+  display: none;
+}
+
+
+.quest-name {
+  display: flex;
+  align-items: baseline;
+  gap: 20px;
+
+  p {
+    cursor: pointer;
+    padding: 5px;
+    transition: all 0.5s ease;
+
+    &.active-earning {
+      background-color: rgba(255, 255, 255, 0.2);
+      color: #fff;
+      padding: 5px 16px;
+      border-radius: 15px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+  }
+}

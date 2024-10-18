@@ -1,4 +1,4 @@
-.overlay {
+.player-character-overlay {
   background-color: rgba(0, 0, 0, 0.5);
   position: fixed;
   width: 100%;
@@ -10,11 +10,15 @@
   overflow-x: hidden;
   overflow-y: auto;
   justify-content: space-around;
+  font-family: "Soehne", sans-serif;
+
   z-index: 100;
   }
   
-  .wrapper {
+  .player-character-wrapper {
     background-color: white;
+    font-family: "Soehne", sans-serif;
+
     width: 895px;
     height: 520px;
     border-radius: 20px;
@@ -28,11 +32,11 @@
     position: absolute;
   }
   
-  .wrapper.centered {
+  .player-character-wrapper.centered {
     position: relative;
   }
   
-  .text-container {
+  .player-character-text-container {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -40,7 +44,7 @@
     height: 23px;
   }
 
-  .text-cheked{
+  .player-character-text-cheked{
     font-size: 24px;
     font-weight: 700;
     color: rgb(6, 24, 44);
@@ -48,7 +52,7 @@
     line-height: 30px;
   }
   
-  .row {
+  .player-character-row {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -57,9 +61,10 @@
     overflow: hidden;
     margin: 0 auto;
   }
-  .btn-player-card{
+  .player-character-btn{
     background-color: black;
     color: #fff;
+    height: 40px;
     width: 100px;
     padding: 6px 10px;
     border: none;
@@ -83,6 +88,8 @@
     height: 100vh;
     left: 0;
     top: 0;
+    font-family: "Soehne", sans-serif;
+
     display: flex;
     align-items: center;
     overflow-y: auto;
@@ -96,8 +103,9 @@
     right: 15px;
     top: 15px;
   }
-  .wrapper-aterl-overly{
+  .wrapper-alert-overly{
     position: fixed;
+
     width: 390px;
     height: auto;
     /* background: linear-gradient(89.78deg, #06182C -0.43%, #06182C 50.21%, #1F3042 99.81%); */
@@ -120,4 +128,24 @@
     justify-content: center;
     align-items: flex-end;
     
+  }
+  .player-card-alert-btn{
+   display: flex;
+   align-items: center;
+   justify-content: center;
+
+    background-color: black;
+    color: #fff;
+    height: 30px;
+    width: 80px;
+    padding: 6px 10px;
+    border: none;
+    margin: 0;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  
+    &:hover {
+      background-color: #333;
+    }
   }

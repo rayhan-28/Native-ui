@@ -1,0 +1,107 @@
+
+    
+.leaderboard-table-container {
+  // background-color: #f9f9f9;
+  // padding: 15px 12px;
+
+  margin: auto;
+  max-width: 520px;
+  width: 100%;
+  overflow: hidden;
+
+}
+
+
+.leaderboard-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed; /* Ensures columns have fixed width */
+  text-align: left;
+}
+
+thead {
+  display: table;
+  width: 100%;
+  table-layout: fixed;
+}
+
+tbody {
+  display: block;
+  // max-height: 230px; /* Customize to show only a certain number of rows */
+  overflow-y: auto;
+  width: 100%;
+  table-layout: fixed;
+}
+
+thead th, tbody td {
+  // padding: 10px;
+  text-align: left;
+}
+
+thead th:nth-child(1),
+tbody td:nth-child(1) {
+  width: 20%; /* Rank */
+}
+
+thead th:nth-child(2),
+tbody td:nth-child(2) {
+  width: 55%; /* Player */
+}
+
+thead th:nth-child(3),
+tbody td:nth-child(3) {
+  width: 25%; /* Points */
+}
+
+tbody td {
+  // padding: 12px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  padding-right: 12px;
+  border-bottom: 1px solid #ddd;
+  position: relative;
+}
+
+tbody tr {
+  display: table;
+  table-layout: fixed;
+  width: 100%;
+}
+
+.player-info {
+  display: flex;
+  align-items: center;
+  text-align: left;
+
+  .player-avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+}
+
+tbody td span {
+  display: inline-block;
+  max-width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+tbody td span[title] {
+  cursor: pointer;
+  position: relative;
+}
+th{
+  font-size: 12px;
+  font-weight: 400;
+  color: #06182C80;
+}
+
+
+
+
+
+
+    
