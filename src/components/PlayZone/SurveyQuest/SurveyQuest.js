@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import svgIcons from '../../../assets/image/SVG/svg'
-import Nudges from '../../Common/Nudges';
+import SurveyQuestSvgIcon from '../../../assets/image/SVG/SurveyQuest/SurveyQuestSvgIcon';
 import NudgesServey from '../../Common/NudgesServey';
 
 
@@ -19,7 +18,7 @@ const hexToRgba = (hex, opacity) => {
 };
 const ServeyQuest= ({
   width="100%",
-  maxWidth="520px",
+  maxWidth="375px",
   serveyQuest,
   setIsServeyGoClicked,
   setQuestId,
@@ -29,11 +28,7 @@ const ServeyQuest= ({
   isAnswerIsCompleted,
    setIsAnswerIsCompleted
   }) => {
-  
-  const [showSuccess, setShowSuccess] = useState(false);
-  
-  const handleShowSuccess = () => setShowSuccess(true);
-  const handleCloseSuccess = () => setShowSuccess(false);
+
 
   const onGoClicked = (questId) => {
     setIsServeyGoClicked(true);
@@ -60,7 +55,7 @@ const ServeyQuest= ({
      >
       <div className="highlite-uppper">
         <p style={{fontSize:'12px',fontWeight:'500',color:'#06182CCC'}}>Servey</p>
-        <p className="voucher">
+        <p className="survey-quest-voucher">
           <span className="scroll-text">
             8 streaks for £20 Amazon voucher progress start
           </span>
@@ -70,7 +65,7 @@ const ServeyQuest= ({
       
       <div className="highlite-last">
         <div
-          dangerouslySetInnerHTML={{ __html: svgIcons.stardust }}
+          dangerouslySetInnerHTML={{ __html: SurveyQuestSvgIcon.stardust }}
           style={{ marginRight: "7px" }}
         />
         <p style={{ fontSize: "12px",fontWeight:'400',margin:'0'}}>{habit.points}/{habit.totalPoints}</p>
@@ -80,7 +75,7 @@ const ServeyQuest= ({
             style={{ width: `${(habit.points / habit.totalPoints) * 100}%` ,backgroundColor:habit.gradientColor}}
           ></p>
         </div>
-        <button onClick={() => onGoClicked(habit?.questId)} className='go-button'>Go</button>
+        <button onClick={() => onGoClicked(habit?.questId)} className='survey-go-button'>Go</button>
       </div>
       <div style={{height:'10px'}}/>
         <NudgesServey 
@@ -92,7 +87,7 @@ const ServeyQuest= ({
          setQuestId={setQuestId}
          isAnswerIsCompleted={isAnswerIsCompleted} 
          setIsAnswerIsCompleted={setIsAnswerIsCompleted} 
-         isCompleted="true"
+         isCompleted=""
         />
         
       

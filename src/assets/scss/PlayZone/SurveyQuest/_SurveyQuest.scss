@@ -1,19 +1,30 @@
 .highlite-servey-quest-card {
   background-color: #c7f3ea;
   border-radius: 16px;
-  /* Rounded border */
+  box-sizing: border-box;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0);
   padding: 15px 12px;
   margin: auto;
 
-  @media (max-width: 768px) {
-    max-width: 90%;
-    padding: 15px;
-  }
 
-  @media (max-width: 480px) {
-    max-width: 100%;
-    padding: 10px;
+  ::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #888;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
   }
 
   .highlite-uppper {
@@ -27,6 +38,49 @@
     background-color: white;
     border-radius: 20px;
   }
+
+  .survey-quest-voucher {
+      padding: 2px 16px;
+      background-color: #e7e7e7;
+      background: linear-gradient(90deg, rgba(255, 152, 255, 0.5) 0%, rgba(255, 255, 255, 0) 100%);
+     
+      font-size: 0.8rem;
+      border-radius: 15px;
+      overflow: hidden; // Hide overflow
+      white-space: nowrap; // Prevent line breaks
+      width: 100%; // Ensure it takes full width of the parent
+      max-width: 246px; // Set a max width as needed
+      cursor: pointer;
+      position: relative;
+      text-overflow: ellipsis;
+      .scroll-text {
+        display: inline-block;
+        position: relative;
+        font-size: 12px;
+        font-weight: 500;
+        
+       
+        left: 0; // Start outside the right edge
+        animation: none; // No animation by default
+        transition: left 0.5s ease-in-out;
+  
+        &:hover {
+          animation: scroll-text 5s linear infinite; // Start scrolling on hover
+          left: 0; // Reset to start position
+        }
+  
+        @keyframes scroll-text {
+          0% {
+            left: 0%; // Start at the initial position
+          }
+  
+          100% {
+            left: -100%; // Move left to hide
+          }
+        }
+      }
+    }
+  
 
   .commission {
     padding: 2px 20px;
@@ -63,19 +117,6 @@
     margin-bottom: 0;
   }
 
-
-  button {
-    background-color: black;
-    padding: 7px 40px;
-    border: none;
-    color: white;
-    border-radius: 20px;
-    cursor: pointer;
-    position: relative;
-    bottom: 5px;
-
-  }
-
   .progress-bar {
     background-color: #fff;
     border-radius: 10px;
@@ -86,6 +127,7 @@
     margin: 0 auto;
 
     .progress-indicator {
+      margin: 0;
       background-color: #000;
       height: 100%;
       border-radius: 10px;
@@ -93,7 +135,7 @@
     }
   }
 
-  .go-button {
+  .survey-go-button {
     background-color: black;
     color: #fff;
     width: 60px;
@@ -110,44 +152,5 @@
       background-color: #333;
     }
   }
-
-  .last-part-quest{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 4px 15px;
-    background-color:rgba(255, 255, 255, 0.3) ;
-    border-radius: 40px ;
-    margin-top: 15px;
-  }
-  .icon-text-quest{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-   
-  }
-  .text-ellipsis {
-    margin: 0;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    
-    @media (max-width: 452px) {
-      
-      max-width: 150px; // Adjust based on how much space you want to allow
-    }
-  }
-
-  // .arrow-box{
-  //   width: 30px;
-  //   cursor: pointer;
-  //   height: 30px;
-  //   border-radius: 50%;
-  //   background-color: black;
-  //   display: flex;
-  //   justify-content: center;
-  //   align-items: center;
-  // }
 
 }

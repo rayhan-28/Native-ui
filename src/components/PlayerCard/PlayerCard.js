@@ -7,9 +7,10 @@ import PlayrCardSvgIcons from "../../assets/image/SVG/PlayerCard/PlayerCardSvg";
 import { color } from "@cloudinary/url-gen/qualifiers/background";
 import { background } from "@cloudinary/url-gen/qualifiers/focusOn";
 import { BackgroundColor } from "@cloudinary/url-gen/actions/background/actions/BackgroundColor";
+import { center } from "@cloudinary/url-gen/qualifiers/textAlignment";
 
-const PayerCard = ({ profileImg, width = "100%", maxWidth = "335px" }) => {
-  const { email, token } = useAuth(); // Get email and token from context
+const PayerCard = ({ profileImg, width = "100%", maxWidth = "335px",Name="",PhotoUrl="",email="" }) => {
+  const {token } = useAuth(); // Get email and token from context
   const [playerData, setPlayerData] = useState(null);
   const [error, setError] = useState(null);
   const [isClicked,setIsClicked]=useState(false)
@@ -31,7 +32,10 @@ const PayerCard = ({ profileImg, width = "100%", maxWidth = "335px" }) => {
       const response = await axios.get(
         "https://dev.api.pitch.space/api/player-info",
         {
-          params: { email, token },
+          params: {
+             email, 
+             token
+             },
         }
       );
       if (response.status === 200) {
@@ -44,10 +48,10 @@ const PayerCard = ({ profileImg, width = "100%", maxWidth = "335px" }) => {
 
 
   useEffect(() => {
-    if (email && token) {
+    if (token) {
       fetchData(); // Fetch player data initially
     }
-  }, [email, token]);
+  }, [token]);
 
   // Refetch player data when shouldRefetch changes to true
   useEffect(() => {
@@ -73,6 +77,14 @@ const PayerCard = ({ profileImg, width = "100%", maxWidth = "335px" }) => {
   //     </>
   //   );
   // }
+   
+  const handleRedirect = (redirectUrl) => {
+    if (redirectUrl) {
+      window.location.href = redirectUrl; // Redirect to the URL
+    } else {
+      console.error('No URL to redirect');
+    }
+  };
 
    const handleClick=()=>{
     setIsClicked(true)
@@ -85,146 +97,168 @@ const PayerCard = ({ profileImg, width = "100%", maxWidth = "335px" }) => {
  
 
     <div
-      className="player-card"
-      style={{
-        width,
-        maxWidth:playerData?.featureUsingDetails?.cardWidth,
-        fontFamily:playerData?.featureUsingDetails?.fontFamily,
-        BackgroundColor:playerData?.featureUsingDetails?.primaryColor
-      }}
-    >
-      {/* top */}
-      {isClicked && <PlayerCharacterOverlay Player={playerData} onClose={()=>setIsClicked(false)} setShouldRefetch={setShouldRefetch}/>}
-    {error? <h1>Please give correct credentials</h1>:<>  <div className="player-card-top">
-       {playerData?.featureUsingDetails?.characterType===1 &&<> <div className="player-card-img">
-          <img
-            onClick={handleClick}
-            src={
-              profileImg ||
-              `https://res.cloudinary.com/pitchspace/image/upload/v1/player-icons/${playerData?.playerAvatar
-              }`
-            }
-            style={{
-              height: "80px",
-              width: "80px",
-              borderRadius: "50%",
-              marginRight: "10px",
-              cursor:'pointer'
-            }}
-          />
-          </div> </>
-        }
-        <div className="player-name-points">
-          <div className="player-name-title">
-            <span className="palyer-name">Ollie</span>
-            <span className="palyer-title">YOUR PROGRESS</span>
-          </div>
-          <div>
-            <div className="player-point-text">
-              <div className="player-points-streak-rank">
-                <div className="player-point-gap-increase" >
-                <span className="player-text">Points</span>
-                <span style={{marginTop:'6.2px'}} className="player-point">{playerData?.points}</span>
-                </div>
-              </div>
-
-              <div className="player-points-streak-rank">
-              <div className="player-point-gap-increase">
-                <span className="player-text">Streaks</span>
-                <span style={{marginTop:'6.2px'}} className="player-point">2</span>
-              </div>
-              </div>
-
-              <div className="player-points-streak-rank">
-              <div className="player-point-gap">
-                <span className="player-text">Rank</span>
-                <span className="player-point">
-                  2<sup style={{marginTop:'3px'}}>{getOrdinalSuffix(2)}</sup>
-                </span>
-                </div>
-              </div>
-
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="player-card-middle">
-          <p className="player-voucher">
-            <span className="scroll-text">
-              8 streaks for £20 Amazon voucher progress start
-            </span>
-          </p>
-        
-        <div className="streak-icon">
-          <div
-            dangerouslySetInnerHTML={{ __html: PlayrCardSvgIcons.streak }}
-            style={{ marginRight: "5px"}}
-          />
-          <div style={{fontSize:'12px',fontWeight:'500'}}>2 Streak</div>
-        </div>
-      </div>
-      <div className="player-card-last">
-        <div className="circle-progress">
-          <svg width="60" height="60" viewBox="0 0 100 100">
-            <circle
-              cx="50"
-              cy="50"
-              r={radius}
-              fill="none"
-              stroke="#f5d8dc"
-              strokeWidth="12"
-            />
-
-            <circle
-              cx="50"
-              cy="50"
-              r={radius}
-              fill="none"
-              stroke="#e4a1a9"
-              strokeWidth="12"
-              strokeDasharray={circumference}
-              strokeDashoffset={circumference - progress}
-              strokeLinecap="round"
-              transform="rotate(-90 50 50)" // rotate to make progress start from the top
-            />
-            <text
-              x="50%"
-              y="43%"
-              dominantBaseline="middle"
-              textAnchor="middle"
-              fontSize={22}
-              fill="#000"
-            >
-              ★
-            </text>
-            <text
-              x="50%"
-              y="60%"
-              dominantBaseline="middle"
-              textAnchor="middle"
-              fontSize={fontSize}
-              fill="#000"
-            >
-             
-              {taskValue}
-            </text>
-          </svg>
-          <div className="details">
-            <p className="details-text">Events joined</p>
-           
-            <p className="out-of-point">2 out of 4</p>
-           
-            <p className="time-duration">
-              in 7 days(6 days left)
-            </p>
-          </div>
-        </div>
-        <div className="player-btn">
-          <button className="player-go-button">Go</button>
-        </div>
-      </div>
-      </>}
+    className="player-card"
+    style={{
+      width,
+      maxWidth,
+      minHeight:'200px'
+    }}
+  >
+    {/* top */}
+    {isClicked && <PlayerCharacterOverlay Player={playerData} onClose={()=>setIsClicked(false)} setShouldRefetch={setShouldRefetch}/>}
+  {error? 
+  <div style={{ display: "flex", flexDirection: "column", alignItems: "center", padding: "20px"}}>
+  <h3>Issue with the KEY</h3>
+  <h4>get in touch</h4>
+  <h5>get a valid API Key</h5>
+  </div>
+  :<>  <div className="player-card-top">
+      {PhotoUrl && playerData?.featureUsingDetails?.characterType === 2 ? 
+      <div className="player-card-img">
+      <img
+        src={PhotoUrl}
+        style={{
+          height: "80px",
+          width: "80px",
+          borderRadius: "50%",
+          marginRight: "10px",
+          cursor:'pointer'
+        }}
+      />
     </div>
+      : playerData?.featureUsingDetails?.characterType === 1  ? <div className="player-card-img">
+        <img
+          onClick={handleClick}
+          src={
+            `https://res.cloudinary.com/pitchspace/image/upload/v1/player-icons/${playerData?.playerAvatar
+            }`
+          }
+          style={{
+            height: "80px",
+            width: "80px",
+            borderRadius: "50%",
+            marginRight: "10px",
+            cursor:'pointer'
+          }}
+        />
+      </div> : null
+      }
+      <div className="player-name-points">
+        <div className="player-name-title">
+          <span className="palyer-name">{Name ? Name : playerData?.playerName}</span>
+          <span className="palyer-title">YOUR PROGRESS</span>
+        </div>
+        <div>
+          <div className="player-point-text">
+            <div className="player-points-streak-rank">
+              <div className="player-point-gap-increase" >
+              <span className="player-text">Points</span>
+              <span style={{marginTop:'6.2px'}} className="player-point">{playerData?.points}</span>
+              </div>
+            </div>
+
+            <div className="player-points-streak-rank">
+            <div className="player-point-gap-increase">
+              <span className="player-text">Streaks</span>
+              <span style={{marginTop:'6.2px'}} className="player-point">2</span>
+            </div>
+            </div>
+
+            <div className="player-points-streak-rank">
+            <div className="player-point-gap">
+              <span className="player-text">Rank</span>
+              <span  className="player-point">
+                2<sup style={{marginTop:'3px'}}>{getOrdinalSuffix(2)}</sup>
+              </span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <div className="player-card-middle">
+        <p className="player-voucher">
+          <span className="scroll-text">
+            {playerData?.habitQuest?.rewardCondition}: {playerData?.habitQuest?.reward}
+          </span>
+        </p>
+      
+      <div className="streak-icon">
+        {playerData?.habitQuest?.completedStreak===0?<div
+          dangerouslySetInnerHTML={{ __html: PlayrCardSvgIcons.empty_streak }}
+          style={{ marginRight: "5px",marginTop:'3px'}}
+        />: <div
+          dangerouslySetInnerHTML={{ __html: PlayrCardSvgIcons.streak }}
+          style={{ marginRight: "5px",marginTop:'3px'}}
+        />}
+        <div style={{fontSize:'12px',fontWeight:'500'}}>{(playerData?.habitQuest?.completedStreak)} Streak</div>
+      </div>
+    </div>
+    <div className="player-card-last">
+      <div className="circle-progress">
+        <svg width="60" height="60" viewBox="0 0 100 100">
+          <circle
+            cx="50"
+            cy="50"
+            r={radius}
+            fill="none"
+            stroke="#f5d8dc"
+            strokeWidth="12"
+          />
+
+          <circle
+            cx="50"
+            cy="50"
+            r={radius}
+            fill="none"
+            stroke="#e4a1a9"
+            strokeWidth="12"
+            strokeDasharray={circumference}
+            strokeDashoffset={circumference - playerData?.habitQuest?.progress}
+            strokeLinecap="round"
+            transform="rotate(-90 50 50)" // rotate to make progress start from the top
+          />
+          <text
+            x="50%"
+            y="43%"
+            dominantBaseline="middle"
+            textAnchor="middle"
+            fontSize={22}
+            fill="#000"
+          >
+            ★
+          </text>
+          <text
+            x="50%"
+            y="60%"
+            dominantBaseline="middle"
+            textAnchor="middle"
+            fontSize={fontSize}
+            fill="#000"
+          >
+           
+            {taskValue}
+          </text>
+        </svg>
+        <div className="details">
+          <p className="details-text">{playerData?.habitQuest?.actionName}</p>
+         
+          <p className="out-of-point">{playerData?.habitQuest?.completedWeekStreak}
+             out of {playerData?.habitQuest?.completionTarget.split(' ',1)}
+          </p>
+         
+          <p className="time-duration">
+            in {playerData?.habitQuest?.targetDay} days({playerData?.habitQuest?.dayLeft} days left)
+          </p>
+        </div>
+      </div>
+      <div className="player-btn">
+        <button className="player-go-button" onClick={()=>handleRedirect(playerData?.habitQuest?.redirectUrl)} >Go</button>
+      </div>
+    </div>
+    </>}
+  </div>
   );
 };
 

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import svgIcons from '../../../../../assets/image/SVG/svg';
+import SurveyQuestSvgIcon from '../../../../../assets/image/SVG/SurveyQuest/SurveyQuestSvgIcon';
 
 const ImageMultiChoice = ({ Options, questAnswer, setQuestAnswer, idx, IsMultiSelection, MaxSelectionOrUpload }) => {
   const [selectedImages, setSelectedImages] = useState([]); // State to track selected image URLs
@@ -99,9 +99,9 @@ const ImageMultiChoice = ({ Options, questAnswer, setQuestAnswer, idx, IsMultiSe
                   dangerouslySetInnerHTML={{
                     __html:
                       isSelected // Show selected star for selected images
-                        ? svgIcons.selected_star 
+                        ? SurveyQuestSvgIcon.selected_star 
                         : hoveredIndex === index 
-                        ? svgIcons.hover_star // Show hover star on hover
+                        ? SurveyQuestSvgIcon.hover_star // Show hover star on hover
                         : ''
                   }}
                 />

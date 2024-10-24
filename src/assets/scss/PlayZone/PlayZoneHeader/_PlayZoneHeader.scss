@@ -1,11 +1,9 @@
-.top-card {
-  color: white;
-  width: 375px;
 
   .PlayZoneHeader-top-part {
     display: flex;
     text-align: left;
     gap: 15px;
+    color: white;
   }
 
   .point-part {
@@ -75,7 +73,7 @@
 
   .PlayZoneHeader-circle {
     position: relative;
-    top: -4px;
+    top: -11px;
     left: 60px;
 
     background-color: #FFFFFF;
@@ -84,7 +82,14 @@
     border-radius: 50%;
   }
 
+  .PlayZoneHeader-Badge-text{
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
   .nextlevel {
+    top: -8px;
     font-size: 12px;
     font-weight: 500;
     position: relative;
@@ -95,14 +100,14 @@
   }
   
 
-  .player-point-text{
+  .PlayZoneHeader-point-text{
     display: flex;
     gap: 30px;  
-    .player-points-streak-rank{
+    .PlayZoneHeader-points-streak-rank{
        display: flex;
        flex-direction: column;
     }
-    .player-point{
+    .PlayZoneHeader-point{
       font-size: 20px;
       font-weight: 400;
       line-height: 17px;
@@ -110,16 +115,16 @@
     }
   }
 
-  .player-point-gap{
+  .PlayZoneHeader-point-gap{
     display: flex;
     flex-direction: column;
   }
-  .player-point-gap-increase{
+  .PlayZoneHeader-point-gap-increase{
     display: flex;
     flex-direction: column;
   }
   
-  .player-text{
+  .PlayZoneHeader-text{
     color: #FFFFFF;
     font-size: 12px;
     font-weight: 400;
@@ -141,7 +146,7 @@
 
 
 
-}
+
 
 
 .rewards-boxes {

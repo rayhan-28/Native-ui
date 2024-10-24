@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
-import svgIcons from "../../../../assets/image/SVG/svg";
+import SurveyQuestSvgIcon from "../../../../assets/image/SVG/SurveyQuest/SurveyQuestSvgIcon";
 import { useAuth } from "../../../../context/AuthContext";
 import axios from "axios";
 import QuestionModal from "./QuestionModal";
-import Nudges from "../../../Common/Nudges";
 import GiveARate from "./Question/GiveARate";
 import ReplyWithTextAnswer from "./Question/ReplyWithTextAnswer";
 import ImageMultiChoice from "./Question/ImageMultiChoice";
@@ -20,6 +19,7 @@ const SurveyQuestion = ({ width = "100%",
    questId,
    isFinisedClickedServey,
    setIsFinisedClickedServey,
+   email
   }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [linkError,setLinkError]=useState(false)
@@ -37,7 +37,7 @@ const SurveyQuestion = ({ width = "100%",
   
   console.log("questId ",questId)
 
-  const { email, token } = useAuth(); // Get email and token from context
+  const { token } = useAuth(); // Get email and token from context
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -58,10 +58,10 @@ const SurveyQuestion = ({ width = "100%",
       }
     };
 
-    if (email && token) {
+    if ( token) {
       fetchData(); // Only fetch if both email and token are set
     }
-  }, [email, token]);
+  }, [ token]);
 
   const addPoints=async(data)=>{
     try {
@@ -128,11 +128,10 @@ const SurveyQuestion = ({ width = "100%",
     setLinkError(false)
   }
 
-  console.log("questAnswer ",questAnswer);
   return ( 
    <>
   
-   <div className="servey">
+   <div className="Survey-question-overlay">
        <div style={{ backgroundColor: "#FFFFFF", width, maxWidth }}>
         <div className="servery-container">
           <div className="first-part">
@@ -175,7 +174,7 @@ const SurveyQuestion = ({ width = "100%",
             </div>
             <div
               onClick={onClose}
-              dangerouslySetInnerHTML={{ __html: svgIcons.cross }}
+              dangerouslySetInnerHTML={{ __html: SurveyQuestSvgIcon.cross }}
               style={{ marginRight: "10px", cursor:'pointer' }}
             />
           </div>
@@ -300,12 +299,12 @@ const SurveyQuestion = ({ width = "100%",
             className="left-progress"
               style={{ width: `${((tempQuestion+1) /questionNo) * 100}%`, height: '10px',  backgroundColor: 'black'}}
             >.</div>
-            <div style={{marginLeft:'-5px'}} dangerouslySetInnerHTML={{ __html: svgIcons.progress_icon }} />
+            <div style={{marginLeft:'-5px',marginBottom:'-2px'}} dangerouslySetInnerHTML={{ __html: SurveyQuestSvgIcon.progress_icon }} />
           </div>
          
           <div style={{ display: "flex" }}>
             <div
-              dangerouslySetInnerHTML={{ __html: svgIcons.stardust }}
+              dangerouslySetInnerHTML={{ __html: SurveyQuestSvgIcon.stardust }}
               style={{ marginRight: "7px", marginLeft: "" }}
             />
             <span>{pointCal}/{20*questionNo}</span>
@@ -314,7 +313,7 @@ const SurveyQuestion = ({ width = "100%",
           {/* circle arrow */}
           <div className="arrow">
             {tempQuestion===0 && <div style={{backgroundColor:'rgba(6, 24, 44, 0.05)'}} className="left-arrow">
-              <div  dangerouslySetInnerHTML={{ __html: svgIcons.left_arrow }} />
+              <div  dangerouslySetInnerHTML={{ __html: SurveyQuestSvgIcon.left_arrow }} />
             </div>}
             {tempQuestion>0 && tempQuestion<questionNo && 
             <div 
@@ -325,7 +324,7 @@ const SurveyQuestion = ({ width = "100%",
             className="left-arrow">
               <div 
                 style={{color:'black'}}
-                dangerouslySetInnerHTML={{ __html: svgIcons.left_arrow }} 
+                dangerouslySetInnerHTML={{ __html: SurveyQuestSvgIcon.left_arrow }} 
               />
             </div>}
             {tempQuestion===questionNo-1 && <div className="finish">
@@ -367,7 +366,7 @@ const SurveyQuestion = ({ width = "100%",
                 }}
                 className="right-arrow"
               >
-                <div dangerouslySetInnerHTML={{ __html: svgIcons.right_arrow }} />
+                <div dangerouslySetInnerHTML={{ __html: SurveyQuestSvgIcon.right_arrow }} />
               </div>
             )}
 
@@ -376,7 +375,7 @@ const SurveyQuestion = ({ width = "100%",
         </div>
       </div>
       {modalVisible && !linkError &&(
-        <QuestionModal text="You have to answer this question"   onClose={()=>{setModalVisible(false)}}/>
+        <QuestionModal text="You have to answer this question" onClose={()=>{setModalVisible(false)}}/>
       )}
       {modalVisible && linkError &&(
         <QuestionModal text="You have to given valid link"   onClose={handleModal}/>

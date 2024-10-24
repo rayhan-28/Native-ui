@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Cropper from "react-easy-crop";
-import svgIcons from "../../../../../assets/image/SVG/svg";
+import SurveyQuestionImageUploadSvgIcon from "../../../../../assets/image/SVG/SurveyQuestionImageUpload/SurveyQuestionImageUpload";
 import getCroppedImg from "../../../../../utils"; // Import your utility function
 import { useUploadImage } from "../../../../../hooks/useCloudinaryUpload";
 import axios from "axios";
@@ -262,7 +262,7 @@ const UploadImage = ({
               
               <div className="circle">
                 <div
-                  dangerouslySetInnerHTML={{ __html: svgIcons.blankImage }}
+                  dangerouslySetInnerHTML={{ __html: SurveyQuestionImageUploadSvgIcon.blankImage }}
                 />
               </div>
             )}
@@ -274,7 +274,9 @@ const UploadImage = ({
         <div className="cropper-modal">
           <div
             style={{
-              width: "30%",
+              width: "auto",
+              minWidth:'375px',
+              height:'auto',
               background: "rgb(255, 255, 255)",
               borderRadius: "20px",
               position: "relative",
@@ -315,7 +317,7 @@ const UploadImage = ({
                 marginTop: "10px",
               }}
             >
-              <div dangerouslySetInnerHTML={{ __html: svgIcons.image }} />
+              <div dangerouslySetInnerHTML={{ __html: SurveyQuestionImageUploadSvgIcon.image }} />
               <div className="controls">
               <input
                 id="zoom-slider"
@@ -330,7 +332,7 @@ const UploadImage = ({
                 style={{ width: "100%" }} // Full width slider
               />
               </div>
-              <div dangerouslySetInnerHTML={{ __html: svgIcons.image2 }} />
+              <div dangerouslySetInnerHTML={{ __html: SurveyQuestionImageUploadSvgIcon.image2 }} />
             </div>
 
             <div className="btn-container-cropper">

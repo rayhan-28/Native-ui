@@ -1,5 +1,5 @@
 import React from 'react'
-import svgIcons from '../../assets/image/SVG/svg'
+import SurveyQuestSvgIcon from '../../assets/image/SVG/SurveyQuest/SurveyQuestSvgIcon'
 
 const NudgesServey = ({
     Icon,
@@ -32,14 +32,14 @@ const NudgesServey = ({
      {isCompleted ?
      <>
      <div
-     dangerouslySetInnerHTML={{ __html: svgIcons.nice_small }}
+     dangerouslySetInnerHTML={{ __html: SurveyQuestSvgIcon.nice_small }}
      />
      <p className="text-ellipsis">Thank you for your participation</p>
      </>
      :
      <>
      <div
-     dangerouslySetInnerHTML={{ __html: svgIcons.referral_nudges }}
+     dangerouslySetInnerHTML={{ __html: SurveyQuestSvgIcon.referral_nudges }}
      />
      <p className="text-ellipsis">You're 8 answers away from a reward</p>
      </>
@@ -51,7 +51,7 @@ const NudgesServey = ({
     </div>
     <div onClick={()=>handleClicked()} className="arrow-box">
     <div
-        dangerouslySetInnerHTML={{ __html: svgIcons.right_quest_arrow }}
+        dangerouslySetInnerHTML={{ __html: SurveyQuestSvgIcon.right_quest_arrow }}
       />
     </div>
    </div>

@@ -9,19 +9,17 @@ export const useAuth = () => {
 };
 
 // Provider component
-export const AuthProvider = ({ children, email, token }) => {
-    const [authEmail, setAuthEmail] = useState(null);
+export const AuthProvider = ({ children,  token }) => {
     const [authToken, setAuthToken] = useState(null);
 
     useEffect(() => {
-        if (email && token) {
-            setAuthEmail(email);
+        if (token) {
             setAuthToken(token);
         }
-    }, [email, token]);
+    }, [token]);
 
     return (
-        <AuthContext.Provider value={{ email: authEmail, token: authToken }}>
+        <AuthContext.Provider value={{ token: authToken }}>
             {children}
         </AuthContext.Provider>
     );

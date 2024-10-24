@@ -1,4 +1,4 @@
-.servey {
+.Survey-question-overlay {
   position: relative;
   top: 0;
   left: 0;
@@ -7,15 +7,37 @@
   background: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
-  //  align-items: center;
+   align-items: center;
   z-index: 200;
-  }
+  
+
+/* Style the scrollbar */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
   .servery-container{
     background-color: #F9F9F9;
     border-top-left-radius: 15px;  /* Rounded top-left corner */
     border-top-right-radius: 15px;
-    height: 70vh;
-    max-height: 80vh;
+    height: 65vh;
+    max-height: 90vh;
     position: relative;
     box-shadow: #45454526;
     overflow-y: auto; 
@@ -31,6 +53,7 @@
     align-items: center;
   }
   .text-one{
+    margin-top: 0;
     font-weight: 500;
     font-size:  22px;
     line-height: 25.48px;
@@ -166,8 +189,8 @@
     }
     
     .rate-button {
-      width: 60px;  /* Fixed width */
-      height: 60px; 
+      width: 57px;  /* Fixed width */
+      height: 57px; 
       padding: 10px;
       font-size: 16px;
       border-radius: 3px;
@@ -199,8 +222,8 @@
       display: flex; /* Use flexbox to display images in a row */
     }
     .image{
-      width: 300px;
-      height: 300px;
+      width: 230px;
+      height: 230px;
       border-radius:12px
     }
     .image-item {
@@ -234,6 +257,7 @@
     
    //yes no
    .yesNO{
+    box-sizing: border-box;
     width: 100%;
     height: auto;
     border-radius: 6px;
@@ -248,33 +272,11 @@
   }
 
 
-   //uploade image
-   .uploade-image{
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-   }
-   .uploade-container{
-    width: 170px;
-    height: 160px;
-    background-color: #f2f2f3;
-    align-items: center;
-    justify-content: center;
-    display: flex;
-    border-radius: 8px;
-   }
-   .circle{
-     width: 40px;
-     height: 40px;
-     background-color: #FFFFFF;
-     border-radius: 50%;
-     display: flex;
-     align-items: center;
-     justify-content: center;
-   }
+   
     
 //poll
 .poll-text{
+  box-sizing: border-box;
   width: 100%;
   height: auto;
   border-radius: 6px;
@@ -331,8 +333,8 @@
   gap: 10px;
 }   
 .multi-image{
-  width:180px;
-  height: 180px;
+  width:160px;
+  height: 160px;
   border-radius: 10px;
 }
 .multi-image-item {
@@ -378,70 +380,44 @@
   font-weight: bold; /* Make percentage text bold */
 }
 
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
+
+
+
+
+
+//uploade image
+.uploade-image{
   display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000; /* Ensure the modal is above other content */
-}
-
-.modal-content {
-  background: white;
-  padding: 20px;
-  width: 90%; /* Use percentage for responsiveness */
-  height: auto;
-  max-width: 320px; /* Maintain a max-width */
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
-  display: flex; /* Add flex for vertical alignment */
-  flex-direction: column; /* Stack children vertically */
-  // align-items: center; /* Center items horizontally */
-}
-
-
-.modal-button{
-  background-color: black;
-  color: #fff;
-  width: 100px;
-  padding: 6px 10px;
-  border: none;
-  margin-left: 80px;
-  border-radius: 25px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-
-  &:hover {
-    background-color: #333;
-  }
-}
-
-
-
-//upload image other design
-
-.upload-image {
-  display: flex;
+  gap: 10px;
   flex-wrap: wrap;
-}
 
-.upload-container {
-  position: relative;
-  width: 100px; // Adjust the width as needed
-  height: 100px; // Adjust the height as needed
-  margin: 10px;
-
-  .circle {
-    border-radius: 50%;
-    overflow: hidden;
-    border: 2px dashed #ccc;
+  .uploade-container{
+    width: 160px;
+    height: 160px;
+    background-color: #f2f2f3;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    border-radius: 8px;
+    cursor: pointer;
+   }
+   .circle{
+     width: 40px;
+     height: 40px;
+     background-color: #FFFFFF;
+     border-radius: 50%;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+   }
+  
+  .upload-image {
+    display: flex;
+    flex-wrap: wrap;
   }
-}
+ }
+
+
 
 
 
@@ -580,4 +556,52 @@
   &:hover {
     background-color: #333;
   }
+}
+
+
+
+//question-modal overlay
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Ensure the modal is above other content */
+  .modal-content {
+    box-sizing: border-box;
+    background: white;
+    padding: 20px;
+    width: 90%; /* Use percentage for responsiveness */
+    height: auto;
+    max-width: 320px; /* Maintain a max-width */
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+    display: flex; /* Add flex for vertical alignment */
+    flex-direction: column; /* Stack children vertically */
+    // align-items: center; /* Center items horizontally */
+  }
+  
+  
+  .modal-button{
+    background-color: black;
+    color: #fff;
+    width: 100px;
+    padding: 6px 10px;
+    border: none;
+    margin-left: 80px;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  
+    &:hover {
+      background-color: #333;
+    }
+  }
+}
+
 }

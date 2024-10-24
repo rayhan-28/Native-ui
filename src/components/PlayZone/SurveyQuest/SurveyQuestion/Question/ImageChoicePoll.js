@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import svgIcons from "../../../../../assets/image/SVG/svg";
+import SurveyQuestSvgIcon from "../../../../../assets/image/SVG/SurveyQuest/SurveyQuestSvgIcon";
 
 const ImageChoicePoll = ({ Options, questAnswer,idx, setQuestAnswer }) => {
   const [selectedImageIndex, setSelectedImageIndex] = useState(null); // State to track selected image index
@@ -80,9 +80,9 @@ const ImageChoicePoll = ({ Options, questAnswer,idx, setQuestAnswer }) => {
               dangerouslySetInnerHTML={{
                 __html:
                   selectedImageIndex === index
-                    ? svgIcons.selected_star
+                    ? SurveyQuestSvgIcon.selected_star
                     : hoveredIndex === index && selectedImageIndex === null
-                    ? svgIcons.hover_star
+                    ? SurveyQuestSvgIcon.hover_star
                     : "", // Show hover star if hovered and no star if neither selected nor hovered
               }}
             />

@@ -5,7 +5,7 @@
     padding: 10px 15px;
     background-color:rgba(255, 255, 255, 0.3) ;
     border-radius: 40px ;
-  }
+ 
   .icon-text-quest{
     display: flex;
     justify-content: center;
@@ -29,12 +29,14 @@
 
   .arrow-box{
     width: 20px;
+    height: 20px;
     cursor: pointer;
     border: 2px;
-    height: 20px;
     border-radius: 50%;
+    color: white;
     background-color: black;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-end;
   }
+}

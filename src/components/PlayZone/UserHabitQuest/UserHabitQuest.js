@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import svgIcons from "../../../assets/image/SVG/svg";
+import UserHabitQuestSvgIcon from "../../../assets/image/SVG/UserHabitQuest/UserHabitQuest";
 import ProgressBarSvg from "../../Common/ProgressBarSvg";
 import axios from "axios";
 import { useAuth } from "../../../context/AuthContext";
@@ -28,12 +28,12 @@ const UserHabitQuest = ({
   userHabitQuest,
   setNudgesClicked,
   setNodgesType,
-  setTypeOfQuest
+  setTypeOfQuest,
 }) => {
   //api call
 
   return (
-    <div style={{ maxWidth }} className="common-card-container">
+    <div style={{ maxWidth }} className="user-card-container">
       {userHabitQuest.length > 0
         ? userHabitQuest.map((habit, index) => {
             const defaultColor = "#fbeeee";
@@ -95,18 +95,18 @@ const UserHabitQuest = ({
                     <div className="icon-text">
                       {habit.completedStreak > 0 ? (
                         <div
-                          dangerouslySetInnerHTML={{ __html: svgIcons.streak }}
+                          dangerouslySetInnerHTML={{ __html: UserHabitQuestSvgIcon.streak }}
                           style={{ marginRight: "2px" }}
                         />
                       ) : (
                         <div
                           dangerouslySetInnerHTML={{
-                            __html: svgIcons.empty_streak,
+                            __html: UserHabitQuestSvgIcon.empty_streak,
                           }}
                           style={{ marginRight: "5px" }}
                         />
                       )}
-                      <p style={{fontSize:'12px',fontWeight:'500', whiteSpace: "nowrap" }}>
+                      <p style={{fontSize:'12px',fontWeight:'500', whiteSpace: "nowrap",marginTop:'0' }}>
                         {habit.completedStreak} Streaks
                       </p>
                     </div>

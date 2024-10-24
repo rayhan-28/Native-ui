@@ -20,19 +20,19 @@ import PlayZone from "./components/PlayZone/PlayZone";
 import './App.css';
 
 function App() {
-  // const [showSuccess, setShowSuccess] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
 
-  // const handleShowSuccess = () => setShowSuccess(true);
-  // const handleCloseSuccess = () => setShowSuccess(false);
 
 
   const email = 'jahir.rayhan@bedatasolutions.com';
   const token = '4733788f-783d-455f-a2b7-3b1815e53196';
   return (
-    <AuthProvider email={email} token={token}>
+    <AuthProvider  token={token}>
      {/* <HighlitePlayZoneModal/> */}
-     <PlayerCard/>
-     {/* <PlayZone/> */}
+     {/* <PlayerCard email={email} Name="" PhotoUrl="https://cdn.pixabay.com/photo/2024/05/26/10/15/bird-8788491_1280.jpg"/> */}
+     <button onClick={()=>setShowSuccess(true)}>Click me</button>
+      <PlayZone email={email}/>
+     {/* {showSuccess && <PlayZone handleCloseSuccess={()=>setShowSuccess(false)}/>} */}
      
      {/* <AlertOverly/> */}
      {/* <Servey/> */}

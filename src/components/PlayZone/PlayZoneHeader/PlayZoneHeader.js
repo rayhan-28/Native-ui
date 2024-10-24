@@ -29,7 +29,7 @@ const rewardsIcon = [
   svgIcons.reviewRestimonial,
 ];
 
-const PlayZoneHeader = ({ width = "100%",maxWidth='375px' }) => {
+const PlayZoneHeader = ({ width = "100%",maxWidth='375px',email }) => {
   const [selectedEarning, setSelectedEarning] = useState("artefact");
 
   const getOrdinalSuffix = (rank) => {
@@ -57,7 +57,7 @@ const PlayZoneHeader = ({ width = "100%",maxWidth='375px' }) => {
   };
 
   //api call
-  const { email, token } = useAuth(); // Get email and token from context
+  const { token } = useAuth(); // Get email and token from context
 
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
@@ -74,7 +74,6 @@ const PlayZoneHeader = ({ width = "100%",maxWidth='375px' }) => {
             },
           }
         );
-        console.log(email);
         if (response.status === 200) {
           setData(response.data);
           console.log("hlw");
@@ -83,10 +82,10 @@ const PlayZoneHeader = ({ width = "100%",maxWidth='375px' }) => {
         setError("You are not valid");
       }
     };
-    if (email && token) {
+    if (token) {
       fetchData(); // Only fetch if both email and token are set
     }
-  }, [email, token, data?.data?.currentLevel]);
+  }, [ token, data?.data?.currentLevel]);
   // SwiperCore.use([]);
   console.log(data);
   console.log("labib cureen check ", data?.data?.currentLevel);
@@ -163,25 +162,25 @@ const PlayZoneHeader = ({ width = "100%",maxWidth='375px' }) => {
 
 
         <div>
-            <div className="player-point-text">
-              <div className="player-points-streak-rank">
-                <div className="player-point-gap-increase" >
-                <span className="player-text">Points</span>
-                <span style={{marginTop:'4.2px'}} className="player-point">1000</span>
+            <div className="PlayZoneHeader-point-text">
+              <div className="PlayZoneHeader-points-streak-rank">
+                <div className="PlayZoneHeader-point-gap-increase" >
+                <span className="PlayZoneHeader-text">Points</span>
+                <span style={{marginTop:'6.2px'}} className="PlayZoneHeader-point">1000</span>
                 </div>
               </div>
 
-              <div className="player-points-streak-rank">
-              <div className="player-point-gap-increase">
-                <span className="player-text">Streaks</span>
-                <span style={{marginTop:'4.2px'}} className="player-point">2</span>
+              <div className="PlayZoneHeader-points-streak-rank">
+              <div className="PlayZoneHeader-point-gap-increase">
+                <span className="PlayZoneHeader-text">Streaks</span>
+                <span style={{marginTop:'6.2px'}} className="PlayZoneHeader-point">2</span>
               </div>
               </div>
 
-              <div className="player-points-streak-rank">
-              <div className="player-point-gap">
-                <span className="player-text">Rank</span>
-                <span style={{marginTop:'4px'}}  className="player-point">
+              <div className="PlayZoneHeader-points-streak-rank">
+              <div className="PlayZoneHeader-point-gap">
+                <span className="PlayZoneHeader-text">Rank</span>
+                <span   className="PlayZoneHeader-point">
                   2<sup >{getOrdinalSuffix(2)}</sup>
                 </span>
                 </div>
@@ -190,26 +189,9 @@ const PlayZoneHeader = ({ width = "100%",maxWidth='375px' }) => {
             </div>
           </div>
 
-      {/* <div className="point-part">
-        <div>
-          <span>Points</span>
-          <p>{data?.data?.points}</p>
-        </div>
-        <div>
-          <span>Streaks</span>
-          <p>1950</p>
-        </div>
-        <div>
-          <span>Rank</span>
-          <p>
-            4<sup>{getOrdinalSuffix(4)}</sup>
-          </p>
-        </div>
-      </div> */}
-
       <div style={{ height: "15px" }} />
 
-      <p style={{fontSize:'12px',fontWeight:'400'}}>TEN artefeacts of same kind of ONE Stutus Badges</p>
+      <p className="PlayZoneHeader-Badge-text" style={{fontSize:'12px',fontWeight:'400'}}>TEN artefeacts of same kind of ONE Stutus Badges</p>
 
       <div className="quest-name">
         <p

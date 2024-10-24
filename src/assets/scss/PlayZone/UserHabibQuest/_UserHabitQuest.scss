@@ -10,13 +10,11 @@
   justify-content: space-between;
 
 
-
-
   .user-habit-voucher {
+    margin-top: 0;
     padding: 2px 16px;
     background-color: #e7e7e7;
     background: linear-gradient(90deg, rgba(255, 152, 255, 0.5) 0%, rgba(255, 255, 255, 0) 100%);
-
     font-size: 0.8rem;
     border-radius: 15px;
     overflow: hidden; // Hide overflow
@@ -68,10 +66,8 @@
 
   .icon-text {
     display: flex;
-    align-items: baseline;
-    @media (max-width: 413px) {
+    @media (max-width: 374px) {
       flex-direction: column;
-      align-items: center;
       white-space:nowrap;
       gap:5px
     }
@@ -101,46 +97,5 @@
       background-color: #333;
     }
   }
-  // .last-part-quest{
-  //   display: flex;
-  //   justify-content: space-between;
-  //   align-items: center;
-  //   padding: 8px 15px;
-  //   background-color:rgba(255, 255, 255, 0.3) ;
-  //   border-radius: 40px ;
-  // }
-  // .icon-text-quest{
-  //   display: flex;
-  //   justify-content: center;
-  //   align-items: center;
-  //   gap: 10px;
-   
-  // }
-  // .text-ellipsis {
-  //   margin: 0;
-  //   font-size: 12px;
-  //   font-weight: 500;
-  //   white-space: nowrap;
-  //   overflow: hidden;
-  //   text-overflow: ellipsis;
-    
-  //   @media (max-width: 452px) {
-      
-  //     max-width: 150px; // Adjust based on how much space you want to allow
-  //   }
-  // }
-
-  // .arrow-box{
-  //   width: 30px;
-  //   cursor: pointer;
-  //   height: 30px;
-  //   border-radius: 50%;
-  //   background-color: black;
-  //   display: flex;
-  //   justify-content: center;
-  //   align-items: center;
-  // }
-
-
 
 }
