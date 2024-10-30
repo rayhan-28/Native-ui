@@ -29,25 +29,11 @@ const NudgesServey = ({
   return (
     <div className="Nudges-quest" >
     <div className="icon-text-quest">
-     {isCompleted ?
-     <>
+
      <div
-     dangerouslySetInnerHTML={{ __html: SurveyQuestSvgIcon.nice_small }}
+         dangerouslySetInnerHTML={{ __html: SurveyQuestSvgIcon.nice_small }}
      />
      <p className="text-ellipsis">Thank you for your participation</p>
-     </>
-     :
-     <>
-     <div
-     dangerouslySetInnerHTML={{ __html: SurveyQuestSvgIcon.referral_nudges }}
-     />
-     <p className="text-ellipsis">You're 8 answers away from a reward</p>
-     </>
-     } 
-     
-
-    
-      
     </div>
     <div onClick={()=>handleClicked()} className="arrow-box">
     <div

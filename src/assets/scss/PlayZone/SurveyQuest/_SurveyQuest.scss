@@ -31,6 +31,7 @@
     display: flex;
     column-gap: 10px;
     align-items: center;
+    justify-content: space-between;
   }
 
   .servey-status {
@@ -43,13 +44,13 @@
       padding: 2px 16px;
       background-color: #e7e7e7;
       background: linear-gradient(90deg, rgba(255, 152, 255, 0.5) 0%, rgba(255, 255, 255, 0) 100%);
-     
+      margin-top: 0;
       font-size: 0.8rem;
       border-radius: 15px;
       overflow: hidden; // Hide overflow
       white-space: nowrap; // Prevent line breaks
       width: 100%; // Ensure it takes full width of the parent
-      max-width: 246px; // Set a max width as needed
+      max-width: 200px; // Set a max width as needed
       cursor: pointer;
       position: relative;
       text-overflow: ellipsis;

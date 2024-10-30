@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from "react";
 import SurveyQuestSvgIcon from "../../../../../assets/image/SVG/SurveyQuest/SurveyQuestSvgIcon";
+import axios from "axios";
+import { useAuth } from "../../../../../context/AuthContext";
 
-const ImageChoicePoll = ({ Options, questAnswer,idx, setQuestAnswer }) => {
+const ImageChoicePoll = ({questId,actionId,email, Options, questAnswer, idx, setQuestAnswer }) => {
   const [selectedImageIndex, setSelectedImageIndex] = useState(null); // State to track selected image index
   const [hoveredIndex, setHoveredIndex] = useState(null); // State to track hovered image index
+  const [percentage, setPercentage] = useState(null);
+  const [error, setError] = useState(null);
   const [singleQAnswer, setSingleAnswer] = useState({
     TextAnswer: "",
     ImageMultiChoice: "",
@@ -14,7 +18,7 @@ const ImageChoicePoll = ({ Options, questAnswer,idx, setQuestAnswer }) => {
     ReplyWithLink: "",
     TextChoicePoll: "",
     ImageChoicePoll: "",
-  }); 
+  });
   // Check if ImageChoicePoll already has a selected image when the component mounts
   useEffect(() => {
     const updatedAnswers = [...questAnswer];
@@ -28,18 +32,33 @@ const ImageChoicePoll = ({ Options, questAnswer,idx, setQuestAnswer }) => {
       );
       setSelectedImageIndex(preSelectedIndex); // Set the pre-selected image index
     }
-  }, [Options, questAnswer[idx]?.ImageChoicePoll,idx,questAnswer,setQuestAnswer]);
+  }, [
+    Options,
+    questAnswer[idx]?.ImageChoicePoll,
+    idx,
+    questAnswer,
+    setQuestAnswer,
+  ]);
 
-  const handleImageClick = (index) => {
-    // Allow selection only if no image has been selected
-    if (selectedImageIndex === null) {
-    setSelectedImageIndex(index); // Set the selected image index when clicked
-    const updatedSingleQAnswer={...singleQAnswer,ImageChoicePoll:Options[index].OptionsImageUrl}
-    setSingleAnswer(updatedSingleQAnswer)
-    const updatedAnswers = [...questAnswer];
-    updatedAnswers[idx]=updatedSingleQAnswer;
-    // Set the updated answers back to state
-    setQuestAnswer(updatedAnswers);
+  const { token } = useAuth();
+
+  const fetchPercentage = async (optionId) => {
+    try {
+      console.log("Options Id = ", optionId);
+      const response = await axios.get(
+        "https://dev.api.pitch.space/api/survey-quest-poll-percentage",
+        {
+          params: { email, token, questId, actionId, optionId },
+        }
+      );
+
+      if (response.status === 200) {
+        // Filter quests based on questCategory
+        const data = response.data.data;
+        setPercentage(data);
+      }
+    } catch (err) {
+      setError("You are not valid");
     }
   };
 
@@ -49,6 +68,36 @@ const ImageChoicePoll = ({ Options, questAnswer,idx, setQuestAnswer }) => {
       setHoveredIndex(index);
     }
   };
+  useEffect(() => {
+    if (selectedImageIndex !== null) {
+      const optionId = Options[selectedImageIndex]?.OptionsId;
+      if (optionId) {
+        fetchPercentage(optionId);
+      }
+    }
+  }, [selectedImageIndex, Options, email, token, questId, actionId]);
+  const handleImageClick = (index) => {
+    // Allow selection only if no image has been selected
+    if (selectedImageIndex === null) {
+      const optionId = Options[index]?.OptionsId;
+      console.log("rayhan ",optionId);
+      if (optionId) {
+        fetchPercentage(optionId);
+      }
+      setSelectedImageIndex(index); // Set the selected image index when clicked
+      const updatedSingleQAnswer = {
+        ...singleQAnswer,
+        ImageChoicePoll: Options[index].OptionsImageUrl,
+      };
+      setSingleAnswer(updatedSingleQAnswer);
+      const updatedAnswers = [...questAnswer];
+      updatedAnswers[idx] = updatedSingleQAnswer;
+      // Set the updated answers back to state
+      setQuestAnswer(updatedAnswers);
+    }
+  };
+
+  
 
   const handleMouseLeave = () => {
     // Only reset hovered index if no image is selected
@@ -66,7 +115,9 @@ const ImageChoicePoll = ({ Options, questAnswer,idx, setQuestAnswer }) => {
           onClick={() => handleImageClick(index)} // Handle image click
           onMouseEnter={() => handleMouseEnter(index)} // Handle hover start
           onMouseLeave={handleMouseLeave} // Handle hover end
-          style={{ cursor: selectedImageIndex === null ? 'pointer' : 'default' }} // Disable pointer when an image is selected
+          style={{
+            cursor: selectedImageIndex === null ? "pointer" : "default",
+          }} // Disable pointer when an image is selected
         >
           <div className="multi-image-text">
             <img
@@ -96,19 +147,19 @@ const ImageChoicePoll = ({ Options, questAnswer,idx, setQuestAnswer }) => {
                 background:
                   selectedImageIndex !== null
                     ? `linear-gradient(to right, ${
-                        selectedImageIndex === index ? '#aee8de' : '#cccece'
-                      } ${option.percentage}%, #f9f9f9 ${option.percentage}%)`
+                        selectedImageIndex === index ? "#aee8de" : "#cccece"
+                      } ${percentage ? percentage[Options[index]?.OptionsId] : 0}%, #f9f9f9 ${percentage ? percentage[Options[index]?.OptionsId] : 0}%)`
                     : undefined,
-                borderRadius: '10px',
+                borderRadius: "10px",
               }}
             >
               <div
                 className="percentage-box"
                 style={{
-                  color: selectedImageIndex === index ? '#3eb9a3' : 'black', // Set text color based on selection
+                  color: selectedImageIndex === index ? "#3eb9a3" : "black", // Set text color based on selection
                 }}
               >
-                {selectedImageIndex !== null ? `${option.percentage}%` : ''}
+                {selectedImageIndex !== null ? `${percentage ? percentage[Options[index]?.OptionsId] : 0}%` : ""}
               </div>
             </div>
           </div>

@@ -48,13 +48,13 @@ const ServeyQuest= ({
      className="highlite-servey-quest-card"
      style={{
       backgroundColor,
-      marginBottom:'20px',
+      marginBottom: index!==(serveyQuest.length)-1?'20px':'',
       maxWidth,
       width
      }}
      >
       <div className="highlite-uppper">
-        <p style={{fontSize:'12px',fontWeight:'500',color:'#06182CCC'}}>Servey</p>
+        <p style={{fontSize:'12px',marginTop:'0',fontWeight:'500',color:'#06182CCC'}}>Servey</p>
         <p className="survey-quest-voucher">
           <span className="scroll-text">
             8 streaks for £20 Amazon voucher progress start
@@ -72,7 +72,7 @@ const ServeyQuest= ({
         <div className="progress-bar">
           <p
             className="progress-indicator"
-            style={{ width: `${(habit.points / habit.totalPoints) * 100}%` ,backgroundColor:habit.gradientColor}}
+            style={{ width: `${((habit.points / habit.totalPoints) * 100) > 100 ? 100 : ((habit.points / habit.totalPoints) * 100)}%` ,backgroundColor:habit.gradientColor}}
           ></p>
         </div>
         <button onClick={() => onGoClicked(habit?.questId)} className='survey-go-button'>Go</button>

@@ -54,6 +54,7 @@ const PlayerCharacterOverlay = ({
   onClose,
   menuButtonIsVisible,
   setShouldRefetch,
+  email
 }) => {
   const [currentIndex, setCurrentIndex] = useState(
     Player?.playerAvatar ? Number(Player.playerAvatar.split(",")[1]) : 2
@@ -73,7 +74,7 @@ const PlayerCharacterOverlay = ({
     });
   };
 
-  const { email, token } = useAuth(); // Get email and token from context
+  const {  token } = useAuth(); // Get email and token from context
   const [error, setError] = useState(null);
 
   const onPlayerAvaterSaved = async () => {

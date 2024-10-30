@@ -37,24 +37,16 @@ const ImageMultiChoice = ({ Options, questAnswer, setQuestAnswer, idx, IsMultiSe
       let updatedSelection=[...prevSelected];
       if (!IsMultiSelection) {
         if (prevSelected.includes(url)) {
-          //  updatedSelection = prevSelected.filter((selectedUrl) => selectedUrl !== url);
-          // setQuestAnswer({ ...questAnswer, ImageMultiChoice: updatedSelection.join(',') });
-          // return updatedSelection;
           updatedSelection = [];
         } else {
-          // setQuestAnswer({ ...questAnswer, ImageMultiChoice: url });
-          // return [url];
+          
           updatedSelection = [url];
         }
       } else {
         if (prevSelected.includes(url)) {
            updatedSelection = prevSelected.filter((selectedUrl) => selectedUrl !== url);
-          // setQuestAnswer({ ...questAnswer, ImageMultiChoice: updatedSelection.join(',') });
-          // return updatedSelection;
         } else if (prevSelected.length < MaxSelectionOrUpload) {
              updatedSelection = [...prevSelected, url];
-            // setQuestAnswer({ ...questAnswer, ImageMultiChoice: updatedSelection.join(',') });
-            // return updatedSelection;
         }
         else{
           return prevSelected;
@@ -85,6 +77,7 @@ const ImageMultiChoice = ({ Options, questAnswer, setQuestAnswer, idx, IsMultiSe
               key={index}
               onClick={() => handleImageClick(option.OptionsImageUrl)} 
               className="image-item"
+              style={{margin:index!==0?'10px':''}}
               onMouseEnter={() => setHoveredIndex(index)} 
               onMouseLeave={() => setHoveredIndex(null)}
             >

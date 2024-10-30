@@ -12,7 +12,6 @@ const ReplyWithTextAnswer = ({ questAnswer, idx, setQuestAnswer }) => {
     TextChoicePoll: "",
     ImageChoicePoll: "",
   });
-  const curr_idx = idx; 
   useEffect(() => {
     const updatedAnswers = [...questAnswer];
     
@@ -27,19 +26,15 @@ const ReplyWithTextAnswer = ({ questAnswer, idx, setQuestAnswer }) => {
     setSingleAnswer(updatedSingleQAnswer)
     const updatedAnswers = [...questAnswer];
     updatedAnswers[idx]=updatedSingleQAnswer;
-    // Set the updated answers back to state
     setQuestAnswer(updatedAnswers);
   }; 
-  console.log(idx);
-
-  console.log(idx);
   return (
     <div>
       <textarea
         onChange={handleTextChange}
         className="custom-textarea"
         placeholder="Type Your answer here"
-        value={questAnswer.TextAnswer}
+        value={questAnswer[idx]?.TextAnswer}
       ></textarea>
     </div>
   );

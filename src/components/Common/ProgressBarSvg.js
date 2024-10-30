@@ -1,10 +1,10 @@
 import React from 'react'
 
-const ProgressBarSvg = ({progress,progressColor}) => {
+const ProgressBarSvg = ({progress,progressColor,points}) => {
     const radius = 40;
     const circumference = 2 * Math.PI * radius;
     const progressBar = (progress / 100) * circumference;
-    const taskValue = 2 * 100;
+    const taskValue = parseInt(points);
     const textLength = taskValue.toString().length;
     const fontSize = textLength > 5 ? 16 - (textLength - 5) * 2 : 16;
   return (
@@ -59,3 +59,4 @@ const ProgressBarSvg = ({progress,progressColor}) => {
 }
 
 export default ProgressBarSvg
+

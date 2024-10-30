@@ -66,57 +66,52 @@
   flex-direction: column;
 }
 
+
 .player-voucher {
-  margin: 0;
+  width: 200px;
+  overflow: hidden;
+  white-space: nowrap;
   position: relative;
   display: flex;
   align-items: center;
-  justify-content: center;
-  background-color: #F9F9F9;
-
+  justify-content: flex-start;
   padding: 0px 10px;
   box-sizing: border-box;
-  
-  border-radius: 11px;
-  overflow: hidden; // Hide overflow
-  white-space: nowrap; // Prevent line breaks
-  width: 100%; // Ensure it takes full width of the parent
-  max-width: 200px;// Set a max width as needed
+  background-color: #F9F9F9;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 15.29px;
   height: 20px; 
   cursor: pointer;
-  
- 
-  .scroll-text {
-    position: relative;
-    margin: 0;
-    width: 100%;
-    font-size: 12px;
-    font-weight: 700;
-    line-height: 15.29px;
-    color: #06182CCC;
-
+  text-overflow: ellipsis;
+  .text {
+    display: inline-block;
     text-overflow: ellipsis;
     overflow: hidden;
-
-    animation: none; // No animation by default
-    transition: left 0.5s ease-in-out;
-    &:hover {
+    color: #06182CCC;
+  }
+  
+}
+.player-voucher:hover .text {
+    animation: scroll-left 3s linear infinite;
+  }
+  .player-voucher .scroll-active{
+    animation: scroll-left 3s linear 1;
+  }
+@keyframes scroll-left {
+    from {
       overflow: visible;
-      animation: scroll-text 5s linear infinite; // Start scrolling on hover
-      left: 0; // Reset to start position
+      transform: translateX(0);
     }
-
-    @keyframes scroll-text {
-      0% {
-        left: 0%; // Start at the initial position
-      }
-
-      100% {
-        left: -100%; // Move left to hide
-      }
+    to {
+      overflow: visible;
+      transform: translateX(-100%);
     }
   }
-}
+
+
+
 
 .player-card-middle{
   height: 20px;
@@ -191,3 +186,5 @@
     background-color: #333;
   }
 }
+
+

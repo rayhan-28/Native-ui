@@ -29,7 +29,7 @@ const rewardsIcon = [
   svgIcons.reviewRestimonial,
 ];
 
-const PlayZoneHeader = ({ width = "100%",maxWidth='375px',email }) => {
+const PlayZoneHeader = ({ width = "100%",maxWidth='375px',email,onSendBg,photoUrl,checkForCharacter }) => {
   const [selectedEarning, setSelectedEarning] = useState("artefact");
 
   const getOrdinalSuffix = (rank) => {
@@ -76,6 +76,7 @@ const PlayZoneHeader = ({ width = "100%",maxWidth='375px',email }) => {
         );
         if (response.status === 200) {
           setData(response.data);
+          onSendBg(response.data?.data?.playerAvatar)
           console.log("hlw");
         }
       } catch (err) {
@@ -95,23 +96,37 @@ const PlayZoneHeader = ({ width = "100%",maxWidth='375px',email }) => {
     const progressPercentage = (currentIndex / (totalLevels - 1)) * 100;
     return progressPercentage;
   };
+  const characterType=data?.data?.featureUsingDetails?.characterType?data?.data?.featureUsingDetails?.characterType:0;
+  const avatarPlayer=data?.data?.playerAvatar
+  console.log(characterType);
+  if(characterType===1){
+    checkForCharacter(characterType,avatarPlayer);
+  }
+  console.log(photoUrl);
   return (
     <>
+      {characterType===1&&<div style={{marginTop:'140px'}}/>}
       <div style={{
         width,
-        maxWidth
+        maxWidth,
       }}
        className="PlayZoneHeader-top-part">
-        <img
-          src={`https://res.cloudinary.com/pitchspace/image/upload/v1/player-icons/${data?.data?.playerAvatar}`}
+
+        {characterType===2 && photoUrl? 
+         <img
+          src={photoUrl}
           style={{ height: "90px", width: "90px", borderRadius: "50%" }}
-        />
+        /> : ''
+        }
+
+
+        
         <div>
           <p style={{ fontSize: "18px",fontWeight:'700',margin:'0',lineHeight:'22.9px',marginTop:'10px' }}>Hello</p>
           <p style={{ fontSize: "40px",fontWeight:'700',margin:'0',lineHeight:'50px' }}>{data?.data?.playerName}Ollie</p>
         </div>
 
-        {/* it show when character is 1 */}
+        {/* it show when character is 1
         {/* <div
           style={{ cursor: "pointer" }}
           dangerouslySetInnerHTML={{ __html: svgIcons.edit }}
@@ -119,7 +134,9 @@ const PlayZoneHeader = ({ width = "100%",maxWidth='375px',email }) => {
 
 
       </div>
+      
       <div style={{ height: "15px" }} />
+
       <div className="PlayZoneHeader-slider-level-container">
         <div className="PlayZoneHeader-progressbar-wrapper">
           <div className="PlayZoneHeader-progressbar" style={{ width: "100%" }} />
@@ -166,7 +183,7 @@ const PlayZoneHeader = ({ width = "100%",maxWidth='375px',email }) => {
               <div className="PlayZoneHeader-points-streak-rank">
                 <div className="PlayZoneHeader-point-gap-increase" >
                 <span className="PlayZoneHeader-text">Points</span>
-                <span style={{marginTop:'6.2px'}} className="PlayZoneHeader-point">1000</span>
+                <span style={{marginTop:'6.2px'}} className="PlayZoneHeader-point">{data?.data?.points}</span>
                 </div>
               </div>
 
@@ -232,7 +249,7 @@ const PlayZoneHeader = ({ width = "100%",maxWidth='375px',email }) => {
                 style={{ marginTop: "5px" }}
                 dangerouslySetInnerHTML={{ __html: icon }}
               />
-              <p style={{ margin: "0" }}>x 1</p>
+              <p style={{ margin: "0" }}>x 0</p>
               <p style={{ fontSize: "0.5rem", marginBottom: "2px" }}>
                 for sending referrals
               </p>

@@ -5,7 +5,7 @@
 import { useState } from "react";
 
 import Point from "./components/Point/Point";
-import MomentSuccess from "./components/MomentSuccess/MomentSuccess";
+// import MomentSuccess from "./components/MomentSuccess/MomentSuccess";
 import PlayerCard from "./components/PlayerCard/PlayerCard";
 
 import HighlitePlayZone from "./components/PlayZone/PlayZone";
@@ -26,14 +26,16 @@ function App() {
 
   const email = 'jahir.rayhan@bedatasolutions.com';
   const token = '4733788f-783d-455f-a2b7-3b1815e53196';
+  const img="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPUhc8feStsjYKYoW8X7sEQAOzA4Yla1QmGQ&s"
   return (
     <AuthProvider  token={token}>
      {/* <HighlitePlayZoneModal/> */}
      {/* <PlayerCard email={email} Name="" PhotoUrl="https://cdn.pixabay.com/photo/2024/05/26/10/15/bird-8788491_1280.jpg"/> */}
-     <button onClick={()=>setShowSuccess(true)}>Click me</button>
-      <PlayZone email={email}/>
-     {/* {showSuccess && <PlayZone handleCloseSuccess={()=>setShowSuccess(false)}/>} */}
+     {/* <button onClick={()=>setShowSuccess(true)}>Click me</button> */}
      
+      <PlayZone email={email} photoUrl={img}/>
+     {/* {showSuccess && <PlayZone handleCloseSuccess={()=>setShowSuccess(false)}/>} */}
+      
      {/* <AlertOverly/> */}
      {/* <Servey/> */}
      {/* <SurveyQuestion/> */}

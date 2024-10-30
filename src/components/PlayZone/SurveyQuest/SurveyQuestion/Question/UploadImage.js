@@ -6,6 +6,7 @@ import { useUploadImage } from "../../../../../hooks/useCloudinaryUpload";
 import axios from "axios";
 import { AdvancedImage } from "@cloudinary/react";
 import { Cloudinary } from "@cloudinary/url-gen/index";
+import { useAuth } from "../../../../../context/AuthContext";
 
 const UploadImage = ({
   uploadedImg,
@@ -13,11 +14,14 @@ const UploadImage = ({
   setQuestAnswer,
   IsMultiSelection,
   MaxSelectionOrUpload,
+  idx,
+  email,
 }) => {
   console.log(IsMultiSelection);
   const [images, setImages] = useState(Array(uploadedImg).fill(null));
   const [imagePublicId, setImagePublicId] = useState([]);
-  const [currIdx,setCurrentIdx]=useState(null)
+  const [publicIdGenLink, setPublicIdGenLink] = useState("");
+  const [currIdx, setCurrentIdx] = useState(null);
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
   const [countImg, setCountImg] = useState(0);
@@ -28,10 +32,22 @@ const UploadImage = ({
   const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
   const [newAssetToUpload, setNewAssetToUpload] = useState(null);
   const [uploadConfig, setUploadConfig] = useState(null);
-  const email = "jahir.rayhan@bedatasolutions.com";
-  const token = "4733788f-783d-455f-a2b7-3b1815e53196";
+  const [tempImageToUpload, setTempImageToUpload] = useState(null);
+  const [singleQAnswer, setSingleAnswer] = useState({
+    TextAnswer: "",
+    ImageMultiChoice: "",
+    TextMultiChoice: "",
+    YesNo: "",
+    Rate: "",
+    UploadedImage: "",
+    ReplyWithLink: "",
+    TextChoicePoll: "",
+    ImageChoicePoll: "",
+  });
 
-  const getNewAssetToUpload = async () => { 
+  const { token } = useAuth();
+
+  const getNewAssetToUpload = async () => {
     try {
       const response = await axios.get(
         "https://dev.api.pitch.space/api/assets/new",
@@ -79,32 +95,76 @@ const UploadImage = ({
     }
   }, [imageToUpload]);
 
+  useEffect(() => {
+    const updatedAnswers = [...questAnswer];
+    
+    if (!updatedAnswers[idx]) {
+      updatedAnswers[idx] = { ...singleQAnswer };
+      setQuestAnswer(updatedAnswers);
+    }
+    if (questAnswer[idx]?.UploadedImage) {
+      const selectedUrls = questAnswer[idx].UploadedImage.split(',');
+      setImagePublicId(selectedUrls);
+      selectedUrls.forEach((url, index)=> {
+        images[index] = url;
+      });
+    }
+  }, [questAnswer,idx,setQuestAnswer,singleQAnswer]);
+
+
+
   const { uploadImage, isUploadingImage } = useUploadImage(
     imageToUpload,
     newAssetToUpload,
     uploadConfig,
     (r) => {
       if (r.wasSuccessful && imageToUpload) {
-        //setImages([r?.url])
         setSavedClicked(false);
         setCropperOpen(false);
-        if(imagePublicId[currIdx]){
-          imagePublicId[currIdx]=r.publicId;
-        }else{
-        setImagePublicId((prevPublicIds) => [...prevPublicIds, r.publicId]);
+        if (imagePublicId[currIdx]) {
+          imagePublicId[currIdx] = r.publicId;
+          setImagePublicId([...imagePublicId]);
+
+          const updatedSingleQAnswer = {
+            ...singleQAnswer,
+            UploadedImage: imagePublicId.join(","),
+          };
+          setSingleAnswer(updatedSingleQAnswer);
+          setTimeout(() => {
+            const updatedAnswers = [...questAnswer];
+            updatedAnswers[idx] = updatedSingleQAnswer;
+            setQuestAnswer(updatedAnswers);
+          }, 0);
+
+        } else {
+          setImagePublicId((prevPublicIds) => {
+            const newPublicIds = [...prevPublicIds];
+            newPublicIds[currIdx] = r.publicId; // Set new publicId at the replaced index
+            const updatedSingleQAnswer = {
+              ...singleQAnswer,
+              UploadedImage: newPublicIds.join(","),
+            };
+            setSingleAnswer(updatedSingleQAnswer);
+            setTimeout(() => {
+              const updatedAnswers = [...questAnswer];
+              updatedAnswers[idx] = updatedSingleQAnswer;
+              setQuestAnswer(updatedAnswers);
+            }, 0);
+            console.log("first call .....");
+
+            return newPublicIds;
+          });
         }
+        setPublicIdGenLink(imagePublicId.join(","));
       } else if (!r.wasSuccessful) {
-        console.log("error misbah = ", r.errorMessage);
         setSavedClicked(false);
         setCropperOpen(false);
       } else {
-        console.log("Something went wrong, please try again later");
         setSavedClicked(false);
         setCropperOpen(false);
       }
     }
   );
-  console.log("imagePublicId ", imagePublicId);
   // Start uploading an image if necessary
   useEffect(() => {
     if (isSavedClicked && images[currentIndex]) {
@@ -115,37 +175,9 @@ const UploadImage = ({
   }, [isSavedClicked, uploadImage, currentIndex, isUploadingImage]);
 
   const handleImageUpload = (index) => {
-    setCurrentIdx(index)
+    setCurrentIdx(index);
     if (images[index]) {
-      const confirmReplace = window.confirm(
-        "An image already exists in this position. Do you want to replace it?"
-      );
-      if (confirmReplace) {
-        // Remove the image from the images and imagePublicId arrays
-        const newImages = [...images];
-        newImages[index] = null;
-        setImages(newImages);
-  
-        // const newImagePublicId = [...imagePublicId];
-        // newImagePublicId[index] = null;
-        // setImagePublicId(newImagePublicId);
-  
-        setCountImg((prevCount) => prevCount - 1); // Decrement the count of uploaded images
-      } else {
-        // If the user cancels, return early without doing anything
-        return;
-      }
-    }
-
-
-    if (!IsMultiSelection && countImg === 1) {
-      alert("You can only upload one image.");
-      return;
-    }
-
-    if (IsMultiSelection && countImg === MaxSelectionOrUpload) {
-      alert(`You can only upload up to ${MaxSelectionOrUpload} images.`);
-      return;
+      setTempImageToUpload(images[index]);
     }
 
     setCurrentIndex(index);
@@ -173,8 +205,6 @@ const UploadImage = ({
 
   const saveCroppedImage = async () => {
     setSavedClicked(true);
-    console.log("-----labib---", imageToUpload);
-    console.log("----jahir---", croppedAreaPixels);
     if (imageToUpload && croppedAreaPixels) {
       const croppedImage = await getCroppedImg(
         imageToUpload?.url,
@@ -188,19 +218,19 @@ const UploadImage = ({
         type: "image/png",
       });
 
+      const newImages = [...images];
+      newImages[currentIndex] = croppedImage;
+      setImages(newImages);
       // Store the cropped image in the upload state
       setImageToUpload({
         url: URL.createObjectURL(croppedFile),
         fileType: "image/png",
       });
 
-      const newImages = [...images];
-      newImages[currentIndex] = croppedImage;
       console.log("hllw labib");
-      setImages(newImages);
-      // setImageToUpload(null);
-      setCroppedAreaPixels(null);
-      setCountImg((prevCount) => prevCount + 1); // Increment the count of uploaded images
+
+      setTempImageToUpload(null);
+      setCroppedAreaPixels(null); // Increment the count of uploaded images
     }
   };
   console.log(currIdx);
@@ -208,6 +238,7 @@ const UploadImage = ({
   const cancelCrop = () => {
     setCropperOpen(false);
     setImageToUpload(null);
+    setTempImageToUpload(null);
     setCroppedAreaPixels(null);
   };
 
@@ -219,10 +250,6 @@ const UploadImage = ({
       secure: true,
     },
   });
-  console.log("get image url : ", cld.image(newAssetToUpload?.publicId));
-
-  console.log("-----> ", newAssetToUpload);
-  console.log("rayhan ---->", images);
 
   return (
     <>
@@ -244,7 +271,7 @@ const UploadImage = ({
                     height: "100%",
                     width: "100%",
                     position: "relative",
-                    cursor:'pointer'
+                    cursor: "pointer",
                   }}
                 >
                   <AdvancedImage
@@ -259,10 +286,11 @@ const UploadImage = ({
                 </div>
               </>
             ) : (
-              
               <div className="circle">
                 <div
-                  dangerouslySetInnerHTML={{ __html: SurveyQuestionImageUploadSvgIcon.blankImage }}
+                  dangerouslySetInnerHTML={{
+                    __html: SurveyQuestionImageUploadSvgIcon.blankImage,
+                  }}
                 />
               </div>
             )}
@@ -275,8 +303,9 @@ const UploadImage = ({
           <div
             style={{
               width: "auto",
-              minWidth:'375px',
-              height:'auto',
+              minWidth: "375px",
+              height: "auto",
+              marginRight: "13px",
               background: "rgb(255, 255, 255)",
               borderRadius: "20px",
               position: "relative",
@@ -289,7 +318,7 @@ const UploadImage = ({
               style={{
                 position: "relative",
                 width: "82%",
-                height:'350px',
+                height: "350px",
 
                 margin: "30px auto 0px",
               }}
@@ -299,7 +328,6 @@ const UploadImage = ({
                 crop={crop}
                 zoom={zoom}
                 aspect={3 / 3}
-                
                 onCropChange={setCrop}
                 onZoomChange={setZoom}
                 onCropComplete={handleCropComplete}
@@ -312,27 +340,35 @@ const UploadImage = ({
                 display: "flex",
                 flexDirection: "row",
                 justifyContent: "center",
-                alignItems: 'baseline',
+                alignItems: "baseline",
                 gap: "8px",
                 marginTop: "10px",
               }}
             >
-              <div dangerouslySetInnerHTML={{ __html: SurveyQuestionImageUploadSvgIcon.image }} />
-              <div className="controls">
-              <input
-                id="zoom-slider"
-                type="range"
-                min={1}
-                max={3}
-                step={0.1}
-                value={zoom}
-                aria-labelledby="Zoom"
-                className="zoom-range"
-                onChange={(e) => setZoom(Number(e.target.value))}
-                style={{ width: "100%" }} // Full width slider
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: SurveyQuestionImageUploadSvgIcon.image,
+                }}
               />
+              <div className="controls">
+                <input
+                  id="zoom-slider"
+                  type="range"
+                  min={1}
+                  max={3}
+                  step={0.1}
+                  value={zoom}
+                  aria-labelledby="Zoom"
+                  className="zoom-range"
+                  onChange={(e) => setZoom(Number(e.target.value))}
+                  style={{ width: "100%" }} // Full width slider
+                />
               </div>
-              <div dangerouslySetInnerHTML={{ __html: SurveyQuestionImageUploadSvgIcon.image2 }} />
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: SurveyQuestionImageUploadSvgIcon.image2,
+                }}
+              />
             </div>
 
             <div className="btn-container-cropper">
@@ -343,9 +379,8 @@ const UploadImage = ({
                 Cancel
               </button>
             </div>
-
+          </div>
         </div>
-         </div>
       )}
     </>
   );

@@ -160,10 +160,10 @@ import React, { useEffect, useState } from "react";
 import { useAuth } from "../../../context/AuthContext";
 import axios from "axios";
 
-const Leaderboard = ({width='100%',maxWidth='375px'}) => {
+const Leaderboard = ({width='100%',maxWidth='375px',email}) => {
   const [leaderboardData, setLeaderBoardData] = useState([]);
   const [myRowData, setMyRowData] = useState(null); // Store the row that contains the email field
-  const { email, token } = useAuth();
+  const {  token } = useAuth();
   const [error, setError] = useState(null);
   const [showExtraUserRow, setShowExtraUserRow] = useState(false);
 
@@ -211,10 +211,10 @@ const Leaderboard = ({width='100%',maxWidth='375px'}) => {
       }
     };
 
-    if (email && token) {
+    if ( token) {
       fetchData(); // Only fetch if both email and token are set
     }
-  }, [email, token]);
+  }, [token]);
   console.log(myRowData)
   const maxHeight = myRowData && myRowData.rank > 4 ? "230px" : "300px";
 
@@ -249,23 +249,23 @@ const Leaderboard = ({width='100%',maxWidth='375px'}) => {
                   display: "table",
                   width: "100%",
                   tableLayout: "fixed",
-                  backgroundColor:player.rank===myRowData.rank?'#ffffff':'#f9f9f9'
+                  backgroundColor:player?.rank===myRowData?.rank?'#ffffff':'#f9f9f9'
                 }}
               >
-                <td style={{paddingLeft:'10px',fontSize:'14px',fontWeight:'500'}}>{player.rank}.</td>
+                <td style={{paddingLeft:'10px',fontSize:'14px',fontWeight:'500'}}>{player?.rank}.</td>
                 <td>
                   <div className="player-info">
                     <img
                       src={`https://res.cloudinary.com/pitchspace/image/upload/v1/player-icons/${player?.playerAvatar}`}
                       className="player-avatar"
                     />
-                    {player.rank===myRowData.rank?<span title={player.playerName}>You ({player.playerName})</span>:
-                      <span style={{fontSize:'16px',fontWeight:'500',color:'#06182C'}} title={player.playerName}>{player.playerName}</span>
+                    {player?.rank===myRowData?.rank?<span title={player?.playerName}>You ({player?.playerName})</span>:
+                      <span style={{fontSize:'16px',fontWeight:'500',color:'#06182C'}} title={player?.playerName}>{player?.playerName}</span>
                     }
                   </div>
                 </td>
                 <td>
-                  <span style={{fontSize:'16px',fontWeight:'500',color:'#06182C99'}} title={player.points}>{player.points}</span>
+                  <span style={{fontSize:'16px',fontWeight:'500',color:'#06182C99'}} title={player?.points}>{player?.points}</span>
                 </td>
               </tr>
             ))}

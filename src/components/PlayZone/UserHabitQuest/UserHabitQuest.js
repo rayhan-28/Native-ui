@@ -30,6 +30,15 @@ const UserHabitQuest = ({
   setNodgesType,
   setTypeOfQuest,
 }) => {
+
+  const handleRedirect = (redirectUrl) => {
+    if (redirectUrl) {
+      window.location.href = redirectUrl; // Redirect to the URL
+    } else {
+      console.error('No URL to redirect');
+    }
+  };
+
   //api call
 
   return (
@@ -48,7 +57,7 @@ const UserHabitQuest = ({
                 style={{
                   backgroundColor, // Use the dynamic color with opacity
                   width,
-                  marginBottom: "20px",
+                  marginBottom: index!==(userHabitQuest.length)-1?'20px':'',
                 }}
               >
                 <div
@@ -63,21 +72,22 @@ const UserHabitQuest = ({
                     {habit.rewardCondition && (
                       <p className="user-habit-voucher">
                         <span className="scroll-text">
-                          {habit.rewardCondition} : {habit.reward}
+                          {habit?.rewardCondition} : {habit?.reward}
                         </span>
                       </p>
                     )}
                     <div className="circle-progress">
                       <ProgressBarSvg
-                        progress={habit.progress || "50"}
+                        points={habit?.points||0}
+                        progress={habit?.progress}
                         progressColor={habit.gradientColor}
                       />
                       <div className="user-habit-details">
-                        <p className="details-text">Community updates</p>
+                        <p className="details-text">{habit?.actionName}</p>
               
                         <span style={{fontSize:'22px',fontWeight:'300',lineHeight:'28.03px',color:'#06182CCC'}}>
-                          {habit.completedStreak} out of{" "}
-                          {habit.completionTarget[0]}
+                          {habit.playTimesInCurrentStreak} out of{" "}
+                          {habit.completionTarget.split(' ')[0]}
                         </span>
                         <p
                           style={{
@@ -86,7 +96,7 @@ const UserHabitQuest = ({
                             margin:'0'
                           }}
                         >
-                          in {habit.targetDay} ({habit.dayLeft} days left)
+                          in {habit?.targetDay} ({habit?.dayLeftToQuestEnd} days left)
                         </p>
                       </div>
                     </div>
@@ -110,12 +120,12 @@ const UserHabitQuest = ({
                         {habit.completedStreak} Streaks
                       </p>
                     </div>
-                    <button className="go-button">Go</button>
+                    <button onClick={()=>handleRedirect(habit?.redirectUrl)} className="go-button">Go</button>
                   </div>
                 </div>
                 <NugesUserHabit
                   Icon={
-                    parseInt(habit.completedStreak) ===
+                    parseInt(habit.completionTarget.split(' ')[0]) ===
                     parseInt(habit.completionTarget[0])
                       ? "wow_small"
                       : "letsGo"

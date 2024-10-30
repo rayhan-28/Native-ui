@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import svgIcons from "../../assets/image/SVG/svg";
 import { useAuth } from "../../context/AuthContext";
 import axios from "axios";
@@ -9,12 +9,13 @@ import { background } from "@cloudinary/url-gen/qualifiers/focusOn";
 import { BackgroundColor } from "@cloudinary/url-gen/actions/background/actions/BackgroundColor";
 import { center } from "@cloudinary/url-gen/qualifiers/textAlignment";
 
-const PayerCard = ({ profileImg, width = "100%", maxWidth = "335px",Name="",PhotoUrl="",email="" }) => {
+const PayerCard = ({  width = "100%", maxWidth = "335px",Name="",PhotoUrl="",email="" }) => {
   const {token } = useAuth(); // Get email and token from context
   const [playerData, setPlayerData] = useState(null);
   const [error, setError] = useState(null);
   const [isClicked,setIsClicked]=useState(false)
   const [shouldRefetch, setShouldRefetch] = useState(false); 
+  const [scroll, setScroll] = useState(false);
 
   const getOrdinalSuffix = (rank) => {
     if (rank % 10 === 1 && rank % 100 !== 11) {
@@ -63,20 +64,11 @@ const PayerCard = ({ profileImg, width = "100%", maxWidth = "335px",Name="",Phot
 
   const radius = 40;
   const circumference = 2 * Math.PI * radius;
-  const progress = (1 / 4) * circumference;
-  const taskValue = 2 * 100;
+  const progressBar = ( playerData?.habitQuest?.progress/ 100) * circumference;
+  const taskValue = parseInt(playerData?.habitQuest?.points);
   const textLength = taskValue.toString().length;
   const fontSize = textLength > 5 ? 16 - (textLength - 5) * 2 : 16;
 
-  // if (error) {
-  //   return (
-  //     <>
-  //       <div className="user-card">
-  //         <h4>Please give your credentials</h4>
-  //       </div>
-  //     </>
-  //   );
-  // }
    
   const handleRedirect = (redirectUrl) => {
     if (redirectUrl) {
@@ -91,7 +83,14 @@ const PayerCard = ({ profileImg, width = "100%", maxWidth = "335px",Name="",Phot
     console.log("clicked")
     
    }
-   console.log(playerData)
+   
+   //for reward sliding
+   useEffect(()=>{
+    const timer = setTimeout(()=>{
+      setScroll(true);
+    },500)
+    return ()=>clearTimeout(timer)
+   },[])
 
   return (
  
@@ -105,7 +104,7 @@ const PayerCard = ({ profileImg, width = "100%", maxWidth = "335px",Name="",Phot
     }}
   >
     {/* top */}
-    {isClicked && <PlayerCharacterOverlay Player={playerData} onClose={()=>setIsClicked(false)} setShouldRefetch={setShouldRefetch}/>}
+    {isClicked && <PlayerCharacterOverlay email={email} Player={playerData} onClose={()=>setIsClicked(false)} setShouldRefetch={setShouldRefetch}/>}
   {error? 
   <div style={{ display: "flex", flexDirection: "column", alignItems: "center", padding: "20px"}}>
   <h3>Issue with the KEY</h3>
@@ -178,11 +177,11 @@ const PayerCard = ({ profileImg, width = "100%", maxWidth = "335px",Name="",Phot
       </div>
     </div>
     <div className="player-card-middle">
-        <p className="player-voucher">
-          <span className="scroll-text">
-            {playerData?.habitQuest?.rewardCondition}: {playerData?.habitQuest?.reward}
-          </span>
-        </p>
+    <div className="player-voucher">
+      <span className={`text ${scroll?"scroll-active":""}`}>
+      {playerData?.habitQuest?.rewardCondition}: {playerData?.habitQuest?.reward}
+      </span>
+    </div>
       
       <div className="streak-icon">
         {playerData?.habitQuest?.completedStreak===0?<div
@@ -215,7 +214,7 @@ const PayerCard = ({ profileImg, width = "100%", maxWidth = "335px",Name="",Phot
             stroke="#e4a1a9"
             strokeWidth="12"
             strokeDasharray={circumference}
-            strokeDashoffset={circumference - playerData?.habitQuest?.progress}
+            strokeDashoffset={circumference - progressBar}
             strokeLinecap="round"
             transform="rotate(-90 50 50)" // rotate to make progress start from the top
           />
@@ -244,12 +243,11 @@ const PayerCard = ({ profileImg, width = "100%", maxWidth = "335px",Name="",Phot
         <div className="details">
           <p className="details-text">{playerData?.habitQuest?.actionName}</p>
          
-          <p className="out-of-point">{playerData?.habitQuest?.completedWeekStreak}
-             out of {playerData?.habitQuest?.completionTarget.split(' ',1)}
+          <p className="out-of-point">{playerData?.habitQuest?.playTimesInCurrentStreak} out of {playerData?.habitQuest?.completionTarget.split(' ',1)}
           </p>
          
           <p className="time-duration">
-            in {playerData?.habitQuest?.targetDay} days({playerData?.habitQuest?.dayLeft} days left)
+            in {playerData?.habitQuest?.targetDay} days({playerData?.habitQuest?.dayLeftToQuestEnd} days left)
           </p>
         </div>
       </div>

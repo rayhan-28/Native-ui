@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import svgIcons from "../../../assets/image/SVG/svg";
-import Nudges from "../../Common/Nudges";
 import ProgressBarSvg from "../../Common/ProgressBarSvg";
 import axios from "axios";
 import { useAuth } from "../../../context/AuthContext";
@@ -27,11 +25,12 @@ const ReferralsQuest = ({
   setNodgesType,
   width = "100%",
   maxWidth = "520px",
+  email
 }) => {
   console.log("refarralQuest ", referralQuest);
   const [isLinkClicked, setIsLinkClicked] = useState(false);
   const [clickedIndex, setClickedIndex] = useState(null);
-  const { email, token } = useAuth();  // Get email and token from context
+  const { token } = useAuth();  // Get email and token from context
   const [error, setError] = useState(null);
   const handleClicked = (index, questId) => {
       
@@ -63,7 +62,7 @@ const ReferralsQuest = ({
           setError('You are not valid');
         }
       }
-      if(email && token){
+      if( token){
          getGeneratedLink()
       }
      
@@ -75,20 +74,20 @@ const ReferralsQuest = ({
   return (
     <div style={{ width }} className="common-card-container">
       {referralQuest.length > 0
-        ? referralQuest.map((habit, index) => {
+        ? referralQuest.map((referrals, index) => {
             const defaultColor = "#fbeeee";
-            const backgroundColor = habit.gradientColor
-              ? hexToRgba(habit.gradientColor, 0.3)
+            const backgroundColor = referrals.gradientColor
+              ? hexToRgba(referrals.gradientColor, 0.3)
               : hexToRgba(defaultColor, 0.3);
 
             return (
               <div
                 className="referrals-card-wrapper"
-                key={habit.questId || index}
+                key={referrals.questId || index}
                 style={{
                   backgroundColor, // Use the dynamic color with opacity
                   width,
-                  marginBottom: "20px",
+                  marginBottom: index!==(referralQuest.length)-1?'20px':'',
                 }}
               >
                 <div
@@ -100,18 +99,18 @@ const ReferralsQuest = ({
                 >
                   <div>
                     {/* Conditionally render the voucher only if rewardCondition is not empty */}
-                    {habit.rewardCondition && (
+                    {referrals.rewardCondition && (
                       <p className="referrals-voucher">
                         <span className="scroll-text">
-                          {/* {habit?.rewardCondition} : {habit?.reward} */}
+                          {referrals?.rewardCondition} : {referrals?.reward}
                         </span>
                       </p>
                     )}
 
                     <div className="circle-progress-text">
                       <ProgressBarSvg
-                        progress={habit.progress || "50"}
-                        progressColor={habit.gradientColor}
+                        progress={referrals.progress || "50"}
+                        progressColor={referrals.gradientColor}
                       />
                       <div className="referral-details">
                         <p className="referrals-details-text">Referrals</p>
@@ -126,22 +125,12 @@ const ReferralsQuest = ({
                     </div>
                   </div>
                   <div className="button-streaks">
-                    <button onClick={()=>handleClicked(index,habit.questId)} className="referrals-go-button">
+                    <button onClick={()=>handleClicked(index,referrals.questId)} className="referrals-go-button">
                       {(isLinkClicked && clickedIndex===index)? "Copied" : "Invite"}
                     </button>
                   </div>
                 </div>
                 <NugesReferrals
-                  // Icon={
-                  //   parseInt(habit.completedStreak) ===
-                  //   parseInt(habit.completionTarget[0])
-                  //     ? "wow_small"
-                  //     : "letsGo"
-                  // }
-                  // remaining={
-                  //   parseInt(habit.completionTarget[0]) -
-                  //   parseInt(habit.completedStreak)
-                  // }
                   questType="Referral Quest"
                   Icon="wow_small"
                   setNudgesClicked={setNudgesClicked} // Pass setNudgesClicked as a prop
