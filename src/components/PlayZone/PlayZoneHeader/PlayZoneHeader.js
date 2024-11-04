@@ -29,7 +29,7 @@ const rewardsIcon = [
   svgIcons.reviewRestimonial,
 ];
 
-const PlayZoneHeader = ({ width = "100%",maxWidth='375px',email,onSendBg,photoUrl,checkForCharacter }) => {
+const PlayZoneHeader = ({ width = "100%",maxWidth='375px',email,photoUrl,checkForCharacter,PlayerName }) => {
   const [selectedEarning, setSelectedEarning] = useState("artefact");
 
   const getOrdinalSuffix = (rank) => {
@@ -76,7 +76,6 @@ const PlayZoneHeader = ({ width = "100%",maxWidth='375px',email,onSendBg,photoUr
         );
         if (response.status === 200) {
           setData(response.data);
-          onSendBg(response.data?.data?.playerAvatar)
           console.log("hlw");
         }
       } catch (err) {
@@ -87,9 +86,7 @@ const PlayZoneHeader = ({ width = "100%",maxWidth='375px',email,onSendBg,photoUr
       fetchData(); // Only fetch if both email and token are set
     }
   }, [ token, data?.data?.currentLevel]);
-  // SwiperCore.use([]);
-  console.log(data);
-  console.log("labib cureen check ", data?.data?.currentLevel);
+
   const [currentIndex, setCurrentIndex] = useState(data?.data?.currentLevel);
   const calculateProgress = (currentIndex) => {
     const totalLevels = Levels.length;
@@ -102,7 +99,7 @@ const PlayZoneHeader = ({ width = "100%",maxWidth='375px',email,onSendBg,photoUr
   if(characterType===1){
     checkForCharacter(characterType,avatarPlayer);
   }
-  console.log(photoUrl);
+ 
   return (
     <>
       {characterType===1&&<div style={{marginTop:'140px'}}/>}
@@ -123,7 +120,7 @@ const PlayZoneHeader = ({ width = "100%",maxWidth='375px',email,onSendBg,photoUr
         
         <div>
           <p style={{ fontSize: "18px",fontWeight:'700',margin:'0',lineHeight:'22.9px',marginTop:'10px' }}>Hello</p>
-          <p style={{ fontSize: "40px",fontWeight:'700',margin:'0',lineHeight:'50px' }}>{data?.data?.playerName}Ollie</p>
+          <p style={{ fontSize: "40px",fontWeight:'700',margin:'0',lineHeight:'50px' }}>{PlayerName}</p>
         </div>
 
         {/* it show when character is 1

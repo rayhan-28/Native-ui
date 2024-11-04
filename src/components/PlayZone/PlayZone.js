@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import ReferralsQuest from "./ReferralsQuest/ReferralsQuest";
 import LeaderBoard from "./LeaderBoard/LeaderBoard";
 import SurveyQuest from "./SurveyQuest/SurveyQuest";
@@ -7,18 +7,25 @@ import { useAuth } from "../../context/AuthContext";
 import NdugesServeyQuestOverlay from "../Common/NdugesServeyQuestOverlay";
 import SurveyQuestion from "./SurveyQuest/SurveyQuestion/SurveyQuestion";
 import QuestionModal from "./SurveyQuest/SurveyQuestion/QuestionModal";
-import SuccessScreenWihoutReward from "./SurveyQuest/SurveyQuestion/SuccessScreen/SuccessScreenWihoutReward";
 import UserHabitQuest from "./UserHabitQuest/UserHabitQuest";
 import PlayZoneSvgIcon from "../../assets/image/SVG/PlayZone/PlayZone";
 import PlayZoneHeader from "./PlayZoneHeader/PlayZoneHeader";
+import Error from "../Common/Error";
+import NdugesUserHabitQuestOverlay from "../Common/NdugesUserHabitQuestOverlay";
 
 const PlayZone = ({
   width = "100%",
   maxWidth = "375px",
   handleCloseSuccess,
   email,
-  photoUrl
+  photoUrl,
+  erroShowSuccess,
+  setErrorShowSuccess,
+  PlayerName
 }) => {
+
+  const surveyRef = useRef(null);
+
   const [isOpen, setIsOpen] = useState(true);
   const [userHabitQuest, setUserHabitQuest] = useState([]);
   const [serveyQuest, setServeyQuest] = useState([]);
@@ -36,9 +43,15 @@ const PlayZone = ({
   const [isFinisedClickedServey, setIsFinisedClickedServey] = useState(null);
   const [isAnswerIsCompleted, setIsAnswerIsCompleted] = useState(false);
   const [playerAvatarBg, setPlayerAvatarBg] = useState(null);
-  const [checkCharacterType,setCheckCharacterType]=useState(null);
-  const [playerAvatar,setPlayerAvatar]=useState(null)
+  const [checkCharacterType, setCheckCharacterType] = useState(null);
+  const [playerAvatar, setPlayerAvatar] = useState(null);
+  const [isErrorClicked, setIsErrorClicked] = useState(false);
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+  const [surveyQuestGoBtn, setSurveyQuestGoBtn] = useState(false);
+  const [surveyNudgesOverlay,setSurveyNudgesOverlay]=useState(false);
+  const [userHabitNuggesOverlay,setUserHabitNuggesOverlay]=useState(false);
+  const [userHabitRewardAway,setUserHabitRewardAway]=useState(null);
+  const [userHabitStreakAway,setUserHabitStreakAway]=useState(null);
   const updateScreenWidth = () => {
     setScreenWidth(window.innerWidth);
   };
@@ -80,24 +93,28 @@ const PlayZone = ({
           setReferralQuest(referralQuests);
         }
       } catch (err) {
-        setError("You are not valid");
+        setError(err);
       }
     };
 
     if (token) {
       fetchData(); // Only fetch if both email and token are set
     }
-  }, [token]);
+  }, [token,isFinisedClickedServey,setIsFinisedClickedServey]);
 
   const handleCloseModal = () => {
     handleCloseSuccess();
   };
-  
-  const checkForCharacter = (character,avatar)=>{
-     setCheckCharacterType(character)
-     setPlayerAvatar(avatar);
+
+  const checkForCharacter = (character, avatar) => {
+    setCheckCharacterType(character);
+    setPlayerAvatar(avatar);
+  };
+
+  const reward_streak =(streak,reward)=>{
+    setUserHabitRewardAway(reward);
+    setUserHabitStreakAway(streak)
   }
-  console.log("labib character " ,checkCharacterType);
 
   // Limit the number of quests to show by default
   const MAX_DISPLAY_QUESTS = 6;
@@ -110,17 +127,36 @@ const PlayZone = ({
 
   if (!isOpen) return null;
 
-  const OnCloseServeyOverlay = () => {
-    setIsFinisedClickedServey(false);
+
+  const scrollToTop = () => {
+    if (surveyRef && surveyRef.current) {
+      surveyRef.current.scrollIntoView({
+        behavior: 'smooth',
+        block: "nearest",
+      });
+    } else {
+    }
   };
 
-  const bgFromPlayZoneHedader = (bg) => {
-    setPlayerAvatarBg(bg);
+  const OnCloseServeyOverlay = async () => {
+    await setIsFinisedClickedServey(false);
+    await setSurveyNudgesOverlay(false)
+    scrollToTop();
   };
 
-  console.log("bg check ", playerAvatarBg);
 
-  return isServeyClicked && screenWidth > 500 ? (
+
+
+
+  return surveyNudgesOverlay?
+  <NdugesServeyQuestOverlay 
+  OnCloseServeyOverlay={OnCloseServeyOverlay}
+  /> :userHabitNuggesOverlay?<NdugesUserHabitQuestOverlay
+    userHabitRewardAway={userHabitRewardAway} 
+    userHabitStreakAway={userHabitStreakAway}
+    onCloseHabitQuestOverlay={()=>setUserHabitNuggesOverlay(false)}
+    />
+  :isServeyClicked && screenWidth > 500 ? (
     <SurveyQuestion
       email={email}
       setCompleteSurveyQuestion={setCompleteSurveyQuestion}
@@ -128,8 +164,11 @@ const PlayZone = ({
       setIsFinisedClickedServey={setIsFinisedClickedServey}
       isFinisedClickedServey={isFinisedClickedServey}
       questId={questId}
+      setSurveyQuestGoBtn={setSurveyQuestGoBtn}
+      photoUrl={photoUrl}
+      PlayerName={PlayerName}
     />
-  ) : (
+  ) : !error ? (
     <div className="playZone-overlay">
       <div
         className={`playZone-modal ${isServeyClicked ? "no-padding" : ""}`}
@@ -146,6 +185,7 @@ const PlayZone = ({
         )}
         {isFinisedClickedServey && (
           <NdugesServeyQuestOverlay
+            isFromQuestion="true"
             OnCloseServeyOverlay={OnCloseServeyOverlay}
           />
         )}
@@ -159,20 +199,18 @@ const PlayZone = ({
             questId={questId}
           />
         )}
-        {nudgesClicked && (
-          <SuccessScreenWihoutReward
-            onClose={() => setNudgesClicked(false)}
-            nodgesType={nodgesType}
-          />
-        )}
+       
         {!isServeyClicked && !nudgesClicked && !isFinisedClickedServey && (
           <>
             <div
               className="top-card"
               style={{
                 // backgroundColor:'#9a7eff',
-                backgroundImage: checkCharacterType===1? `url(https://res.cloudinary.com/pitchspace/image/upload/v1/player-icons/${playerAvatar})`:'',
-                backgroundColor:checkCharacterType!==1?'#9a7eff':'',
+                backgroundImage:
+                  checkCharacterType === 1
+                    ? `url(https://res.cloudinary.com/pitchspace/image/upload/v1/player-icons/${playerAvatar})`
+                    : "",
+                backgroundColor: checkCharacterType !== 1 ? "#9a7eff" : "",
                 backgroundSize: "cover",
                 backgroundPosition: "center",
                 backgroundRepeat: "no-repeat",
@@ -180,7 +218,7 @@ const PlayZone = ({
                 color: "white",
                 boxSizing: "border-box",
                 width,
-                height:checkCharacterType!==1?'':'600px',
+                height: checkCharacterType !== 1 ? "" : "600px",
                 maxWidth,
               }}
             >
@@ -193,7 +231,12 @@ const PlayZone = ({
                   onClick={handleCloseModal}
                 />
               </div>
-              <PlayZoneHeader checkForCharacter={checkForCharacter} photoUrl={photoUrl} onSendBg={bgFromPlayZoneHedader} email={email} />
+              <PlayZoneHeader
+                checkForCharacter={checkForCharacter}
+                photoUrl={photoUrl}
+                email={email}
+                PlayerName={PlayerName}
+              />
             </div>
 
             <div className="playZone-cards">
@@ -230,13 +273,17 @@ const PlayZone = ({
                   setNudgesClicked={setNudgesClicked}
                   setNodgesType={setNodgesType}
                   setTypeOfQuest={setTypeOfQuest}
+                  onCloseHabitQuestOverlay
+                  setUserHabitNuggesOverlay={setUserHabitNuggesOverlay}
+                  reward_streak={reward_streak}
                 />
               )}
 
               {displayedQuests.filter(
                 (quest) => quest.questCategory === "Survey Quest"
               ).length > 0 && (
-                <SurveyQuest
+                <div ref={surveyRef}>
+                  <SurveyQuest
                   email={email}
                   serveyQuest={displayedQuests.filter(
                     (quest) => quest.questCategory === "Survey Quest"
@@ -246,7 +293,11 @@ const PlayZone = ({
                   setReward={setReward}
                   isAnswerIsCompleted={isAnswerIsCompleted}
                   setIsAnswerIsCompleted={setIsAnswerIsCompleted}
+                  surveyQuestGoBtn={surveyQuestGoBtn}
+                  surveyNudgesOverlay={surveyNudgesOverlay}
+                  setSurveyNudgesOverlay={setSurveyNudgesOverlay}
                 />
+              </div>
               )}
 
               {displayedQuests.filter(
@@ -262,13 +313,20 @@ const PlayZone = ({
                   email={email}
                 />
               )}
-
-              <LeaderBoard  email={email}/>
+              <LeaderBoard email={email} />
             </div>
           </>
         )}
       </div>
     </div>
+  ) : (
+    erroShowSuccess && (
+      <Error
+        onCloseError={() => setErrorShowSuccess(false)}
+        width={width}
+        maxWidth={maxWidth}
+      />
+    )
   );
 };
 

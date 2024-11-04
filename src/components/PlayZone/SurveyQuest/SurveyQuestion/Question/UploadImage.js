@@ -17,7 +17,6 @@ const UploadImage = ({
   idx,
   email,
 }) => {
-  console.log(IsMultiSelection);
   const [images, setImages] = useState(Array(uploadedImg).fill(null));
   const [imagePublicId, setImagePublicId] = useState([]);
   const [publicIdGenLink, setPublicIdGenLink] = useState("");
@@ -233,7 +232,6 @@ const UploadImage = ({
       setCroppedAreaPixels(null); // Increment the count of uploaded images
     }
   };
-  console.log(currIdx);
 
   const cancelCrop = () => {
     setCropperOpen(false);

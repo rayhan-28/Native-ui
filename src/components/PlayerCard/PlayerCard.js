@@ -1,13 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
-import svgIcons from "../../assets/image/SVG/svg";
 import { useAuth } from "../../context/AuthContext";
 import axios from "axios";
 import PlayerCharacterOverlay from "./PlayerCharacterOverlay";
 import PlayrCardSvgIcons from "../../assets/image/SVG/PlayerCard/PlayerCardSvg";
-import { color } from "@cloudinary/url-gen/qualifiers/background";
-import { background } from "@cloudinary/url-gen/qualifiers/focusOn";
-import { BackgroundColor } from "@cloudinary/url-gen/actions/background/actions/BackgroundColor";
-import { center } from "@cloudinary/url-gen/qualifiers/textAlignment";
+import Error from "../Common/Error";
+import NugesUserHabib from "../Common/NugesUserHabit";
+import NdugesUserHabitQuestOverlay from "../Common/NdugesUserHabitQuestOverlay";
 
 const PayerCard = ({  width = "100%", maxWidth = "335px",Name="",PhotoUrl="",email="" }) => {
   const {token } = useAuth(); // Get email and token from context
@@ -16,7 +14,8 @@ const PayerCard = ({  width = "100%", maxWidth = "335px",Name="",PhotoUrl="",ema
   const [isClicked,setIsClicked]=useState(false)
   const [shouldRefetch, setShouldRefetch] = useState(false); 
   const [scroll, setScroll] = useState(false);
-
+  const [userHabitFromPlayerCard,setUserHabitFromPlayerCard]=useState(false);
+  
   const getOrdinalSuffix = (rank) => {
     if (rank % 10 === 1 && rank % 100 !== 11) {
       return "st";
@@ -105,12 +104,9 @@ const PayerCard = ({  width = "100%", maxWidth = "335px",Name="",PhotoUrl="",ema
   >
     {/* top */}
     {isClicked && <PlayerCharacterOverlay email={email} Player={playerData} onClose={()=>setIsClicked(false)} setShouldRefetch={setShouldRefetch}/>}
+    {userHabitFromPlayerCard && <NdugesUserHabitQuestOverlay onCloseHabitQuestOverlay={()=>setUserHabitFromPlayerCard(false)} />}
   {error? 
-  <div style={{ display: "flex", flexDirection: "column", alignItems: "center", padding: "20px"}}>
-  <h3>Issue with the KEY</h3>
-  <h4>get in touch</h4>
-  <h5>get a valid API Key</h5>
-  </div>
+  <Error/>
   :<>  <div className="player-card-top">
       {PhotoUrl && playerData?.featureUsingDetails?.characterType === 2 ? 
       <div className="player-card-img">
@@ -255,6 +251,14 @@ const PayerCard = ({  width = "100%", maxWidth = "335px",Name="",PhotoUrl="",ema
         <button className="player-go-button" onClick={()=>handleRedirect(playerData?.habitQuest?.redirectUrl)} >Go</button>
       </div>
     </div>
+    <div style={{height:'10px'}}/>
+    {playerData?.habitQuest?.streakAway===0 && playerData?.habitQuest?.rewardAway===0 && playerData?.habitQuest?.completedStreak===0 ? null:
+        <NugesUserHabib
+          streakAway = {playerData?.habitQuest?.streakAway}
+          rewardAway = {playerData?.habitQuest?.rewardAway}
+          fromPlayer="true"
+          setUserHabitNuggesOverlay={setUserHabitFromPlayerCard}
+        />}
     </>}
   </div>
   );

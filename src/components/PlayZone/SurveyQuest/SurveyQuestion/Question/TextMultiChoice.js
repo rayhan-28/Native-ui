@@ -2,10 +2,7 @@ import React, { useEffect, useState } from 'react';
 // import './TextMultiChoice.css'; // Assuming you'll add the styles for borders here
 
 const TextMultiChoice = ({ Options, questAnswer, setQuestAnswer, idx,IsMultiSelection, MaxSelectionOrUpload }) => {
-  // const [selectedTexts, setSelectedTexts] = useState(() => {
-  //   // Initialize selected texts from questAnswer.TextMultiChoice
-  //   return questAnswer.TextMultiChoice ? questAnswer.TextMultiChoice.split(',') : [];
-  // });
+ 
   const [selectedTexts, setSelectedTexts] = useState([])
   const [singleQAnswer, setSingleAnswer] = useState({
     TextAnswer: "",

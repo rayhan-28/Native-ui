@@ -3,7 +3,15 @@ import SurveyQuestSvgIcon from "../../../../../assets/image/SVG/SurveyQuest/Surv
 import axios from "axios";
 import { useAuth } from "../../../../../context/AuthContext";
 
-const ImageChoicePoll = ({questId,actionId,email, Options, questAnswer, idx, setQuestAnswer }) => {
+const ImageChoicePoll = ({
+  questId,
+  actionId,
+  email,
+  Options,
+  questAnswer,
+  idx,
+  setQuestAnswer,
+}) => {
   const [selectedImageIndex, setSelectedImageIndex] = useState(null); // State to track selected image index
   const [hoveredIndex, setHoveredIndex] = useState(null); // State to track hovered image index
   const [percentage, setPercentage] = useState(null);
@@ -68,6 +76,8 @@ const ImageChoicePoll = ({questId,actionId,email, Options, questAnswer, idx, set
       setHoveredIndex(index);
     }
   };
+
+  
   useEffect(() => {
     if (selectedImageIndex !== null) {
       const optionId = Options[selectedImageIndex]?.OptionsId;
@@ -76,11 +86,13 @@ const ImageChoicePoll = ({questId,actionId,email, Options, questAnswer, idx, set
       }
     }
   }, [selectedImageIndex, Options, email, token, questId, actionId]);
+
+
   const handleImageClick = (index) => {
     // Allow selection only if no image has been selected
     if (selectedImageIndex === null) {
       const optionId = Options[index]?.OptionsId;
-      console.log("rayhan ",optionId);
+      console.log("rayhan ", optionId);
       if (optionId) {
         fetchPercentage(optionId);
       }
@@ -96,8 +108,6 @@ const ImageChoicePoll = ({questId,actionId,email, Options, questAnswer, idx, set
       setQuestAnswer(updatedAnswers);
     }
   };
-
-  
 
   const handleMouseLeave = () => {
     // Only reset hovered index if no image is selected
@@ -148,7 +158,11 @@ const ImageChoicePoll = ({questId,actionId,email, Options, questAnswer, idx, set
                   selectedImageIndex !== null
                     ? `linear-gradient(to right, ${
                         selectedImageIndex === index ? "#aee8de" : "#cccece"
-                      } ${percentage ? percentage[Options[index]?.OptionsId] : 0}%, #f9f9f9 ${percentage ? percentage[Options[index]?.OptionsId] : 0}%)`
+                      } ${
+                        percentage ? percentage[Options[index]?.OptionsId] : 0
+                      }%, #f9f9f9 ${
+                        percentage ? percentage[Options[index]?.OptionsId] : 0
+                      }%)`
                     : undefined,
                 borderRadius: "10px",
               }}
@@ -159,7 +173,9 @@ const ImageChoicePoll = ({questId,actionId,email, Options, questAnswer, idx, set
                   color: selectedImageIndex === index ? "#3eb9a3" : "black", // Set text color based on selection
                 }}
               >
-                {selectedImageIndex !== null ? `${percentage ? percentage[Options[index]?.OptionsId] : 0}%` : ""}
+                {selectedImageIndex !== null
+                  ? `${percentage ? percentage[Options[index]?.OptionsId] : 0}%`
+                  : ""}
               </div>
             </div>
           </div>

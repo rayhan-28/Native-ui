@@ -19,7 +19,10 @@ const SurveyQuestion = ({
   onClose,
   questId,
   setIsFinisedClickedServey,
+  setSurveyQuestGoBtn,
   email,
+  photoUrl,
+  PlayerName,
 }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [linkError, setLinkError] = useState(false);
@@ -30,8 +33,9 @@ const SurveyQuestion = ({
   const [questAction, setQuestAction] = useState(null);
   const [data, setData] = useState(null);
   const [questAnswer, setQuestAnswer] = useState([]);
+  const [playerData, setPlayerData] = useState(null);
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
-  const [actionId,setActionId]=useState(null);
+  const [actionId, setActionId] = useState(null);
 
   const updateScreenWidth = () => {
     setScreenWidth(window.innerWidth);
@@ -42,12 +46,10 @@ const SurveyQuestion = ({
     window.addEventListener("resize", updateScreenWidth);
     return () => window.removeEventListener("resize", updateScreenWidth);
   }, []);
-  console.log("width calculation ", screenWidth);
+
   const toggleText = () => {
     setIsExpanded(!isExpanded);
   };
-  console.log(questAnswer);
-  console.log("questId ", questId);
 
   const { token } = useAuth(); // Get email and token from context
   const [error, setError] = useState(null);
@@ -66,7 +68,7 @@ const SurveyQuestion = ({
           const quest = response.data.data; // Assuming the data is stored in `data`
           setQuestAction(quest.action);
           setData(quest);
-          setActionId(quest.action.ActionId)
+          setActionId(quest.action.ActionId);
           console.log("ActionId1 = ", quest.action.ActionId);
           setQuestionNo(quest?.action?.ActionDetails?.length);
         }
@@ -80,7 +82,29 @@ const SurveyQuestion = ({
     }
   }, [token]);
 
-
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(
+        "https://dev.api.pitch.space/api/player-info",
+        {
+          params: {
+            email,
+            token,
+          },
+        }
+      );
+      if (response.status === 200) {
+        setPlayerData(response.data?.data);
+      }
+    } catch (err) {
+      setError("You are not valid");
+    }
+  };
+ 
+  useEffect(() => {
+    
+      fetchData();
+  }, [token]);
 
   const addPoints = async (data) => {
     try {
@@ -90,6 +114,9 @@ const SurveyQuestion = ({
           points: data,
         }
       );
+      if (response.status === 200) {
+        setSurveyQuestGoBtn(true);
+      }
     } catch (error) {
       throw error;
     }
@@ -100,8 +127,8 @@ const SurveyQuestion = ({
       const response = await axios.post(
         `https://dev.api.pitch.space/api/survey-quest-answers?email=${email}&token=${token}&questId=${questId}`,
         {
-          questId:questId,
-          QuestAnswer:data,
+          questId: questId,
+          QuestAnswer: data,
         }
       );
     } catch (error) {
@@ -112,12 +139,10 @@ const SurveyQuestion = ({
   const sendSurveyAnswers = async () => {
     try {
       await addPoints(questAnswer.length * 20);
-      await saveQuestion(questAnswer)
+      await saveQuestion(questAnswer);
       onClose();
       setIsFinisedClickedServey(true);
-    } catch (error) {
-
-    }
+    } catch (error) {}
   };
 
   const validateCurrentQuestion = (currentAction) => {
@@ -161,6 +186,7 @@ const SurveyQuestion = ({
         return true;
     }
   };
+
   const handleModal = () => {
     setModalVisible(false);
     setLinkError(false);
@@ -177,7 +203,9 @@ const SurveyQuestion = ({
       return "th";
     }
   };
-  console.log("action jahir ",actionId);
+
+ 
+
   return (
     <>
       <div className="Survey-question-overlay">
@@ -193,7 +221,7 @@ const SurveyQuestion = ({
             <div
               style={{
                 padding: screenWidth > 500 ? "50px 50px 10px 150px" : "20px",
-                boxSizing:'border-box'
+                boxSizing: "border-box",
               }}
               className="servery-container"
             >
@@ -266,14 +294,28 @@ const SurveyQuestion = ({
                           columnGap: "10px",
                         }}
                       >
-                        <img
-                          src="https://res.cloudinary.com/pitchspace/image/upload/v1/player-icons/PlayerCharacter,2"
-                          style={{
-                            height: "40px",
-                            width: "40px",
-                            borderRadius: "50%",
-                          }}
-                        />
+                        {playerData?.featureUsingDetails?.characterType === 2 && photoUrl ? (
+                          <img
+                            src={photoUrl}
+                            style={{
+                              height: "40px",
+                              width: "40px",
+                              borderRadius: "50%",
+                            }}
+                          />
+                        ) :playerData?.featureUsingDetails?.characterType === 1? (
+                          <img
+                          src={
+                            `https://res.cloudinary.com/pitchspace/image/upload/v1/player-icons/${playerData?.playerAvatar
+                            }`
+                          }
+                            style={{
+                              height: "40px",
+                              width: "40px",
+                              borderRadius: "50%",
+                            }}
+                          /> ):null}
+                        
                         <p
                           style={{
                             margin: "0",
@@ -282,7 +324,7 @@ const SurveyQuestion = ({
                             color: "#06182C",
                           }}
                         >
-                          Player Name
+                          {PlayerName}
                         </p>
                       </div>
                       <p
@@ -305,7 +347,7 @@ const SurveyQuestion = ({
                                 style={{ marginTop: "6.2px" }}
                                 className="survey-point"
                               >
-                                1000
+                               {playerData?.points}
                               </span>
                             </div>
                           </div>
@@ -317,7 +359,7 @@ const SurveyQuestion = ({
                                 style={{ marginTop: "6.2px" }}
                                 className="survey-point"
                               >
-                                2
+                                {playerData?.streaks ?? 0}
                               </span>
                             </div>
                           </div>
@@ -349,7 +391,7 @@ const SurveyQuestion = ({
                           display: "flex",
                           marginBottom: "20px",
                           alignItems: "center",
-                          marginTop:'2px',
+                          marginTop: "2px",
                           columnGap: "15px",
                         }}
                       >
@@ -591,9 +633,9 @@ const SurveyQuestion = ({
                         questAction?.ActionDetails[tempQuestion]?.ResponseType
                           .OptionsType === "Image Choice Poll" && (
                           <ImageChoicePoll
-                          questId={questId}
-                          actionId={actionId}
-                          email={email}
+                            questId={questId}
+                            actionId={actionId}
+                            email={email}
                             questAnswer={questAnswer}
                             Options={
                               questAction?.ActionDetails[tempQuestion]

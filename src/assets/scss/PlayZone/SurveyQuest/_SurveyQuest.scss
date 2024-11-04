@@ -40,45 +40,48 @@
     border-radius: 20px;
   }
 
-  .survey-quest-voucher {
-      padding: 2px 16px;
-      background-color: #e7e7e7;
-      background: linear-gradient(90deg, rgba(255, 152, 255, 0.5) 0%, rgba(255, 255, 255, 0) 100%);
-      margin-top: 0;
-      font-size: 0.8rem;
-      border-radius: 15px;
-      overflow: hidden; // Hide overflow
-      white-space: nowrap; // Prevent line breaks
-      width: 100%; // Ensure it takes full width of the parent
-      max-width: 200px; // Set a max width as needed
-      cursor: pointer;
-      position: relative;
+  .survey-voucher {
+    width: 200px;
+    overflow: hidden;
+    white-space: nowrap;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0px 10px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+    background: linear-gradient(90deg, rgba(255, 152, 255, 0.5) 0%, rgba(255, 255, 255, 0) 100%);
+  
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 15.29px;
+    height: 20px; 
+    cursor: pointer;
+    text-overflow: ellipsis;
+    .text {
+      display: inline-block;
       text-overflow: ellipsis;
-      .scroll-text {
-        display: inline-block;
-        position: relative;
-        font-size: 12px;
-        font-weight: 500;
-        
-       
-        left: 0; // Start outside the right edge
-        animation: none; // No animation by default
-        transition: left 0.5s ease-in-out;
-  
-        &:hover {
-          animation: scroll-text 5s linear infinite; // Start scrolling on hover
-          left: 0; // Reset to start position
-        }
-  
-        @keyframes scroll-text {
-          0% {
-            left: 0%; // Start at the initial position
-          }
-  
-          100% {
-            left: -100%; // Move left to hide
-          }
-        }
+      overflow: hidden;
+      color: #06182CCC;
+    }
+    
+  }
+  .survey-voucher:hover .text {
+      animation: scroll-left 3s linear infinite;
+    }
+    .survey-voucher .scroll-active{
+      animation: scroll-left 3s linear 1;
+    }
+  @keyframes scroll-left {
+      from {
+        overflow: visible;
+        transform: translateX(0);
+      }
+      to {
+        overflow: visible;
+        transform: translateX(-100%);
       }
     }
   

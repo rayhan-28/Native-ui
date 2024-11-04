@@ -193,7 +193,7 @@ const Leaderboard = ({width='100%',maxWidth='375px',email}) => {
           }));
 
           // Find the row that has the `email` field and store that row
-          const myRow = leaderboard.find((player) => player.email);
+          const myRow = leaderboard.find((player) => player._id);
 
           // If such a row is found, store it in `myRowData`
           if (myRow) {

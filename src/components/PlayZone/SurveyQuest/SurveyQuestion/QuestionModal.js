@@ -1,6 +1,5 @@
 import React from 'react';
 import SurveyQuestSvgIcon from '../../../../assets/image/SVG/SurveyQuest/SurveyQuestSvgIcon';
-// import './QuestionModal.css'; // Assuming you will create some CSS for styling
 
 const QuestionModal = ({ onClose ,text,OnCloseCompleteOverlay,}) => {
   return (

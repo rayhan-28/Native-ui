@@ -3,7 +3,6 @@ import UserHabitQuestSvgIcon from "../../../assets/image/SVG/UserHabitQuest/User
 import ProgressBarSvg from "../../Common/ProgressBarSvg";
 import axios from "axios";
 import { useAuth } from "../../../context/AuthContext";
-import Nudges from "../../Common/Nudges";
 import NugesUserHabit from "../../Common/NugesUserHabit";
 
 const hexToRgba = (hex, opacity) => {
@@ -24,18 +23,19 @@ const hexToRgba = (hex, opacity) => {
 
 const UserHabitQuest = ({
   width = "",
-  maxWidth="375px",
+  maxWidth = "375px",
   userHabitQuest,
   setNudgesClicked,
   setNodgesType,
   setTypeOfQuest,
+  setUserHabitNuggesOverlay,
+  reward_streak,
 }) => {
-
   const handleRedirect = (redirectUrl) => {
     if (redirectUrl) {
       window.location.href = redirectUrl; // Redirect to the URL
     } else {
-      console.error('No URL to redirect');
+      console.error("No URL to redirect");
     }
   };
 
@@ -57,46 +57,56 @@ const UserHabitQuest = ({
                 style={{
                   backgroundColor, // Use the dynamic color with opacity
                   width,
-                  marginBottom: index!==(userHabitQuest.length)-1?'20px':'',
+                  marginBottom:
+                    index !== userHabitQuest.length - 1 ? "20px" : "",
                 }}
               >
                 <div
                   style={{
                     display: "flex",
-                    justifyContent: 'space-between',
-                    alignItems: 'stretch',
+                    justifyContent: "space-between",
+                    alignItems: "stretch",
                   }}
                 >
                   <div>
                     {/* Conditionally render the voucher only if rewardCondition is not empty */}
                     {habit.rewardCondition && (
-                      <p className="user-habit-voucher">
-                        <span className="scroll-text">
-                          {habit?.rewardCondition} : {habit?.reward}
+                      <div className="user-habit-voucher">
+                        <span className="text">
+                          {habit?.rewardCondition}: {habit?.reward}
                         </span>
-                      </p>
+                      </div>
                     )}
                     <div className="circle-progress">
                       <ProgressBarSvg
-                        points={habit?.points||0}
+                        points={habit?.points || 0}
                         progress={habit?.progress}
                         progressColor={habit.gradientColor}
                       />
                       <div className="user-habit-details">
                         <p className="details-text">{habit?.actionName}</p>
-              
-                        <span style={{fontSize:'22px',fontWeight:'300',lineHeight:'28.03px',color:'#06182CCC'}}>
+
+                        <span
+                          style={{
+                            fontSize: "22px",
+                            fontWeight: "300",
+                            lineHeight: "28.03px",
+                            color: "#06182CCC",
+                          }}
+                        >
                           {habit.playTimesInCurrentStreak} out of{" "}
-                          {habit.completionTarget.split(' ')[0]}
+                          {habit.completionTarget.split(" ")[0]}
                         </span>
                         <p
                           style={{
                             color: "rgba(6, 24, 44, 0.8)",
-                            fontSize: "12px",fontWeight:'400',
-                            margin:'0'
+                            fontSize: "12px",
+                            fontWeight: "400",
+                            margin: "0",
                           }}
                         >
-                          in {habit?.targetDay} ({habit?.dayLeftToQuestEnd} days left)
+                          in {habit?.targetDay} ({habit?.dayLeftToQuestEnd} days
+                          left)
                         </p>
                       </div>
                     </div>
@@ -105,7 +115,9 @@ const UserHabitQuest = ({
                     <div className="icon-text">
                       {habit.completedStreak > 0 ? (
                         <div
-                          dangerouslySetInnerHTML={{ __html: UserHabitQuestSvgIcon.streak }}
+                          dangerouslySetInnerHTML={{
+                            __html: UserHabitQuestSvgIcon.streak,
+                          }}
                           style={{ marginRight: "2px" }}
                         />
                       ) : (
@@ -116,29 +128,41 @@ const UserHabitQuest = ({
                           style={{ marginRight: "5px" }}
                         />
                       )}
-                      <p style={{fontSize:'12px',fontWeight:'500', whiteSpace: "nowrap",marginTop:'0' }}>
+                      <p
+                        style={{
+                          fontSize: "12px",
+                          fontWeight: "500",
+                          whiteSpace: "nowrap",
+                          marginTop: "0",
+                        }}
+                      >
                         {habit.completedStreak} Streaks
                       </p>
                     </div>
-                    <button onClick={()=>handleRedirect(habit?.redirectUrl)} className="go-button">Go</button>
+                    <button
+                      onClick={() => handleRedirect(habit?.redirectUrl)}
+                      className="go-button"
+                    >
+                      Go
+                    </button>
                   </div>
                 </div>
-                <NugesUserHabit
-                  Icon={
-                    parseInt(habit.completionTarget.split(' ')[0]) ===
-                    parseInt(habit.completionTarget[0])
-                      ? "wow_small"
-                      : "letsGo"
-                  }
-                  remaining={
-                    parseInt(habit.completionTarget[0]) -
-                    parseInt(habit.completedStreak)
-                  }
-                  setNudgesClicked={setNudgesClicked} // Pass setNudgesClicked as a prop
-                  setNodgesType={setNodgesType}
-                  setTypeOfQuest={setTypeOfQuest}
-                  questType="User Habit Quest"
-                />
+                {habit.streakAway === 0 &&
+                habit.rewardAway === 0 &&
+                habit.completedStreak === 0 ? null : (
+                  <NugesUserHabit
+                    setNudgesClicked={setNudgesClicked} // Pass setNudgesClicked as a prop
+                    setNodgesType={setNodgesType}
+                    setTypeOfQuest={setTypeOfQuest}
+                    questType="User Habit Quest"
+                    streakAway={habit?.streakAway}
+                    rewardAway={habit?.rewardAway}
+                    setUserHabitNuggesOverlay={() => {
+                      setUserHabitNuggesOverlay(true);
+                      reward_streak(habit?.streakAway, habit?.rewardAway);
+                    }}
+                  />
+                )}
               </div>
             );
           })

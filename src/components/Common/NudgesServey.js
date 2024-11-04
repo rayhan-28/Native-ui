@@ -13,7 +13,7 @@ const NudgesServey = ({
     isCompleted,
     setIsAnswerIsCompleted,
     isAnswerIsCompleted,
-    
+    setSurveyNudgesOverlay,
     questId
 }) => {
     const handleClicked=()=>{
@@ -21,17 +21,18 @@ const NudgesServey = ({
           setIsAnswerIsCompleted(true)
        }
        else{
-         setIsServeyGoClicked(true)
+         setSurveyNudgesOverlay(true)
          setQuestId(questId)
        }
        
     }
   return (
-    <div className="Nudges-quest" >
+    <div style={{backgroundColor:'rgba(255, 255, 255, 0.3)'}} className="Nudges-quest" >
     <div className="icon-text-quest">
 
      <div
-         dangerouslySetInnerHTML={{ __html: SurveyQuestSvgIcon.nice_small }}
+         style={{marginTop:'7px'}}
+         dangerouslySetInnerHTML={{ __html: SurveyQuestSvgIcon.wow_small}}
      />
      <p className="text-ellipsis">Thank you for your participation</p>
     </div>

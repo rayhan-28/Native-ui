@@ -188,3 +188,47 @@
 }
 
 
+.Nudges-quest1{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 15px;
+  background-color:rgba(219, 210, 210, 0.301) ;
+  border-radius: 40px ;
+
+.icon-text-quest{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+ 
+}
+.text-ellipsis {
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 12px;
+  font-weight: 500;
+  
+  @media (max-width: 375px) {
+    
+    max-width: 100px; // Adjust based on how much space you want to allow
+  }
+}
+
+.arrow-box{
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  border: 2px;
+  border-radius: 50%;
+  color: white;
+  background-color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+}
+
+

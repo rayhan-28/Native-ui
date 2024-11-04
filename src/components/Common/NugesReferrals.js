@@ -9,7 +9,7 @@ const NugesReferrals = ({
 
     }
   return (
-    <div className="Nudges-quest" >
+    <div style={{backgroundColor:'rgba(255, 255, 255, 0.3)'}} className="Nudges-quest" >
       <div className="icon-text-quest">
      
     {questType==='Referral Quest' &&

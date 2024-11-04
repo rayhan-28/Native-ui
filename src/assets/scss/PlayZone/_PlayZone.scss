@@ -1,23 +1,23 @@
 .playZone-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 100;
-    font-family: "Soehne", sans-serif;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+  font-family: "Soehne", sans-serif;
 
 
 
-  
+
 
   .playZone-modal {
-   
-  
+
+
     background-color: #f9f9f9;
     border-radius: 18px 18px 0px 0px;
     max-height: 80vh;
@@ -26,53 +26,55 @@
     align-items: center;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     overflow-y: auto;
-    -webkit-overflow-scrolling: touch; /* Smooth scrolling on mobile */
-  
-  /* Hide the scrollbar */
-  scrollbar-width: none; /* For Firefox */
-  -ms-overflow-style: none;
+    -webkit-overflow-scrolling: touch;
+    /* Smooth scrolling on mobile */
 
-   
+    /* Hide the scrollbar */
+    scrollbar-width: none;
+    /* For Firefox */
+    -ms-overflow-style: none;
+
+
   }
+
   .playZone-modal::-webkit-scrollbar {
-    display: none;  /* For Chrome, Safari, and WebKit browsers */
-  }
- 
-  .playZone-modal > :not(.top-card) {
-    padding: 15px; /* Default padding */
-  }
-  
-  .playZone-modal.no-padding > :not(.top-card) {
-    
-    padding: 0px; /* Remove padding when the .no-padding class is applied */
+    display: none;
+    /* For Chrome, Safari, and WebKit browsers */
   }
 
-  .playZone-cards{
-   gap:20px;
-   display:flex;
-   flex-direction:column
+  .playZone-modal> :not(.top-card) {
+    padding: 15px;
+    /* Default padding */
   }
 
-  .playZone-quest-see{
+  .playZone-modal.no-padding> :not(.top-card) {
+
+    padding: 0px;
+    /* Remove padding when the .no-padding class is applied */
+  }
+
+  .playZone-cards {
+    gap: 20px;
+    display: flex;
+    flex-direction: column
+  }
+
+  .playZone-quest-see {
     display: flex;
     justify-content: space-between;
   }
-  .playZone-see{
-       color:#06182C80;
-        font-size:14px;
-        font-weight: 400;
-        text-decoration:underline;
-        cursor:pointer
+
+  .playZone-see {
+    color: #06182C80;
+    font-size: 14px;
+    font-weight: 400;
+    text-decoration: underline;
+    cursor: pointer
   }
-  
-  .playZone-close-btn{
+
+  .playZone-close-btn {
     cursor: pointer;
   }
 
 
-  }
- 
-  
-
-  
-  
+}

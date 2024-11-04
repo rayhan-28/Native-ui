@@ -26,22 +26,24 @@ const ServeyQuest= ({
   setIsFinisedClickedServey,
   isFinisedClickedServey,
   isAnswerIsCompleted,
-   setIsAnswerIsCompleted
+  setIsAnswerIsCompleted,
+  surveyQuestGoBtn,
+  setSurveyNudgesOverlay,
   }) => {
-
+  
+ 
 
   const onGoClicked = (questId) => {
     setIsServeyGoClicked(true);
     setQuestId(questId);
   }
-  console.log(serveyQuest)
   return (
     <div>
     {serveyQuest.length>0?(
-     serveyQuest.map((habit,index)=>{
+     serveyQuest.map((survey,index)=>{
       const defaultColor = "#fbeeee";
-      const backgroundColor = habit.gradientColor
-        ? hexToRgba(habit.gradientColor, 0.3) // Apply 30% opacity to the gradient color
+      const backgroundColor = survey.gradientColor
+        ? hexToRgba(survey.gradientColor, 0.3) // Apply 30% opacity to the gradient color
         : hexToRgba(defaultColor, 0.3); 
     return( 
     <div key={index}
@@ -54,12 +56,14 @@ const ServeyQuest= ({
      }}
      >
       <div className="highlite-uppper">
-        <p style={{fontSize:'12px',marginTop:'0',fontWeight:'500',color:'#06182CCC'}}>Servey</p>
-        <p className="survey-quest-voucher">
-          <span className="scroll-text">
-            8 streaks for £20 Amazon voucher progress start
-          </span>
-        </p>
+        <p style={{fontSize:'12px',marginTop:'0',fontWeight:'500',color:'#06182CCC'}}>Survey</p>
+        {survey.rewardCondition && (
+            <div className="survey-voucher">
+                <span className="text">
+                  {survey?.rewardCondition}: {survey?.reward}
+                </span>
+            </div>
+      )}
       </div>
       <p className="task">Share our link with your friends</p>
       
@@ -68,27 +72,28 @@ const ServeyQuest= ({
           dangerouslySetInnerHTML={{ __html: SurveyQuestSvgIcon.stardust }}
           style={{ marginRight: "7px" }}
         />
-        <p style={{ fontSize: "12px",fontWeight:'400',margin:'0'}}>{habit.points}/{habit.totalPoints}</p>
+        <p style={{ fontSize: "12px",fontWeight:'400',margin:'0'}}>{survey.points}/{survey.totalPoints}</p>
         <div className="progress-bar">
           <p
             className="progress-indicator"
-            style={{ width: `${((habit.points / habit.totalPoints) * 100) > 100 ? 100 : ((habit.points / habit.totalPoints) * 100)}%` ,backgroundColor:habit.gradientColor}}
+            style={{ width: `${((survey.points / survey.totalPoints) * 100) > 100 ? 100 : ((survey.points / survey.totalPoints) * 100)}%` ,backgroundColor:survey.gradientColor}}
           ></p>
         </div>
-        <button onClick={() => onGoClicked(habit?.questId)} className='survey-go-button'>Go</button>
+        {survey.points !== survey.totalPoints &&<button onClick={() => onGoClicked(survey?.questId)} className='survey-go-button'>Go</button>}
       </div>
       <div style={{height:'10px'}}/>
-        <NudgesServey 
+       {survey.points === survey.totalPoints && <NudgesServey 
          questType="Survey Quest"
          setIsServeyGoClicked={setIsServeyGoClicked}
          isFinisedClickedServey={isFinisedClickedServey}
          setIsFinisedClickedServey={setIsFinisedClickedServey}
-         questId={habit?.questId}
+         questId={survey?.questId}
          setQuestId={setQuestId}
          isAnswerIsCompleted={isAnswerIsCompleted} 
          setIsAnswerIsCompleted={setIsAnswerIsCompleted} 
+         setSurveyNudgesOverlay={setSurveyNudgesOverlay}
          isCompleted=""
-        />
+        />}
         
       
     </div>

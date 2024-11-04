@@ -1,12 +1,20 @@
 import React from 'react'
+import PlayZoneSvgIcon from '../../assets/image/SVG/PlayZone/PlayZone'
 
-const NdugesUserHabitQuestOverlay = (Icon,
-    remaining="",
+const NdugesUserHabitQuestOverlay = ({
     onClose,
     width="100%",
     maxWidth="520px",
-    nodgesType,
-    reward) => {
+    userHabitRewardAway,
+    userHabitStreakAway,
+    onCloseHabitQuestOverlay,
+    reward,
+    onCloseUserHabitPalyerCard
+  }) => {
+  
+  const handleOverlay=()=>{
+    onCloseHabitQuestOverlay()
+  }
   return (
     <div className='success-without-reward-overlay'>
         <div
@@ -19,15 +27,17 @@ const NdugesUserHabitQuestOverlay = (Icon,
             
           <div
              className='close-icon'
-              onClick={onClose}
-              dangerouslySetInnerHTML={{ __html: svgIcons.cross }}
+              onClick={handleOverlay}
+              dangerouslySetInnerHTML={{ __html: PlayZoneSvgIcon.cross }}
               
           />
         
-        {/* <div  dangerouslySetInnerHTML={{ __html: svgIcons.nice }} /> */}
-         {nodgesType==='wow_small'? <div  dangerouslySetInnerHTML={{ __html: svgIcons.wow }}/>
-         : 
-         <div  dangerouslySetInnerHTML={{ __html: svgIcons.letsGo_big }}/>} 
+        
+        {(userHabitStreakAway >= 1  || (userHabitStreakAway === 0 && userHabitRewardAway > 0)) ? <div  dangerouslySetInnerHTML={{ __html: PlayZoneSvgIcon.letsGo_big }}/>
+        : <div  dangerouslySetInnerHTML={{ __html: PlayZoneSvgIcon.wow }}/>}
+         
+
+
          {reward &&
           <>
            <p style={{fontSize:'1.1rem',marginBottom:'0'}}>Reward unlocked</p> 
@@ -44,7 +54,13 @@ const NdugesUserHabitQuestOverlay = (Icon,
 
        {!reward && 
        <>
-       <p style={{fontSize:'25px',fontWeight:'bold',marginTop:'20px',marginBottom:'0'}}>Servey Completed</p>
+       <p style={{fontSize:'25px',fontWeight:'bold',marginTop:'20px',marginBottom:'0'}}>
+        {userHabitStreakAway === 1 ? "1 action to save your streak" 
+         : userHabitStreakAway > 1 ? `${userHabitStreakAway} more action for a streak`
+          : userHabitStreakAway === 0 && userHabitRewardAway > 0 ? `You achieved ${userHabitRewardAway} streaks`
+          : null
+        }
+        </p>
         <p style={{}}>Thank you for your time</p>
         <span style={{fontSize:'0.7rem',marginBottom:'5px'}}>With this survey,you've collected</span>
         </>
@@ -52,20 +68,20 @@ const NdugesUserHabitQuestOverlay = (Icon,
         <div style={{display:'flex',gap:'15px'}}>
             <div style={{display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center'}}>
             <div className='reward-container'>
-            <div  dangerouslySetInnerHTML={{ __html: svgIcons.black_star }} />
+            <div  dangerouslySetInnerHTML={{ __html: PlayZoneSvgIcon.black_star }} />
              <p style={{margin:'0'}}>X 450</p>
             </div>
              <p style={{fontSize:'0.8rem'}}>Points</p>
             </div>
             <div style={{display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center'}}>
             <div className='reward-container'>
-            <div  dangerouslySetInnerHTML={{ __html: svgIcons.servey }} />
+            <div  dangerouslySetInnerHTML={{ __html: PlayZoneSvgIcon.servey }} />
             <p style={{margin:'0'}}>X 1</p>
             </div>
             <p style={{fontSize:'0.8rem'}}>Artefact</p>
             </div>
         </div>
-        <button onClick={onClose} style={{marginTop:'15px'}} className='success-without-btn'>Collect more points</button>
+        <button onClick={onCloseHabitQuestOverlay} style={{marginTop:'15px'}} className='success-without-btn'>Collect more points</button>
         <p style={{marginTop:'15px',color:'rgba(6, 24, 44, 0.7)'}}>Collect more points to unlock amazing rewards!</p>
         </div>
     </div>

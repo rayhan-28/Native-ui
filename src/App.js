@@ -21,8 +21,11 @@ import './App.css';
 
 function App() {
   const [showSuccess, setShowSuccess] = useState(false);
-
-
+  const [erroShowSuccess,setErrorShowSuccess]=useState(false);
+  const handleshow=()=>{
+    setShowSuccess(true);
+    setErrorShowSuccess(true);
+   }
 
   const email = 'jahir.rayhan@bedatasolutions.com';
   const token = '4733788f-783d-455f-a2b7-3b1815e53196';
@@ -30,11 +33,19 @@ function App() {
   return (
     <AuthProvider  token={token}>
      {/* <HighlitePlayZoneModal/> */}
-     {/* <PlayerCard email={email} Name="" PhotoUrl="https://cdn.pixabay.com/photo/2024/05/26/10/15/bird-8788491_1280.jpg"/> */}
-     {/* <button onClick={()=>setShowSuccess(true)}>Click me</button> */}
+     <PlayerCard email={email} Name="" PhotoUrl="https://cdn.pixabay.com/photo/2024/05/26/10/15/bird-8788491_1280.jpg"/>
+     <button onClick={handleshow}>Click me</button>
      
-      <PlayZone email={email} photoUrl={img}/>
-     {/* {showSuccess && <PlayZone handleCloseSuccess={()=>setShowSuccess(false)}/>} */}
+      {/* <PlayZone  photoUrl={img}/> */}
+     {showSuccess &&
+      <PlayZone email={email} 
+      erroShowSuccess={erroShowSuccess} 
+      setErrorShowSuccess={setErrorShowSuccess}
+      handleErrorClose={()=>setErrorShowSuccess(false)}
+      handleCloseSuccess={()=>setShowSuccess(false)}
+      PlayerName="Olle"
+      photoUrl={img}
+      />}
       
      {/* <AlertOverly/> */}
      {/* <Servey/> */}
