@@ -132,7 +132,7 @@ const PayerCard = ({  width = "100%", maxWidth = "335px",Name="",PhotoUrl="",ema
         style={{
           width,
           maxWidth,
-          minHeight:'200px'
+         
         }}
       >
         {/* top */}
@@ -221,6 +221,7 @@ const PayerCard = ({  width = "100%", maxWidth = "335px",Name="",PhotoUrl="",ema
           
 
         </div>
+        {playerData?.habitQuest &&<>
         <div className="player-card-middle">
         <div className="player-voucher">
           <span className={`text ${scroll?"scroll-active":""}`}>
@@ -239,6 +240,7 @@ const PayerCard = ({  width = "100%", maxWidth = "335px",Name="",PhotoUrl="",ema
             <div style={{fontSize:'12px',fontWeight:'500'}}>{(playerData?.habitQuest?.completedStreak)} Streak</div>
           </div>
         </div>
+        
         <div className="player-card-last">
           <div className="circle-progress">
             <ProgressBarSvg 
@@ -270,8 +272,9 @@ const PayerCard = ({  width = "100%", maxWidth = "335px",Name="",PhotoUrl="",ema
               rewardAway = {playerData?.habitQuest?.rewardAway}
               fromPlayer="true"
               setUserHabitNuggesOverlay={setUserHabitFromPlayerCard}
-            />}
+            />}</>}
         </>}
+        
       </div>}
    </>
    
