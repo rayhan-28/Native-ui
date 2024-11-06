@@ -33,7 +33,7 @@ function App() {
   return (
     <AuthProvider  token={token}>
      {/* <HighlitePlayZoneModal/> */}
-     <PlayerCard email={email} Name="" PhotoUrl="https://cdn.pixabay.com/photo/2024/05/26/10/15/bird-8788491_1280.jpg"/>
+     <PlayerCard email={email} Name="Rayhan" PhotoUrl="https://cdn.pixabay.com/photo/2024/05/26/10/15/bird-8788491_1280.jpg"/>
      <button onClick={handleshow}>Click me</button>
      
       {/* <PlayZone  photoUrl={img}/> */}

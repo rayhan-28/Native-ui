@@ -256,7 +256,7 @@ const Leaderboard = ({width='100%',maxWidth='375px',email}) => {
                 <td>
                   <div className="player-info">
                     <img
-                      src={`https://res.cloudinary.com/pitchspace/image/upload/v1/player-icons/${player?.playerAvatar}`}
+                      src={player?.playerAvatar.split(',').length===2?`https://res.cloudinary.com/pitchspace/image/upload/v1/player-icons/${player?.playerAvatar}`:player?.playerAvatar}
                       className="player-avatar"
                     />
                     {player?.rank===myRowData?.rank?<span title={player?.playerName}>You ({player?.playerName})</span>:

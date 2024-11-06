@@ -61,13 +61,14 @@ const NdugesReferralsQuestOverlay = ({Icon,
               dangerouslySetInnerHTML={{ __html: ReferralSvgIcon.cross }}
               
           />
-        
-       
-      {rewardCondition!==null && confirmedReferrals>0 && confirmedReferrals%rewardCondition===0 ? 
+{/*         
+        rewardCondition!==null && confirmedReferrals>0 && confirmedReferrals%rewardCondition===0 ? 
      <div
      dangerouslySetInnerHTML={{ __html: ReferralSvgIcon.wow }}
      />
-    : rewardCondition>1 && confirmedReferrals<rewardCondition?
+    : */}
+       
+      { rewardCondition>1 && confirmedReferrals<rewardCondition?
      <div
      dangerouslySetInnerHTML={{ __html: ReferralSvgIcon.letsGo_big }}
      />
@@ -75,7 +76,9 @@ const NdugesReferralsQuestOverlay = ({Icon,
      <div
      dangerouslySetInnerHTML={{ __html: ReferralSvgIcon.referral_nudges_big }}
      />
-     :null
+     : <div
+     dangerouslySetInnerHTML={{ __html: ReferralSvgIcon.wow }}
+     />
      
     }  
        <>

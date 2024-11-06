@@ -44,6 +44,7 @@ const PayerCard = ({  width = "100%", maxWidth = "335px",Name="",PhotoUrl="",ema
       );
       if (response.status === 200) {
         setPlayerData(response.data?.data);
+        savePlayerNameAndAvater(response.data?.data);
       }
     } catch (err) {
       setError("You are not valid");
@@ -65,7 +66,25 @@ const PayerCard = ({  width = "100%", maxWidth = "335px",Name="",PhotoUrl="",ema
     }
   }, [shouldRefetch]);
 
- 
+
+  const savePlayerNameAndAvater = async (player) => {
+    try {
+      const response = await axios.post(
+        `https://dev.api.pitch.space/api/player-info?email=${email}&token=${token}`,
+        {
+          playerName: Name,
+          playerAvatar: player?.featureUsingDetails?.characterType === 2 ? PhotoUrl  
+          : player?.playerAvatar?.split(',')?.length===2 
+            ? player?.playerAvatar : 'PlayerCharacter,3'
+        }
+      );
+      if (response.status === 200) {
+        
+      }
+    } catch (error) {
+      throw error;
+    }
+  };
 
    
   const handleRedirect = (redirectUrl) => {

@@ -17,12 +17,7 @@ const NugesReferrals = ({
       <div className="icon-text-quest">
      
      
-     {rewardCondition!==null && confirmedReferrals>0 && confirmedReferrals%rewardCondition===0 ?  <>
-     <div
-     dangerouslySetInnerHTML={{ __html: ReferralSvgIcon.wow_small }}
-     />
-     <p className="text-ellipsis">Congrats! You unlocked a reward...</p>
-     </>: rewardCondition>1 && confirmedReferrals<rewardCondition? <>
+     { rewardCondition>1 && confirmedReferrals<rewardCondition? <>
      <div
      dangerouslySetInnerHTML={{ __html: ReferralSvgIcon.letsGo }}
      />
@@ -32,7 +27,12 @@ const NugesReferrals = ({
      dangerouslySetInnerHTML={{ __html: ReferralSvgIcon.referral_nudges }}
      />
      <p className="text-ellipsis">Earn more points to unlock rewards</p>
-     </>:null
+     </>:<>
+     <div
+     dangerouslySetInnerHTML={{ __html: ReferralSvgIcon.wow_small }}
+     />
+     <p className="text-ellipsis">Congrats! You unlocked a reward...</p>
+     </>
      
     }
      
