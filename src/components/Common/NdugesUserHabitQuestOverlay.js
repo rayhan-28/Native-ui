@@ -1,5 +1,7 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import PlayZoneSvgIcon from '../../assets/image/SVG/PlayZone/PlayZone'
+import { useAuth } from '../../context/AuthContext';
+import axios from 'axios';
 
 const NdugesUserHabitQuestOverlay = ({
     onClose,
@@ -9,12 +11,45 @@ const NdugesUserHabitQuestOverlay = ({
     userHabitStreakAway,
     onCloseHabitQuestOverlay,
     reward,
-    onCloseUserHabitPalyerCard
+    onCloseUserHabitPalyerCard,
+    email,
+    questId
   }) => {
+    const [playerData, setPlayerData] = useState(null);
+    const {token} =useAuth()
   
+    const GetPlayerData = async () => {
+      try {
+        const response = await axios.get(
+          "https://dev.api.pitch.space/api/player-info-for-quest",
+          {
+            params: {
+               email, 
+               token,
+               questId
+               },
+          }
+        );
+        if (response.status === 200) {
+          setPlayerData(response.data?.data);
+        }
+      } catch (err) {
+        
+      }
+    };
+  
+  
+    useEffect(() => {
+      if (token) {
+        GetPlayerData(); // Fetch player data initially
+      }
+    }, [token]);
+
+
   const handleOverlay=()=>{
     onCloseHabitQuestOverlay()
   }
+  console.log("check user and reward ",userHabitRewardAway,userHabitStreakAway);
   return (
     <div className='success-without-reward-overlay'>
         <div
@@ -62,21 +97,21 @@ const NdugesUserHabitQuestOverlay = ({
         }
         </p>
         <p style={{}}>Thank you for your time</p>
-        <span style={{fontSize:'0.7rem',marginBottom:'5px'}}>With this survey,you've collected</span>
+        <span style={{fontSize:'0.7rem',marginBottom:'5px'}}>With this UserHabit,you've collected</span>
         </>
          }
         <div style={{display:'flex',gap:'15px'}}>
             <div style={{display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center'}}>
             <div className='reward-container'>
             <div  dangerouslySetInnerHTML={{ __html: PlayZoneSvgIcon.black_star }} />
-             <p style={{margin:'0'}}>X 450</p>
+             <p style={{margin:'0'}}>X {playerData?.points}</p>
             </div>
              <p style={{fontSize:'0.8rem'}}>Points</p>
             </div>
             <div style={{display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center'}}>
             <div className='reward-container'>
             <div  dangerouslySetInnerHTML={{ __html: PlayZoneSvgIcon.servey }} />
-            <p style={{margin:'0'}}>X 1</p>
+            <p style={{margin:'0'}}>X {playerData?.Artifacts}</p>
             </div>
             <p style={{fontSize:'0.8rem'}}>Artefact</p>
             </div>

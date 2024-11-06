@@ -30,6 +30,7 @@ const UserHabitQuest = ({
   setTypeOfQuest,
   setUserHabitNuggesOverlay,
   reward_streak,
+  setQuestId
 }) => {
   const handleRedirect = (redirectUrl) => {
     if (redirectUrl) {
@@ -160,7 +161,9 @@ const UserHabitQuest = ({
                     setUserHabitNuggesOverlay={() => {
                       setUserHabitNuggesOverlay(true);
                       reward_streak(habit?.streakAway, habit?.rewardAway);
+                      setQuestId(habit?.questId)
                     }}
+                  
                   />
                 )}
               </div>
@@ -172,3 +175,4 @@ const UserHabitQuest = ({
 };
 
 export default UserHabitQuest;
+

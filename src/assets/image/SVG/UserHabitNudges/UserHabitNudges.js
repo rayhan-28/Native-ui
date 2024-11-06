@@ -81,4 +81,4 @@ right_quest_arrow:`
 `,
 }
 
-export default UserHabitNudgesSvgIcon
+export default UserHabitNudgesSvgIcon  

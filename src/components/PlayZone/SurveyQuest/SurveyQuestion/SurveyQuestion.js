@@ -36,7 +36,7 @@ const SurveyQuestion = ({
   const [playerData, setPlayerData] = useState(null);
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
   const [actionId, setActionId] = useState(null);
-
+  const [finisedAnswerLoading,setFinisedAnswerLoading]=useState(false)
   const updateScreenWidth = () => {
     setScreenWidth(window.innerWidth);
   };
@@ -100,10 +100,9 @@ const SurveyQuestion = ({
       setError("You are not valid");
     }
   };
- 
+
   useEffect(() => {
-    
-      fetchData();
+    fetchData();
   }, [token]);
 
   const addPoints = async (data) => {
@@ -124,6 +123,7 @@ const SurveyQuestion = ({
 
   const saveQuestion = async (data) => {
     try {
+      setFinisedAnswerLoading(true)
       const response = await axios.post(
         `https://dev.api.pitch.space/api/survey-quest-answers?email=${email}&token=${token}&questId=${questId}`,
         {
@@ -131,6 +131,9 @@ const SurveyQuestion = ({
           QuestAnswer: data,
         }
       );
+      if(response.status===200){
+        setFinisedAnswerLoading(false)
+      }
     } catch (error) {
       throw error;
     }
@@ -144,21 +147,21 @@ const SurveyQuestion = ({
       setIsFinisedClickedServey(true);
     } catch (error) {}
   };
+  const isValidUrl = (url) => {
+    console.log("check valid link", url);
+    const urlPattern = new RegExp(
+      "^(https?://)?" + // protocol
+        "((([a-z\\d]([a-z\\d-]*[a-z\\d])?)\\.)+[a-z]{2,}|" + // domain name
+        "localhost|" + // localhost
+        "\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}|" + // IP address
+        "\\[?[a-f\\d]*:[a-f\\d:]+)"
+    ); // IPv6
+    return !!urlPattern.test(url);
+  };
 
   const validateCurrentQuestion = (currentAction) => {
     const { ResponseType } = currentAction;
-    console.log(currentAction);
-    const isValidUrl = (url) => {
-      console.log("check valid link", url);
-      const urlPattern = new RegExp(
-        "^(https?://)?" + // protocol
-          "((([a-z\\d]([a-z\\d-]*[a-z\\d])?)\\.)+[a-z]{2,}|" + // domain name
-          "localhost|" + // localhost
-          "\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}|" + // IP address
-          "\\[?[a-f\\d]*:[a-f\\d:]+)"
-      ); // IPv6
-      return !!urlPattern.test(url);
-    };
+    console.log("current Action ", currentAction);
 
     switch (ResponseType.OptionsType) {
       case "Reply with text":
@@ -174,10 +177,7 @@ const SurveyQuestion = ({
       case "Upload image":
         return questAnswer[tempQuestion]?.UploadedImage !== "";
       case "Reply with link":
-        return (
-          questAnswer[tempQuestion]?.ReplyWithLink !== "" &&
-          isValidUrl(questAnswer[tempQuestion]?.ReplyWithLink)
-        );
+        return questAnswer[tempQuestion]?.ReplyWithLink !== "";
       case "Text Choice Poll":
         return questAnswer[tempQuestion]?.TextChoicePoll !== "";
       case "Image Choice Poll":
@@ -204,7 +204,49 @@ const SurveyQuestion = ({
     }
   };
 
- 
+  const checkForValidation = () => {
+    const currentAction = questAction?.ActionDetails[tempQuestion];
+    console.log(currentAction);
+    if (currentAction?.IsRequired) {
+      if (!validateCurrentQuestion(currentAction)) {
+        setModalVisible(true);
+      } else if (!isValidUrl(questAnswer[tempQuestion].ReplyWithLink) && questAction?.ActionDetails[tempQuestion]?.ResponseType.OptionsType === "Reply with link") {
+        setModalVisible(true);
+        setLinkError(true);
+      } else {
+        setTempQuestion(tempQuestion + 1);
+        setPointCal((prev) => prev + 20);
+      }
+    } else if (validateCurrentQuestion(currentAction) && questAction?.ActionDetails[tempQuestion]?.ResponseType.OptionsType === "Reply with link" && !isValidUrl(questAnswer[tempQuestion].ReplyWithLink)) {
+      setModalVisible(true);
+      setLinkError(true);
+    } else {
+      setTempQuestion(tempQuestion + 1);
+      setPointCal((prev) => prev + 20);
+    }
+  };
+
+  const checkForValidationForFinish = () => {
+    const currentAction = questAction?.ActionDetails[tempQuestion];
+    console.log(currentAction);
+    if (currentAction?.IsRequired) {
+      if (!validateCurrentQuestion(currentAction)) {
+        setModalVisible(true);
+      } else if (!isValidUrl(questAnswer[tempQuestion].ReplyWithLink) && questAction?.ActionDetails[tempQuestion]?.ResponseType.OptionsType === "Reply with link") {
+        setModalVisible(true);
+        setLinkError(true);
+      } else {
+        sendSurveyAnswers()
+      }
+    } else if (validateCurrentQuestion(currentAction) && questAction?.ActionDetails[tempQuestion]?.ResponseType.OptionsType === "Reply with link" && !isValidUrl(questAnswer[tempQuestion].ReplyWithLink)) {
+      setModalVisible(true);
+      setLinkError(true);
+    } else {
+      sendSurveyAnswers()
+    }
+  };
+
+  const rankSuf = playerData?.rank??0;
 
   return (
     <>
@@ -294,7 +336,8 @@ const SurveyQuestion = ({
                           columnGap: "10px",
                         }}
                       >
-                        {playerData?.featureUsingDetails?.characterType === 2 && photoUrl ? (
+                        {playerData?.featureUsingDetails?.characterType === 2 &&
+                        photoUrl ? (
                           <img
                             src={photoUrl}
                             style={{
@@ -303,19 +346,18 @@ const SurveyQuestion = ({
                               borderRadius: "50%",
                             }}
                           />
-                        ) :playerData?.featureUsingDetails?.characterType === 1? (
+                        ) : playerData?.featureUsingDetails?.characterType ===
+                          1 ? (
                           <img
-                          src={
-                            `https://res.cloudinary.com/pitchspace/image/upload/v1/player-icons/${playerData?.playerAvatar
-                            }`
-                          }
+                            src={`https://res.cloudinary.com/pitchspace/image/upload/v1/player-icons/${playerData?.playerAvatar}`}
                             style={{
                               height: "40px",
                               width: "40px",
                               borderRadius: "50%",
                             }}
-                          /> ):null}
-                        
+                          />
+                        ) : null}
+
                         <p
                           style={{
                             margin: "0",
@@ -347,7 +389,7 @@ const SurveyQuestion = ({
                                 style={{ marginTop: "6.2px" }}
                                 className="survey-point"
                               >
-                               {playerData?.points}
+                                {playerData?.points}
                               </span>
                             </div>
                           </div>
@@ -368,9 +410,9 @@ const SurveyQuestion = ({
                             <div className="survey-point-gap">
                               <span className="survey-text">Rank</span>
                               <span className="survey-point">
-                                2
+                                {playerData?.rank}
                                 <sup style={{ marginTop: "3px" }}>
-                                  {getOrdinalSuffix(2)}
+                                  {getOrdinalSuffix(rankSuf)}
                                 </sup>
                               </span>
                             </div>
@@ -933,56 +975,14 @@ const SurveyQuestion = ({
               {tempQuestion === questionNo - 1 && (
                 <div className="finish">
                   <button
-                    onClick={() => sendSurveyAnswers()}
+                    onClick={checkForValidationForFinish}
                     className="finish"
-                  >
-                    Finish
-                  </button>
+                  >{finisedAnswerLoading?"Saving...":'Finish'}</button>
                 </div>
               )}
 
               {tempQuestion < questionNo && tempQuestion !== questionNo - 1 && (
-                <div
-                  onClick={() => {
-                    const currentAction =
-                      questAction?.ActionDetails[tempQuestion];
-                    console.log(currentAction);
-                    if (
-                      (currentAction?.IsRequired ||
-                        questAction?.ActionDetails[tempQuestion]?.ResponseType
-                          .OptionsType === "Reply with link") &&
-                      !validateCurrentQuestion(currentAction)
-                    ) {
-                      // Handle validation failure
-
-                      console.log("hey this is labib");
-                      const isValidUrl = (url) => {
-                        console.log("check valid link", url);
-                        const urlPattern = new RegExp(
-                          "^(https?://)?" + // protocol
-                            "((([a-z\\d]([a-z\\d-]*[a-z\\d])?)\\.)+[a-z]{2,}|" + // domain name
-                            "localhost|" + // localhost
-                            "\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}|" + // IP address
-                            "\\[?[a-f\\d]*:[a-f\\d:]+)"
-                        ); // IPv6
-                        return !!urlPattern.test(url);
-                      };
-                      console.log(questAnswer.ReplyWithLink);
-                      if (
-                        questAnswer[tempQuestion].ReplyWithLink.length > 0 &&
-                        !isValidUrl(questAnswer[tempQuestion].ReplyWithLink)
-                      ) {
-                        console.log("lsdjfsdjfljsdljfljsdlfjlsdkjf");
-                        setLinkError(true);
-                      }
-                      setModalVisible(true);
-                    } else {
-                      setTempQuestion(tempQuestion + 1);
-                      setPointCal((prev) => prev + 20);
-                    }
-                  }}
-                  className="right-arrow"
-                >
+                <div onClick={checkForValidation} className="right-arrow">
                   <div
                     style={{ marginTop: "3.5px" }}
                     dangerouslySetInnerHTML={{

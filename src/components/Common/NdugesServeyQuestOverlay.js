@@ -1,15 +1,50 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import SurveyQuestSvgIcon from "../../assets/image/SVG/SurveyQuest/SurveyQuestSvgIcon";
+import { useAuth } from "../../context/AuthContext";
+import axios from "axios";
 
 const NdugesServeyQuestOverlay = ({
-  onClose,
   width = "100%",
   maxWidth = "520px",
-  nodgesType,
   reward,
   OnCloseServeyOverlay,
-  isFromQuestion
+  isFromQuestion,
+  questId,
+  email
 }) => {
+
+ 
+  const [playerData, setPlayerData] = useState(null);
+    const {token} =useAuth()
+  
+    const GetPlayerData = async () => {
+      try {
+        const response = await axios.get(
+          "https://dev.api.pitch.space/api/player-info-for-quest",
+          {
+            params: {
+               email, 
+               token,
+               questId
+               },
+          }
+        );
+        if (response.status === 200) {
+          setPlayerData(response.data?.data);
+        }
+      } catch (err) {
+        
+      }
+    };
+  
+  
+    useEffect(() => {
+      if (token) {
+        GetPlayerData(); // Fetch player data initially
+      }
+    }, [token]);
+
+
   return (
     <div className="success-without-reward-overlay">
       <div
@@ -60,7 +95,7 @@ const NdugesServeyQuestOverlay = ({
                 marginBottom: "0",
               }}
             >
-              Servey Completed
+              Survey Completed
             </p>
             <p style={{}}>Thank you for your time</p>
             <span style={{ fontSize: "0.7rem", marginBottom: "5px" }}>
@@ -79,7 +114,7 @@ const NdugesServeyQuestOverlay = ({
           >
             <div className="reward-container">
               <div dangerouslySetInnerHTML={{ __html: SurveyQuestSvgIcon.black_star }} />
-              <p style={{ margin: "0" }}>X 450</p>
+              <p style={{ margin: "0" }}>X {playerData?.points}</p>
             </div>
             <p style={{ fontSize: "0.8rem" }}>Points</p>
           </div>
@@ -93,7 +128,7 @@ const NdugesServeyQuestOverlay = ({
           >
             <div className="reward-container">
               <div dangerouslySetInnerHTML={{ __html: SurveyQuestSvgIcon.servey }} />
-              <p style={{ margin: "0" }}>X 1</p>
+              <p style={{ margin: "0" }}>X {playerData?.Artifacts}</p>
             </div>
             <p style={{ fontSize: "0.8rem" }}>Artefact</p>
           </div>

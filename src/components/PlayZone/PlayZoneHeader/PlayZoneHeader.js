@@ -99,7 +99,7 @@ const PlayZoneHeader = ({ width = "100%",maxWidth='375px',email,photoUrl,checkFo
   if(characterType===1){
     checkForCharacter(characterType,avatarPlayer);
   }
- 
+  const rankSuf = data?.data?.rank??0;
   return (
     <>
       {characterType===1&&<div style={{marginTop:'140px'}}/>}
@@ -187,7 +187,7 @@ const PlayZoneHeader = ({ width = "100%",maxWidth='375px',email,photoUrl,checkFo
               <div className="PlayZoneHeader-points-streak-rank">
               <div className="PlayZoneHeader-point-gap-increase">
                 <span className="PlayZoneHeader-text">Streaks</span>
-                <span style={{marginTop:'6.2px'}} className="PlayZoneHeader-point">2</span>
+                <span style={{marginTop:'6.2px'}} className="PlayZoneHeader-point">{data?.data?.streaks}</span>
               </div>
               </div>
 
@@ -195,7 +195,7 @@ const PlayZoneHeader = ({ width = "100%",maxWidth='375px',email,photoUrl,checkFo
               <div className="PlayZoneHeader-point-gap">
                 <span className="PlayZoneHeader-text">Rank</span>
                 <span   className="PlayZoneHeader-point">
-                  2<sup >{getOrdinalSuffix(2)}</sup>
+                {data?.data?.rank}<sup >{getOrdinalSuffix(rankSuf)}</sup>
                 </span>
                 </div>
               </div>

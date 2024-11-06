@@ -12,6 +12,7 @@ import PlayZoneSvgIcon from "../../assets/image/SVG/PlayZone/PlayZone";
 import PlayZoneHeader from "./PlayZoneHeader/PlayZoneHeader";
 import Error from "../Common/Error";
 import NdugesUserHabitQuestOverlay from "../Common/NdugesUserHabitQuestOverlay";
+import NdugesReferralsQuestOverlay from "../Common/NdugesReferralsQuestOverlay";
 
 const PlayZone = ({
   width = "100%",
@@ -24,7 +25,6 @@ const PlayZone = ({
   PlayerName
 }) => {
 
-  const surveyRef = useRef(null);
 
   const [isOpen, setIsOpen] = useState(true);
   const [userHabitQuest, setUserHabitQuest] = useState([]);
@@ -49,9 +49,13 @@ const PlayZone = ({
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
   const [surveyQuestGoBtn, setSurveyQuestGoBtn] = useState(false);
   const [surveyNudgesOverlay,setSurveyNudgesOverlay]=useState(false);
+  const [referralsNudgesOverlay,setReferralsNudgesOverlay]=useState(false);
   const [userHabitNuggesOverlay,setUserHabitNuggesOverlay]=useState(false);
   const [userHabitRewardAway,setUserHabitRewardAway]=useState(null);
   const [userHabitStreakAway,setUserHabitStreakAway]=useState(null);
+  const [confirmedReferrals,setConfirmedReferrals]=useState(null);
+  const [rewardConditionReferrals,setRewardConditionReferrals]=useState(null);
+  const [rewardReferrals,setRewardReferrals]=useState(null)
   const updateScreenWidth = () => {
     setScreenWidth(window.innerWidth);
   };
@@ -116,6 +120,12 @@ const PlayZone = ({
     setUserHabitStreakAway(streak)
   }
 
+  const referralsNdugesOverlayConditionData = (confirmedReferrals,rewardCondition,reward) => {
+    setConfirmedReferrals(confirmedReferrals)
+    setRewardConditionReferrals(rewardCondition);
+    setRewardReferrals(reward)
+  }
+
   // Limit the number of quests to show by default
   const MAX_DISPLAY_QUESTS = 6;
 
@@ -128,30 +138,35 @@ const PlayZone = ({
   if (!isOpen) return null;
 
 
-  const scrollToTop = () => {
-    if (surveyRef && surveyRef.current) {
-      surveyRef.current.scrollIntoView({
-        behavior: 'smooth',
-        block: "nearest",
-      });
-    } else {
-    }
+  
+  const OnCloseServeyOverlay =  () => {
+     setIsFinisedClickedServey(false);
+     setSurveyNudgesOverlay(false)
   };
 
-  const OnCloseServeyOverlay = async () => {
-    await setIsFinisedClickedServey(false);
-    await setSurveyNudgesOverlay(false)
-    scrollToTop();
-  };
+  const OnCloseReferralOverlay =  () => {
+    setReferralsNudgesOverlay(false)
+ };
 
 
 
-
-
-  return surveyNudgesOverlay?
+  return referralsNudgesOverlay? <NdugesReferralsQuestOverlay 
+  email={email}
+  questId={questId}
+  confirmedReferrals={confirmedReferrals}
+  rewardCondition={rewardConditionReferrals}
+  reward={rewardReferrals}
+  OnCloseReferralOverlay={OnCloseReferralOverlay}
+  /> 
+   :surveyNudgesOverlay?
   <NdugesServeyQuestOverlay 
-  OnCloseServeyOverlay={OnCloseServeyOverlay}
-  /> :userHabitNuggesOverlay?<NdugesUserHabitQuestOverlay
+    email={email}
+    questId={questId}
+    OnCloseServeyOverlay={OnCloseServeyOverlay}
+  /> : userHabitNuggesOverlay?
+   <NdugesUserHabitQuestOverlay
+    email={email}
+    questId={questId}
     userHabitRewardAway={userHabitRewardAway} 
     userHabitStreakAway={userHabitStreakAway}
     onCloseHabitQuestOverlay={()=>setUserHabitNuggesOverlay(false)}
@@ -186,6 +201,8 @@ const PlayZone = ({
         {isFinisedClickedServey && (
           <NdugesServeyQuestOverlay
             isFromQuestion="true"
+            email={email}
+            questId={questId}
             OnCloseServeyOverlay={OnCloseServeyOverlay}
           />
         )}
@@ -200,7 +217,7 @@ const PlayZone = ({
           />
         )}
        
-        {!isServeyClicked && !nudgesClicked && !isFinisedClickedServey && (
+        {!isServeyClicked && !referralsNudgesOverlay && !isFinisedClickedServey && (
           <>
             <div
               className="top-card"
@@ -276,13 +293,14 @@ const PlayZone = ({
                   onCloseHabitQuestOverlay
                   setUserHabitNuggesOverlay={setUserHabitNuggesOverlay}
                   reward_streak={reward_streak}
+                  setQuestId={setQuestId}
                 />
               )}
 
               {displayedQuests.filter(
                 (quest) => quest.questCategory === "Survey Quest"
               ).length > 0 && (
-                <div ref={surveyRef}>
+                <div >
                   <SurveyQuest
                   email={email}
                   serveyQuest={displayedQuests.filter(
@@ -308,9 +326,12 @@ const PlayZone = ({
                     (quest) => quest.questCategory === "Referral Quest"
                   )}
                   setNudgesClicked={setNudgesClicked}
+                  setReferralsNudgesOverlay={setReferralsNudgesOverlay}
                   setNodgesType={setNodgesType}
                   setTypeOfQuest={setTypeOfQuest}
                   email={email}
+                  setQuestId={setQuestId}
+                  referralsNdugesOverlayConditionData={referralsNdugesOverlayConditionData}
                 />
               )}
               <LeaderBoard email={email} />

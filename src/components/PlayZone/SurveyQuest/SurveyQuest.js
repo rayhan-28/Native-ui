@@ -70,7 +70,7 @@ const ServeyQuest= ({
       <div className="highlite-last">
         <div
           dangerouslySetInnerHTML={{ __html: SurveyQuestSvgIcon.stardust }}
-          style={{ marginRight: "7px" }}
+          style={{ marginRight: "7px",marginTop:'3.4px' }}
         />
         <p style={{ fontSize: "12px",fontWeight:'400',margin:'0'}}>{survey.points}/{survey.totalPoints}</p>
         <div className="progress-bar">
