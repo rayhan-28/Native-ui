@@ -56,6 +56,7 @@ const PlayZone = ({
   const [confirmedReferrals,setConfirmedReferrals]=useState(null);
   const [rewardConditionReferrals,setRewardConditionReferrals]=useState(null);
   const [rewardReferrals,setRewardReferrals]=useState(null)
+  const [surveyName,setSurveyName]=useState(null)
   const updateScreenWidth = () => {
     setScreenWidth(window.innerWidth);
   };
@@ -110,6 +111,10 @@ const PlayZone = ({
     handleCloseSuccess();
   };
 
+  const SurveyNameGet = (name)=>{
+    setSurveyName(name)
+  }
+
   const checkForCharacter = (character, avatar) => {
     setCheckCharacterType(character);
     setPlayerAvatar(avatar);
@@ -147,7 +152,8 @@ const PlayZone = ({
   const OnCloseReferralOverlay =  () => {
     setReferralsNudgesOverlay(false)
  };
-
+ 
+ 
 
 
   return referralsNudgesOverlay? <NdugesReferralsQuestOverlay 
@@ -182,6 +188,7 @@ const PlayZone = ({
       setSurveyQuestGoBtn={setSurveyQuestGoBtn}
       photoUrl={photoUrl}
       PlayerName={PlayerName}
+      surveyName={surveyName}
     />
   ) : !error ? (
     <div className="playZone-overlay">
@@ -214,6 +221,7 @@ const PlayZone = ({
             setIsFinisedClickedServey={setIsFinisedClickedServey}
             isFinisedClickedServey={isFinisedClickedServey}
             questId={questId}
+            surveyName={surveyName}
           />
         )}
        
@@ -314,6 +322,7 @@ const PlayZone = ({
                   surveyQuestGoBtn={surveyQuestGoBtn}
                   surveyNudgesOverlay={surveyNudgesOverlay}
                   setSurveyNudgesOverlay={setSurveyNudgesOverlay}
+                  SurveyNameGet={SurveyNameGet}
                 />
               </div>
               )}

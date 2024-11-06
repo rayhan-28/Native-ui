@@ -27,13 +27,13 @@ function App() {
     setErrorShowSuccess(true);
    }
 
-  const email = 'serkan@joinnative.io';
-  const token = '15d14c3a-6f74-4c6a-ba6d-7c335d195b63';
+  const email = 'jahir.rayhan@bedatasolutions.com';
+  const token = '4733788f-783d-455f-a2b7-3b1815e53196';
   const img="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPUhc8feStsjYKYoW8X7sEQAOzA4Yla1QmGQ&s"
   return (
     <AuthProvider  token={token}>
      {/* <HighlitePlayZoneModal/> */}
-     <PlayerCard email={email} Name="Serkan" PhotoUrl="https://cdn.pixabay.com/photo/2024/05/26/10/15/bird-8788491_1280.jpg"/>
+     <PlayerCard email={email} Name="Rayhan" PhotoUrl="https://cdn.pixabay.com/photo/2024/05/26/10/15/bird-8788491_1280.jpg"/>
      <button onClick={handleshow}>Click me</button>
      
       {/* <PlayZone  photoUrl={img}/> */}

@@ -23,6 +23,7 @@ const SurveyQuestion = ({
   email,
   photoUrl,
   PlayerName,
+  surveyName,
 }) => {
   const [modalVisible, setModalVisible] = useState(false);
   const [linkError, setLinkError] = useState(false);
@@ -273,15 +274,15 @@ const SurveyQuestion = ({
                     className="profile-img"
                     src={`https://res.cloudinary.com/pitchspace/${data?.profileImage}`}
                   />
-                  <img
+                {data?.action?.ThumbnailPartnerImage && <img
                     className="profile-img"
                     src={`https://res.cloudinary.com/pitchspace/${data?.action?.ThumbnailPartnerImage}`}
-                  />
+                  />}  
                   <div style={{ display: "flex", flexDirection: "column" }}>
-                    <span style={{ color: "#06182CB2" }}>Servey name</span>
+                    <span style={{ color: "#06182CB2" }}>{surveyName}</span>
                     <div>
                       <span style={{ fontSize: "0.8rem", color: "#06182C66" }}>
-                        {data?.idName} with {}
+                        {data?.idName} {data?.action?.ThumbnailPartnerName?'with ':'' }
                       </span>
                       {data?.action?.ThumbnailPartnerLink ? (
                         <span

@@ -29,13 +29,15 @@ const ServeyQuest= ({
   setIsAnswerIsCompleted,
   surveyQuestGoBtn,
   setSurveyNudgesOverlay,
+  SurveyNameGet
   }) => {
   
  
 
-  const onGoClicked = (questId) => {
+  const onGoClicked = (questId,name) => {
     setIsServeyGoClicked(true);
     setQuestId(questId);
+    SurveyNameGet(name)
   }
   return (
     <div>
@@ -79,7 +81,7 @@ const ServeyQuest= ({
             style={{ width: `${((survey.points / survey.totalPoints) * 100) > 100 ? 100 : ((survey.points / survey.totalPoints) * 100)}%` ,backgroundColor:survey.gradientColor}}
           ></p>
         </div>
-        {survey.points !== survey.totalPoints &&<button onClick={() => onGoClicked(survey?.questId)} className='survey-go-button'>Go</button>}
+        {survey.points !== survey.totalPoints &&<button onClick={ ()=>onGoClicked(survey?.questId,survey?.name)} className='survey-go-button'>Go</button>}
       </div>
       <div style={{height:'10px'}}/>
        {survey.points === survey.totalPoints && <NudgesServey 
