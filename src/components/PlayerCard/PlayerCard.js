@@ -203,7 +203,7 @@ const PayerCard = ({  width = "100%", maxWidth = "335px",Name="",PhotoUrl="",ema
                 <div className="player-points-streak-rank">
                 <div className="player-point-gap">
                   <span className="player-text">Rank</span>
-                  <span style={{position:'relative',bottom:'2.3px'}} className="player-point">
+                  <span style={{position:'relative',bottom:'-2.3px'}} className="player-point">
                     {playerData?.rank}<sup style={{marginTop:'3px',fontSize:'10px', position: 'relative', top: '-1px',left:'-1px'}}>{getOrdinalSuffix(rankSuf)}</sup>
                   </span>
                   </div>
@@ -256,7 +256,7 @@ const PayerCard = ({  width = "100%", maxWidth = "335px",Name="",PhotoUrl="",ema
               </p>
             
               <p className="time-duration">
-                in {playerData?.habitQuest?.targetDay} days({playerData?.habitQuest?.dayLeftToQuestEnd} days left)
+                in {playerData?.habitQuest?.targetDay} days ({playerData?.habitQuest?.dayLeftToQuestEnd} days left)
               </p>
             </div>
           </div>

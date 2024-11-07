@@ -53,6 +53,7 @@ const NugesUserHabib = ({
       </div>
       <div onClick={() => handleClicked()} className="arrow-box">
         <div
+          style={{marginLeft:'1.5px',marginBottom:'1px'}}
           dangerouslySetInnerHTML={{
             __html: UserHabitNudgesSvgIcon.right_quest_arrow,
           }}

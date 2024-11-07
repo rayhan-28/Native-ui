@@ -68,7 +68,7 @@
 
 
 .player-voucher {
-  width: 200px;
+  max-width: 200px;
   overflow: hidden;
   white-space: nowrap;
   position: relative;
@@ -145,7 +145,7 @@
 .details-text{
   font-weight: 700;
   font-size: 14px;
-  line-height: 17.84px;
+  line-height: 10px;
   color: #06182CE5;
   margin: 0;
 }
