@@ -47,7 +47,7 @@ const PlayZoneHeader = ({ width = "100%",maxWidth='375px',email,photoUrl,checkFo
   const typeOfReward = {
     artefact: ["Referrals", "Survey", "Content"],
     reward: [],
-    badges: [],
+   
   };
 
   const [current, setCurrent] = useState(0);
@@ -119,8 +119,9 @@ const PlayZoneHeader = ({ width = "100%",maxWidth='375px',email,photoUrl,checkFo
 
         
         <div>
-          <p style={{ fontSize: "18px",fontWeight:'700',margin:'0',lineHeight:'22.9px',marginTop:'10px' }}>Hello</p>
-          <p style={{ fontSize: "40px",fontWeight:'700',margin:'0',lineHeight:'50px' }}>{PlayerName}</p>
+          {(data?.data?.playerName  || PlayerName) && <p style={{ fontSize: "18px",fontWeight:'700',margin:'0',lineHeight:'22.9px',marginTop:'25px' }}>Hello</p>}
+          
+          <p style={{ fontSize: "40px",fontWeight:'700',margin:'0',lineHeight:'50px' }}>{data?.data?.playerName?data?.data?.playerName:PlayerName}</p>
         </div>
 
         {/* it show when character is 1
@@ -194,8 +195,8 @@ const PlayZoneHeader = ({ width = "100%",maxWidth='375px',email,photoUrl,checkFo
               <div className="PlayZoneHeader-points-streak-rank">
               <div className="PlayZoneHeader-point-gap">
                 <span className="PlayZoneHeader-text">Rank</span>
-                <span   className="PlayZoneHeader-point">
-                {data?.data?.rank}<sup >{getOrdinalSuffix(rankSuf)}</sup>
+                <span style={{position:'relative',bottom:'-2.3px'}}   className="PlayZoneHeader-point">
+                {data?.data?.rank}<sup style={{marginTop:'3px',fontSize:'10px', position: 'relative',left:'-1px'}}>{getOrdinalSuffix(rankSuf)}</sup>
                 </span>
                 </div>
               </div>
@@ -204,8 +205,6 @@ const PlayZoneHeader = ({ width = "100%",maxWidth='375px',email,photoUrl,checkFo
           </div>
 
       <div style={{ height: "15px" }} />
-
-      <p className="PlayZoneHeader-Badge-text" style={{fontSize:'12px',fontWeight:'400'}}>TEN artefeacts of same kind of ONE Stutus Badges</p>
 
       <div className="quest-name">
         <p
@@ -220,12 +219,7 @@ const PlayZoneHeader = ({ width = "100%",maxWidth='375px',email,photoUrl,checkFo
         >
           Reward (0)
         </p>
-        <p
-          className={selectedEarning === "badges" ? "active-earning" : ""}
-          onClick={() => handleSelectEarning("badges")}
-        >
-          Badges (0)
-        </p>
+       
       </div>
        
       <div style={{ height: "2px" }} />

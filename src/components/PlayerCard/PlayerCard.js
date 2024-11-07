@@ -106,12 +106,24 @@ const PayerCard = ({  width = "100%", maxWidth = "335px",Name="",PhotoUrl="",ema
    }
    
    //for reward sliding
-   useEffect(()=>{
-    const timer = setTimeout(()=>{
-      setScroll(true);
-    },500)
-    return ()=>clearTimeout(timer)
-   },[])
+  //  useEffect(()=>{
+  //   const timer = setTimeout(()=>{
+  //     setScroll(true);
+  //   },300)
+  //   return ()=>clearTimeout(timer)
+  //  },[])
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setScroll(true); // Start the scroll animation
+      setTimeout(() => {
+        setScroll(false); // Reset scroll after 500ms to allow re-triggering
+      }, 3000); // Adjust duration as per your animation's length
+    }, 500);
+  
+    return () => clearTimeout(timer); // Cleanup the timer on component unmount
+  }, []);
+  
+   
    const rankSuf = playerData?.rank??0;
 
   //  const img="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPUhc8feStsjYKYoW8X7sEQAOzA4Yla1QmGQ&s"
@@ -204,7 +216,7 @@ const PayerCard = ({  width = "100%", maxWidth = "335px",Name="",PhotoUrl="",ema
                 <div className="player-point-gap">
                   <span className="player-text">Rank</span>
                   <span style={{position:'relative',bottom:'-2.3px'}} className="player-point">
-                    {playerData?.rank}<sup style={{marginTop:'3px',fontSize:'10px', position: 'relative', top: '-1px',left:'-1px'}}>{getOrdinalSuffix(rankSuf)}</sup>
+                    {playerData?.rank}<sup style={{marginTop:'3px',fontSize:'10px', position: 'relative',left:'-1px'}}>{getOrdinalSuffix(rankSuf)}</sup>
                   </span>
                   </div>
                 </div>
@@ -227,7 +239,7 @@ const PayerCard = ({  width = "100%", maxWidth = "335px",Name="",PhotoUrl="",ema
           <span className={`text ${scroll?"scroll-active":""}`}>
           {playerData?.habitQuest?.rewardCondition}: {playerData?.habitQuest?.reward}
           </span>
-        </div>
+        </div> 
           
           <div className="streak-icon">
             {playerData?.habitQuest?.completedStreak===0?<div

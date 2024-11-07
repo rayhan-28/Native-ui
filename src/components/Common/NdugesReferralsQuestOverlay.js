@@ -47,14 +47,8 @@ const NdugesReferralsQuestOverlay = ({Icon,
     }, [token]);
   return (
     <div className='success-without-reward-overlay'>
-        <div
-        style={{
-            width,
-            maxWidth
-        }}
-        className='success-without-container'
-        >    
-
+        <div style={{ width,maxWidth}}
+        className='success-without-container'>    
           <div
              className='close-icon'
               onClick={OnCloseReferralOverlay}

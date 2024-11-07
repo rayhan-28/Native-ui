@@ -284,7 +284,9 @@ const PlayZone = ({
                   className="playZone-see"
                   onClick={() => setShowAll(!showAll)}
                 >
-                  {showAll ? "Show less" : "See all"}
+                  {allQuests.length>6 && (showAll?"Show less":'See all')}
+                  {/* {allQuests.length>5 && showAll?"Show less":'See all'} */}
+                  {/* {allQuests.lengthshowAll>5 ?showAll? "Show less" : "See all"} */}
                 </span>
               </div>
 

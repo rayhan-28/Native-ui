@@ -410,9 +410,9 @@ const SurveyQuestion = ({
                           <div className="survey-points-streak-rank">
                             <div className="survey-point-gap">
                               <span className="survey-text">Rank</span>
-                              <span className="survey-point">
+                              <span style={{position:'relative',bottom:'-2.3px'}} className="survey-point">
                                 {playerData?.rank}
-                                <sup style={{ marginTop: "3px" }}>
+                                <sup style={{marginTop:'3px',fontSize:'10px', position: 'relative',left:'-1px' }}>
                                   {getOrdinalSuffix(rankSuf)}
                                 </sup>
                               </span>

@@ -68,7 +68,7 @@ const ServeyQuest= ({
       )}
       </div>
       <p className="task">Share our link with your friends</p>
-      
+      <div style={{height:'5px'}}/>
       <div className="highlite-last">
         <div
           dangerouslySetInnerHTML={{ __html: SurveyQuestSvgIcon.stardust }}

@@ -129,7 +129,8 @@ const PlayerCharacterOverlay = ({
       }
       
       <div
-        className={`player-character-wrapper ${!menuButtonIsVisible ? 'centered' : ''}`}
+      className="player-character-wrapper"
+        // className={`player-character-wrapper ${!menuButtonIsVisible ? 'centered' : ''}`}
         onClick={(e) => e.stopPropagation()}
       >
         

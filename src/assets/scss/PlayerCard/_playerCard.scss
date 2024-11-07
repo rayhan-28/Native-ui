@@ -94,7 +94,7 @@
   
 }
 .player-voucher:hover .text {
-    animation: scroll-left 3s linear infinite;
+    animation: scroll-left 3s linear 1;
   }
   .player-voucher .scroll-active{
     animation: scroll-left 3s linear 1;
