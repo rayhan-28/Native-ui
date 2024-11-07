@@ -203,8 +203,8 @@ const PayerCard = ({  width = "100%", maxWidth = "335px",Name="",PhotoUrl="",ema
                 <div className="player-points-streak-rank">
                 <div className="player-point-gap">
                   <span className="player-text">Rank</span>
-                  <span  className="player-point">
-                    {playerData?.rank}<sup style={{marginTop:'3px'}}>{getOrdinalSuffix(rankSuf)}</sup>
+                  <span style={{position:'relative',bottom:'2.3px'}} className="player-point">
+                    {playerData?.rank}<sup style={{marginTop:'3px',fontSize:'10px', position: 'relative', top: '-1px',left:'-1px'}}>{getOrdinalSuffix(rankSuf)}</sup>
                   </span>
                   </div>
                 </div>
@@ -212,7 +212,7 @@ const PayerCard = ({  width = "100%", maxWidth = "335px",Name="",PhotoUrl="",ema
               </div>
             </div>
           </div>
-          {playerData?.featureUsingDetails?.characterType !== 1 && !PhotoUrl?
+          {playerData?.featureUsingDetails?.characterType === 0 || (!PhotoUrl && playerData?.featureUsingDetails?.characterType === 2)?
           <div dangerouslySetInnerHTML={{ __html: PlayrCardSvgIcons.openIcon }} onClick={handleOpenPlayZone} style={{cursor:'pointer',marginLeft:'23%'}}/>
           :
           <div dangerouslySetInnerHTML={{ __html: PlayrCardSvgIcons.openIcon }} onClick={handleOpenPlayZone} style={{cursor:'pointer'}}/>
