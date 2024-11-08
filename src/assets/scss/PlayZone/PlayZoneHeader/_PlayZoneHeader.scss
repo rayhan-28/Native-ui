@@ -163,8 +163,8 @@
 }
 
 .reward-point {
-  height: 90px;
-  width: 70px;
+  max-height: 91px;
+  width: 60px;
   border-radius: 10px;
   background-color: rgba(255, 255, 255, 0.2);
   display: flex;
@@ -173,6 +173,7 @@
   align-items: center;
   border: 1px solid #FFFFFF;
   flex-shrink: 0;
+   padding: 10px 5px 5px 5px;
   /* Prevents shrinking */
 }
 

@@ -4,9 +4,9 @@ import { Swiper, SwiperSlide } from "swiper/react";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
-import svgIcons from "../../../assets/image/SVG/svg";
 import axios from "axios";
 import { useAuth } from "../../../context/AuthContext";
+import PlayZoneHeaderSvgIcon from "../../../assets/image/SVG/PlayZoneHeader/PlayZoneHeader";
 const Levels = [
   "Explorer",
   "Rookie",
@@ -20,13 +20,23 @@ const Levels = [
   "Super Native",
 ];
 
+
+const text =[
+  "for sending referrals",
+  "for having streaks",
+  "for taking surveys",
+  "for giving feedback",
+  "for posting about us",
+  "for staying with us",
+]
+
 const rewardsIcon = [
-  svgIcons.referrals,
-  svgIcons.servey,
-  svgIcons.UserGenerateContent,
-  svgIcons.userActivation,
-  svgIcons.userHabit,
-  svgIcons.reviewRestimonial,
+  PlayZoneHeaderSvgIcon.referrals,
+  PlayZoneHeaderSvgIcon.UserGenerateContent,
+  PlayZoneHeaderSvgIcon.servey,
+  PlayZoneHeaderSvgIcon.userActivation,
+  PlayZoneHeaderSvgIcon.userHabit,
+  PlayZoneHeaderSvgIcon.reviewRestimonial,
 ];
 
 const PlayZoneHeader = ({ width = "100%",maxWidth='375px',email,photoUrl,checkForCharacter,PlayerName }) => {
@@ -235,14 +245,16 @@ const PlayZoneHeader = ({ width = "100%",maxWidth='375px',email,photoUrl,checkFo
       >
         {rewardsIcon.map((icon, index) => (
           <SwiperSlide key={index}>
-            <div key={index} className="reward-point">
+            <div key={index} className="reward-point" 
+             style={{padding:(index===0 || index===5)?'5px':'11px 5px 5px 5px'}}
+            >
               <div
-                style={{ marginTop: "5px" }}
+                style={{marginLeft:index===0?'7px':index===1?'2px':''}}
                 dangerouslySetInnerHTML={{ __html: icon }}
               />
-              <p style={{ margin: "0" }}>x 0</p>
-              <p style={{ fontSize: "0.5rem", marginBottom: "2px" }}>
-                for sending referrals
+              <p style={{ margin: "0",fontSize:'14px',fontWeight:'500',lineHeight:'15px' }}>x 1</p>
+              <p style={{ margin:'0',fontSize: "10px",fontWeight:'700' }}>
+                {text[index]}
               </p>
             </div>
           </SwiperSlide>
