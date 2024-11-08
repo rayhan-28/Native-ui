@@ -37,7 +37,7 @@ const SurveyQuestion = ({
   const [playerData, setPlayerData] = useState(null);
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
   const [actionId, setActionId] = useState(null);
-  const [finisedAnswerLoading,setFinisedAnswerLoading]=useState(false)
+  const [finisedAnswerLoading, setFinisedAnswerLoading] = useState(false);
   const updateScreenWidth = () => {
     setScreenWidth(window.innerWidth);
   };
@@ -124,7 +124,7 @@ const SurveyQuestion = ({
 
   const saveQuestion = async (data) => {
     try {
-      setFinisedAnswerLoading(true)
+      setFinisedAnswerLoading(true);
       const response = await axios.post(
         `https://dev.api.pitch.space/api/survey-quest-answers?email=${email}&token=${token}&questId=${questId}`,
         {
@@ -132,8 +132,8 @@ const SurveyQuestion = ({
           QuestAnswer: data,
         }
       );
-      if(response.status===200){
-        setFinisedAnswerLoading(false)
+      if (response.status === 200) {
+        setFinisedAnswerLoading(false);
       }
     } catch (error) {
       throw error;
@@ -211,14 +211,23 @@ const SurveyQuestion = ({
     if (currentAction?.IsRequired) {
       if (!validateCurrentQuestion(currentAction)) {
         setModalVisible(true);
-      } else if (!isValidUrl(questAnswer[tempQuestion].ReplyWithLink) && questAction?.ActionDetails[tempQuestion]?.ResponseType.OptionsType === "Reply with link") {
+      } else if (
+        !isValidUrl(questAnswer[tempQuestion].ReplyWithLink) &&
+        questAction?.ActionDetails[tempQuestion]?.ResponseType.OptionsType ===
+          "Reply with link"
+      ) {
         setModalVisible(true);
         setLinkError(true);
       } else {
         setTempQuestion(tempQuestion + 1);
         setPointCal((prev) => prev + 20);
       }
-    } else if (validateCurrentQuestion(currentAction) && questAction?.ActionDetails[tempQuestion]?.ResponseType.OptionsType === "Reply with link" && !isValidUrl(questAnswer[tempQuestion].ReplyWithLink)) {
+    } else if (
+      validateCurrentQuestion(currentAction) &&
+      questAction?.ActionDetails[tempQuestion]?.ResponseType.OptionsType ===
+        "Reply with link" &&
+      !isValidUrl(questAnswer[tempQuestion].ReplyWithLink)
+    ) {
       setModalVisible(true);
       setLinkError(true);
     } else {
@@ -228,26 +237,41 @@ const SurveyQuestion = ({
   };
 
   const checkForValidationForFinish = () => {
+    console.log("hey shameem comming ..........");
     const currentAction = questAction?.ActionDetails[tempQuestion];
-    console.log(currentAction);
     if (currentAction?.IsRequired) {
       if (!validateCurrentQuestion(currentAction)) {
         setModalVisible(true);
-      } else if (!isValidUrl(questAnswer[tempQuestion].ReplyWithLink) && questAction?.ActionDetails[tempQuestion]?.ResponseType.OptionsType === "Reply with link") {
+      } else if (
+        !isValidUrl(questAnswer[tempQuestion].ReplyWithLink) &&
+        questAction?.ActionDetails[tempQuestion]?.ResponseType.OptionsType ===
+          "Reply with link"
+      ) {
         setModalVisible(true);
         setLinkError(true);
       } else {
-        sendSurveyAnswers()
+        sendSurveyAnswers();
       }
-    } else if (validateCurrentQuestion(currentAction) && questAction?.ActionDetails[tempQuestion]?.ResponseType.OptionsType === "Reply with link" && !isValidUrl(questAnswer[tempQuestion].ReplyWithLink)) {
+    } else if (
+      validateCurrentQuestion(currentAction) &&
+      questAction?.ActionDetails[tempQuestion]?.ResponseType.OptionsType ===
+        "Reply with link" &&
+      !isValidUrl(questAnswer[tempQuestion].ReplyWithLink)
+    ) {
       setModalVisible(true);
       setLinkError(true);
     } else {
-      sendSurveyAnswers()
+      sendSurveyAnswers();
     }
   };
 
-  const rankSuf = playerData?.rank??0;
+  const description =
+    questAction?.ActionDetails?.[tempQuestion]?.ResponseType?.Description || "";
+
+  const shouldShowToggle = description.length > 100;
+  const displayText = isExpanded? description: description.slice(0, 100) + (shouldShowToggle ? "..." : "");
+
+  const rankSuf = playerData?.rank ?? 0;
 
   return (
     <>
@@ -274,15 +298,18 @@ const SurveyQuestion = ({
                     className="profile-img"
                     src={`https://res.cloudinary.com/pitchspace/${data?.profileImage}`}
                   />
-                {data?.action?.ThumbnailPartnerImage && <img
-                    className="profile-img"
-                    src={`https://res.cloudinary.com/pitchspace/${data?.action?.ThumbnailPartnerImage}`}
-                  />}  
+                  {data?.action?.ThumbnailPartnerImage && (
+                    <img
+                      className="profile-img"
+                      src={`https://res.cloudinary.com/pitchspace/${data?.action?.ThumbnailPartnerImage}`}
+                    />
+                  )}
                   <div style={{ display: "flex", flexDirection: "column" }}>
                     <span style={{ color: "#06182CB2" }}>{surveyName}</span>
                     <div>
                       <span style={{ fontSize: "0.8rem", color: "#06182C66" }}>
-                        {data?.idName} {data?.action?.ThumbnailPartnerName?'with ':'' }
+                        {data?.idName}{" "}
+                        {data?.action?.ThumbnailPartnerName ? "with " : ""}
                       </span>
                       {data?.action?.ThumbnailPartnerLink ? (
                         <span
@@ -321,21 +348,10 @@ const SurveyQuestion = ({
               {screenWidth > 500 ? (
                 <>
                   <div style={{ display: "flex", columnGap: "30px" }}>
-                    <div
-                      style={{
-                        minWidth: "250px",
-                        height: "120px",
-                        background: "#FFFFFF",
-                        borderRadius: "10px",
-                        padding: "12px",
-                      }}
+                    <div style={{minWidth: "210px",maxHeight: "130px",background: "#FFFFFF",borderRadius: "10px",padding: "12px",}}
                     >
                       <div
-                        style={{
-                          display: "flex",
-                          alignItems: "center",
-                          columnGap: "10px",
-                        }}
+                        style={{display: "flex",alignItems: "center",columnGap: "10px", }}
                       >
                         {playerData?.featureUsingDetails?.characterType === 2 &&
                         photoUrl ? (
@@ -360,23 +376,14 @@ const SurveyQuestion = ({
                         ) : null}
 
                         <p
-                          style={{
-                            margin: "0",
-                            fontSize: "22px",
-                            fontWeight: "500",
-                            color: "#06182C",
+                          style={{margin: "0",fontSize: "22px",fontWeight: "500",color: "#06182C",
                           }}
                         >
                           {PlayerName}
                         </p>
                       </div>
                       <p
-                        style={{
-                          margin: "0",
-                          paddingTop: "5px",
-                          fontSize: "10px",
-                          fontWeight: "500",
-                          color: "#06182C80",
+                        style={{margin: "0",paddingTop: "5px",fontSize: "10px",fontWeight: "500",lineHeight: "20px",color: "#06182C80",
                         }}
                       >
                         PLAYER PROGRESS
@@ -410,9 +417,22 @@ const SurveyQuestion = ({
                           <div className="survey-points-streak-rank">
                             <div className="survey-point-gap">
                               <span className="survey-text">Rank</span>
-                              <span style={{position:'relative',bottom:'-2.3px'}} className="survey-point">
+                              <span
+                                style={{
+                                  position: "relative",
+                                  bottom: "-2.3px",
+                                }}
+                                className="survey-point"
+                              >
                                 {playerData?.rank}
-                                <sup style={{marginTop:'3px',fontSize:'10px', position: 'relative',left:'-1px' }}>
+                                <sup
+                                  style={{
+                                    marginTop: "3px",
+                                    fontSize: "10px",
+                                    position: "relative",
+                                    left: "-1px",
+                                  }}
+                                >
                                   {getOrdinalSuffix(rankSuf)}
                                 </sup>
                               </span>
@@ -473,11 +493,8 @@ const SurveyQuestion = ({
                       <div className="text-section">
                         <div style={{ display: "flex" }}>
                           <p className="text-one">
-                            {tempQuestion + 1}.{" "}
-                            {questAction?.ActionDetails?.length > tempQuestion
-                              ? questAction?.ActionDetails[tempQuestion]
-                                  ?.ResponseType?.Title
-                              : ""}
+                          {questAction?.ActionDetails.length > tempQuestion ? `${tempQuestion + 1}. ` : ""}
+                          {questAction?.ActionDetails?.length > tempQuestion? questAction?.ActionDetails[tempQuestion]?.ResponseType?.Title: ""}
                           </p>
                           {questAction?.ActionDetails?.length > tempQuestion
                             ? questAction?.ActionDetails[tempQuestion]
@@ -499,24 +516,25 @@ const SurveyQuestion = ({
                               isExpanded ? "expanded" : ""
                             }`}
                           >
-                            {questAction?.ActionDetails?.length > tempQuestion
-                              ? questAction?.ActionDetails[tempQuestion]
-                                  ?.ResponseType?.Description
-                              : ""}
+                            {displayText}
                           </p>
-                        </div>
-                        <div style={{ display: "flex", justifyContent: "end" }}>
-                          <p
-                            style={{
-                              color: "#06182C80",
-                              margin: "0",
-                              textDecoration: "underline",
-                              cursor: "pointer",
-                            }}
-                            onClick={toggleText}
-                          >
-                            {isExpanded ? "Show less" : "Read all"}
-                          </p>
+                          {shouldShowToggle && (
+                            <div
+                              style={{ display: "flex", justifyContent: "end" }}
+                            >
+                              <p
+                                style={{
+                                  color: "#06182C80",
+                                  margin: "0",
+                                  textDecoration: "underline",
+                                  cursor: "pointer",
+                                }}
+                                onClick={toggleText}
+                              >
+                                {isExpanded ? "Show less" : "Read all"}
+                              </p>
+                            </div>
+                          )}
                         </div>
                       </div>
 
@@ -531,7 +549,10 @@ const SurveyQuestion = ({
                             )
                           }
                         >
-                          Watch video
+                          {questAction?.ActionDetails[tempQuestion]
+                            ?.ResponseType?.VideoLink
+                            ? "Watch video"
+                            : ""}
                         </p>
                         <p
                           onClick={() =>
@@ -543,7 +564,10 @@ const SurveyQuestion = ({
                             )
                           }
                         >
-                          View link
+                          {questAction?.ActionDetails[tempQuestion]
+                            ?.ResponseType?.VideoLink
+                            ? "View link"
+                            : ""}
                         </p>
                       </div>
 
@@ -696,10 +720,8 @@ const SurveyQuestion = ({
                   <div className="text-section">
                     <div style={{ display: "flex" }}>
                       <p className="text-one">
-                        {questAction?.ActionDetails?.length > tempQuestion
-                          ? questAction?.ActionDetails[tempQuestion]
-                              ?.ResponseType?.Title
-                          : ""}
+                      {questAction?.ActionDetails.length > tempQuestion ? `${tempQuestion + 1}. ` : ""}
+                      {questAction?.ActionDetails?.length > tempQuestion? questAction?.ActionDetails[tempQuestion]?.ResponseType?.Title: ""}
                       </p>
                       {questAction?.ActionDetails?.length > tempQuestion
                         ? questAction?.ActionDetails[tempQuestion]
@@ -712,54 +734,59 @@ const SurveyQuestion = ({
                           )
                         : ""}
                     </div>
-                    <div>
-                      <p className={`text-two ${isExpanded ? "expanded" : ""}`}>
-                        {questAction?.ActionDetails?.length > tempQuestion
-                          ? questAction?.ActionDetails[tempQuestion]
-                              ?.ResponseType?.Description
-                          : ""}
-                      </p>
-                    </div>
-                    <div style={{ display: "flex", justifyContent: "end" }}>
-                      <p
-                        style={{
-                          color: "#06182C80",
-                          margin: "0",
-                          textDecoration: "underline",
-                          cursor: "pointer",
-                        }}
-                        onClick={toggleText}
-                      >
-                        {isExpanded ? "Show less" : "Read all"}
-                      </p>
-                    </div>
+                  <div>
+                    <p className={`text-two ${isExpanded ? "expanded" : ""}`}>
+                      {displayText}
+                    </p>
+                    {shouldShowToggle && (
+                      <div style={{ display: "flex", justifyContent: "end" }}>
+                        <p
+                          style={{
+                            color: "#06182C80",
+                            margin: "0",
+                            textDecoration: "underline",
+                            cursor: "pointer",
+                          }}
+                          onClick={toggleText}
+                        >
+                          {isExpanded ? "Show less" : "Read all"}
+                        </p>
+                      </div>
+                    )}
+                  </div>
                   </div>
                   <div className="link-part">
-                    <p
-                      onClick={() =>
-                        window.open(
-                          questAction?.ActionDetails?.length > tempQuestion
-                            ? questAction?.ActionDetails[tempQuestion]
-                                ?.ResponseType?.VideoLink
-                            : ""
-                        )
-                      }
-                    >
-                      Watch video
-                    </p>
-                    <p
-                      onClick={() =>
-                        window.open(
-                          questAction?.ActionDetails?.length > tempQuestion
-                            ? questAction?.ActionDetails[tempQuestion]
-                                ?.ResponseType?.ReferenceLink
-                            : ""
-                        )
-                      }
-                    >
-                      View link
-                    </p>
-                  </div>
+                        <p
+                          onClick={() =>
+                            window.open(
+                              questAction?.ActionDetails?.length > tempQuestion
+                                ? questAction?.ActionDetails[tempQuestion]
+                                    ?.ResponseType?.VideoLink
+                                : ""
+                            )
+                          }
+                        >
+                          {questAction?.ActionDetails[tempQuestion]
+                            ?.ResponseType?.VideoLink
+                            ? "Watch video"
+                            : ""}
+                        </p>
+                        <p
+                          onClick={() =>
+                            window.open(
+                              questAction?.ActionDetails?.length > tempQuestion
+                                ? questAction?.ActionDetails[tempQuestion]
+                                    ?.ResponseType?.ReferenceLink
+                                : ""
+                            )
+                          }
+                        >
+                          {questAction?.ActionDetails[tempQuestion]
+                            ?.ResponseType?.VideoLink
+                            ? "View link"
+                            : ""}
+                        </p>
+                      </div>
 
                   {questAction?.ActionDetails?.length > tempQuestion &&
                     questAction?.ActionDetails[tempQuestion]?.ResponseType
@@ -946,31 +973,25 @@ const SurveyQuestion = ({
             <div className="arrow">
               {tempQuestion === 0 && (
                 <div
-                  style={{ backgroundColor: "rgba(6, 24, 44, 0.05)" }}
+                  style={{ backgroundColor:'rgba(6, 24, 44, 0.05)',border:'1.5px solid rgb(255, 255, 255)' }}
                   className="left-arrow"
+                  sty
                 >
                   <div
-                    style={{ marginTop: "3.5px" }}
+                    style={{ marginTop: "3.5px"}}
                     dangerouslySetInnerHTML={{
-                      __html: SurveyQuestSvgIcon.left_arrow,
+                      __html: SurveyQuestSvgIcon.left_arrow_white,
                     }}
                   />
                 </div>
               )}
               {tempQuestion > 0 && tempQuestion < questionNo && (
-                <div
-                  onClick={() => {
-                    setTempQuestion(tempQuestion - 1);
-                    setPointCal((prev) => prev - 20);
-                  }}
-                  className="left-arrow"
-                >
-                  <div
-                    style={{ color: "black", marginTop: "3.5px" }}
-                    dangerouslySetInnerHTML={{
-                      __html: SurveyQuestSvgIcon.left_arrow,
-                    }}
-                  />
+                <div 
+                onClick={() => {setTempQuestion(tempQuestion - 1);
+                setPointCal((prev) => prev - 20);}}
+                 className="left-arrow"
+                 >
+                  <div style={{ color: "black", marginTop: "3.5px" }} dangerouslySetInnerHTML={{   __html: SurveyQuestSvgIcon.left_arrow, }}/>
                 </div>
               )}
               {tempQuestion === questionNo - 1 && (
@@ -978,7 +999,9 @@ const SurveyQuestion = ({
                   <button
                     onClick={checkForValidationForFinish}
                     className="finish"
-                  >{finisedAnswerLoading?"Saving...":'Finish'}</button>
+                  >
+                    {finisedAnswerLoading ? "Saving..." : "Finish"}
+                  </button>
                 </div>
               )}
 

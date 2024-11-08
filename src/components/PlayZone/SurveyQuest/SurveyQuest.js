@@ -67,7 +67,7 @@ const ServeyQuest= ({
             </div>
       )}
       </div>
-      <p className="task">Share our link with your friends</p>
+      <p className="task">Participate in our annual user survey</p>
       <div style={{height:'5px'}}/>
       <div className="highlite-last">
         <div

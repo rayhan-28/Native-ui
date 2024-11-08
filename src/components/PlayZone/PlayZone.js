@@ -215,13 +215,16 @@ const PlayZone = ({
         )}
         {isServeyClicked && screenWidth <= 500 && (
           <SurveyQuestion
-            email={email}
-            setCompleteSurveyQuestion={setCompleteSurveyQuestion}
-            onClose={() => setIsServeyGoClicked(false)}
-            setIsFinisedClickedServey={setIsFinisedClickedServey}
-            isFinisedClickedServey={isFinisedClickedServey}
-            questId={questId}
-            surveyName={surveyName}
+          email={email}
+          setCompleteSurveyQuestion={setCompleteSurveyQuestion}
+          onClose={() => setIsServeyGoClicked(false)}
+          setIsFinisedClickedServey={setIsFinisedClickedServey}
+          isFinisedClickedServey={isFinisedClickedServey}
+          questId={questId}
+          setSurveyQuestGoBtn={setSurveyQuestGoBtn}
+          photoUrl={photoUrl}
+          PlayerName={PlayerName}
+          surveyName={surveyName}
           />
         )}
        
@@ -243,7 +246,7 @@ const PlayZone = ({
                 color: "white",
                 boxSizing: "border-box",
                 width,
-                height: checkCharacterType !== 1 ? "" : "600px",
+                height: checkCharacterType !== 1 ? "" : "575px",
                 maxWidth,
               }}
             >

@@ -220,7 +220,7 @@
     width: 40px;
     color: white;
     background-color: white;
-    border: 0.1rem solid black;
+    border: 0.02rem solid black;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -247,8 +247,8 @@
   }
 
   .finish {
-    background-color: black;
-    color: #fff;
+    background-color: rgba(6, 24, 44, 0.05);;
+    color: rgba(6, 24, 44, 0.5);
     width: 85px;
     height: 42px;
     font-size: 16px;
@@ -257,9 +257,7 @@
     cursor: pointer;
     transition: background-color 0.3s ease;
 
-    &:hover {
-      background-color: #333;
-    }
+   
   }
 
 

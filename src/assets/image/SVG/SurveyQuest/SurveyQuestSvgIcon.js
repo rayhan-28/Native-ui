@@ -37,6 +37,13 @@ left_arrow:`
 <svg width="10" height="16" viewBox="0 0 10 16" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M9 14.666L1 7.99935L9 1.33269" stroke="black" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
+`,
+left_arrow_white:`
+<svg width="10" height="16" viewBox="0 0 10 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M9 14.666L1 7.99935L9 1.33269" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
+
 `
 ,
 right_arrow:`
