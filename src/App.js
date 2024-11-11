@@ -33,10 +33,20 @@ function App() {
   return (
     <AuthProvider  token={token}>
      {/* <HighlitePlayZoneModal/> */}
-     <PlayerCard email={email} Name="Rayhan" PhotoUrl=""/>
+     
      <button onClick={handleshow}>Click me</button>
      
       {/* <PlayZone  photoUrl={img}/> */}
+      <div style={{width:'600px',height:'500px',backgroundColor:'gray',marginBottom:'20px'}}>
+
+      </div>
+      <div style={{display:'flex',gap:'40px'}}>
+          <div style={{width:'160px',height:'160px',backgroundColor:'teal'}}>
+
+          </div>
+          <PlayerCard email={email} Name="Rayhan" PhotoUrl=""/>
+      </div>
+      
      {showSuccess &&
       <PlayZone email={email} 
       erroShowSuccess={erroShowSuccess} 
