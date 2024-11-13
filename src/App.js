@@ -41,14 +41,10 @@ function App() {
 
       </div>
       <div style={{display:'flex',gap:'40px'}}>
-          <div style={{width:'160px',height:'160px',backgroundColor:'teal'}}>
-
-          </div>
-          <PlayerCard email={email} Name="Rayhan" PhotoUrl=""/>
-      </div>
-      
-     {showSuccess &&
-      <PlayZone email={email} 
+          <div style={{width:'160px',height:'160px',backgroundColor:'teal'}}></div>
+          <PlayerCard email={email} Name="Rayhan" PhotoUrl=""/> 
+      {showSuccess &&
+          <PlayZone email={email} 
       erroShowSuccess={erroShowSuccess} 
       setErrorShowSuccess={setErrorShowSuccess}
       handleErrorClose={()=>setErrorShowSuccess(false)}
@@ -56,6 +52,9 @@ function App() {
       PlayerName="Olle"
       photoUrl={img}
       />}
+      </div>
+      
+    
       
      {/* <AlertOverly/> */}
      {/* <Servey/> */}
